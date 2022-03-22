@@ -2,13 +2,15 @@ import { HanNumber, NativeNumberOption, HangulNumberObj } from './HanNumber';
 import { getNumAtPos, getRanInt } from './utils';
 
 export class NativeNumber extends HanNumber {
-  number: number;
-  hangul: string;
-  private absMin: number;
-  private absMax: number;
+  readonly number: number;
+  readonly hangul: string;
+  readonly absMin: number;
+  readonly absMax: number;
+  readonly option: NativeNumberOption;
 
-  constructor(public option: NativeNumberOption) {
+  constructor(option: NativeNumberOption) {
     super();
+    this.option = option;
     this.absMin = option === 'sequence' || option === 'repetition' ? 1 : 0;
     this.absMax = 99;
     const ran = this.getRandom();
@@ -82,7 +84,7 @@ export class NativeNumber extends HanNumber {
     return this.fromNumber(randomNum);
   };
 
-  isValid(str: string): boolean {
+  isValid = (str: string): boolean => {
     return (
       // no leading zeros
       !/^0.+/.test(str) &&
@@ -92,7 +94,7 @@ export class NativeNumber extends HanNumber {
       Number.parseInt(str, 10) >= this.absMin &&
       Number.parseInt(str, 10) <= this.absMax
     );
-  }
+  };
 
   printAll(): string[] {
     return Array.from(Array(this.absMax - this.absMin + 1).keys())

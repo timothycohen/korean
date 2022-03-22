@@ -2,11 +2,20 @@ import { HanNumber, SinoNumberOption, HangulNumberObj } from './HanNumber';
 import { format, getNumAtPos, getRanIntByOOM } from './utils';
 
 export class SinoNumber extends HanNumber {
-  number: number;
-  hangul: string;
+  readonly number: number;
+  readonly hangul: string;
+  readonly absMin: number;
+  readonly absMax: number;
+  readonly option: SinoNumberOption;
 
-  constructor(public option: SinoNumberOption) {
+  constructor(option: SinoNumberOption) {
     super();
+    this.option = option;
+    // sino numbers increment units by 10^4 and not 10^3 like the West
+    // therefore the highest number with 조 is 10^12 * 10^4 - 1 = (10,000 trillion - 1)
+    // 10 ^ 16 - 1 > Number.MAX_SAFE_INTEGER (9007_1992_5474_0991) and would require BigInt so limit to 10^15 - 1
+    this.absMin = 0;
+    this.absMax = 15;
     const ran = this.getRandom();
     this.hangul = ran.hangul;
     this.number = ran.number;
@@ -22,12 +31,6 @@ export class SinoNumber extends HanNumber {
     8: '억', // hundred million
     12: '조', // trillion
   };
-
-  // sino numbers increment units by 10^4 and not 10^3 like the West
-  // therefore the highest number with 조 is 10^12 * 10^4 - 1 = (10,000 trillion - 1)
-  // 10 ^ 16 - 1 > Number.MAX_SAFE_INTEGER (9007_1992_5474_0991) and would require BigInt so limit to 10^15 - 1
-  private absMin = 0;
-  private absMax = 15;
 
   fromNumber = (number: number): HangulNumberObj => {
     if (number > 10 ** this.absMax - 1 || number < 10 ** this.absMin - 1)
@@ -126,7 +129,7 @@ export class SinoNumber extends HanNumber {
     return this.fromNumber(randomNum);
   };
 
-  isValid(str: string): boolean {
+  isValid = (str: string): boolean => {
     return (
       // no leading zeros
       !/^0.+/.test(str) &&
@@ -136,5 +139,5 @@ export class SinoNumber extends HanNumber {
       Number.parseInt(str, 10) >= 10 ** this.absMin - 1 &&
       Number.parseInt(str, 10) <= 10 ** this.absMax - 1
     );
-  }
+  };
 }

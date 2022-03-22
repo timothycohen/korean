@@ -39,9 +39,12 @@ export type HangulNumberOptions =
 export abstract class HanNumber {
   abstract number: number;
   abstract hangul: string;
+  abstract absMin: number;
+  abstract absMax: number;
+  abstract option: string;
   abstract fromNumber: (number: number) => HangulNumberObj;
   abstract getRandom: () => HangulNumberObj;
-  // abstract isValid: (str: string) => boolean;
+  abstract isValid: (str: string) => boolean;
 
   setRandom = (): this => {
     const obj = this.getRandom();
