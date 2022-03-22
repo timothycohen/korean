@@ -1,32 +1,28 @@
 import Head from 'next/head';
 import styles from './numbers.module.css';
 import { useEffect, useState } from 'react';
-import {
-  getRandomHangulNumber,
-  numToHangul,
-  isValidHangulNumber,
-  type HangulNumber,
-  type HangulNumberType,
-  type HangulNumberOptions,
-} from '../lib/numbers';
-import { format } from 'lib/utils';
+import { HangulNumber, type HangulNumberOptions } from 'lib/number';
 
 export default function Numbers() {
   const [input, setInput] = useState('');
   const [showInputFlag, setShowInputFlag] = useState(true);
-  const [goal, setGoal] = useState({} as HangulNumber);
   const [showGoalFlag, setShowGoalFlag] = useState(false);
-  const [hangulNumberType, setHangulNumberType] = useState<HangulNumberType>('sino');
-  const [hangulNumberOption, setHangulNumberOption] = useState<HangulNumberOptions>('cardinal');
+  const [hangulNumberOptions, setHangulNumberOptions] = useState<HangulNumberOptions>({
+    type: 'native',
+    option: 'repetition',
+  });
+  const [goal, setGoal] = useState(
+    HangulNumber.create(hangulNumberOptions.type, hangulNumberOptions.option).setRandom()
+  );
 
   useEffect(() => {
-    setGoal(getRandomHangulNumber(hangulNumberType, hangulNumberOption));
-  }, [hangulNumberType, hangulNumberOption]);
+    setGoal(HangulNumber.create(hangulNumberOptions.type, hangulNumberOptions.option).setRandom());
+  }, [hangulNumberOptions.type, hangulNumberOptions.option]);
 
   useEffect(() => {
     const reset = () => {
       setInput('');
-      setGoal(getRandomHangulNumber(hangulNumberType, hangulNumberOption));
+      setGoal(goal.setRandom());
     };
 
     const handleWin = () => {
@@ -34,25 +30,26 @@ export default function Numbers() {
       reset();
     };
 
-    if (Number.isInteger(goal.number) && input === goal.number.toString()) handleWin();
-  }, [hangulNumberType, hangulNumberOption, input, goal.number]);
+    if (input === goal.number.toString()) handleWin();
+  }, [goal, input]);
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Cards | Numbers | {hangulNumberType.replace(/^./, str => str.toUpperCase())}</title>
+        <title>Cards | Numbers | {hangulNumberOptions.type.replace(/^./, str => str.toUpperCase())}</title>
       </Head>
       <header className={styles.header}>
-        <h1 className={styles.title}>{hangulNumberType.replace(/^./, str => str.toUpperCase())} Numbers</h1>
+        <h1 className={styles.title}>
+          {hangulNumberOptions.type.replace(/^./, str => str.toUpperCase())} Numbers
+        </h1>
         <select
           className={styles.select}
           name="hangulNumberType"
           id="hangulNumberType"
-          value={`${hangulNumberType}-${hangulNumberOption}`}
+          value={`${hangulNumberOptions.type}-${hangulNumberOptions.option}`}
           onChange={e => {
             const [type, option] = e.currentTarget.value.split('-');
-            setHangulNumberType(type as HangulNumberType);
-            setHangulNumberOption(option as HangulNumberOptions);
+            setHangulNumberOptions({ type, option } as HangulNumberOptions);
           }}
         >
           <optgroup label="Native">
@@ -81,7 +78,7 @@ export default function Numbers() {
       </header>
       <main className={styles.main}>
         <h2 className={styles.goalHangul}>{goal.hangul}</h2>
-        <h2 className={styles.goalNumber}>{showGoalFlag && format(goal.number)} </h2>
+        <h2 className={styles.goalNumber}>{showGoalFlag && goal.formattedNumber} </h2>
 
         <input
           className={styles.numberInput}
@@ -89,14 +86,12 @@ export default function Numbers() {
           value={input}
           onChange={e => {
             const val = e.target.value.replaceAll(/\s/g, '');
-            if (val === '' || isValidHangulNumber(val, hangulNumberType)) setInput(val);
+            if (val === '' || goal.isValid(val)) setInput(val);
           }}
         />
 
         <h1 className={styles.userHangul}>
-          {showInputFlag && input !== ''
-            ? numToHangul(Number.parseInt(input), hangulNumberType, hangulNumberOption).hangul
-            : ' '}
+          {showInputFlag && input !== '' ? goal.fromNumber(Number.parseInt(input)).hangul : ' '}
         </h1>
 
         <button type="button" onClick={() => setShowGoalFlag(!showGoalFlag)}>
