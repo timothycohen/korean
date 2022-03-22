@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styles from './numbers.module.css';
 import { useEffect, useState } from 'react';
 import { HangulNumber, type HangulNumberOptions } from 'lib/number';
+import { format } from 'lib/number/utils';
 
 export default function Numbers() {
   const [input, setInput] = useState('');
@@ -15,23 +16,16 @@ export default function Numbers() {
     HangulNumber.create(hangulNumberOptions.type, hangulNumberOptions.option).setRandom()
   );
 
+  // set new goal when options are changed
   useEffect(() => {
     setGoal(HangulNumber.create(hangulNumberOptions.type, hangulNumberOptions.option).setRandom());
   }, [hangulNumberOptions.type, hangulNumberOptions.option]);
 
-  useEffect(() => {
-    const reset = () => {
-      setInput('');
-      setGoal(goal.setRandom());
-    };
-
-    const handleWin = () => {
-      console.log('correct!', input, goal.number.toString());
-      reset();
-    };
-
-    if (input === goal.number.toString()) handleWin();
-  }, [goal, input]);
+  const handleWin = () => {
+    console.log('correct!', input, goal.number.toString());
+    setInput('');
+    setGoal(goal.setRandom());
+  };
 
   return (
     <div className={styles.container}>
@@ -49,6 +43,7 @@ export default function Numbers() {
           value={`${hangulNumberOptions.type}-${hangulNumberOptions.option}`}
           onChange={e => {
             const [type, option] = e.currentTarget.value.split('-');
+            setInput(''); // to prevent out of range issues
             setHangulNumberOptions({ type, option } as HangulNumberOptions);
           }}
         >
@@ -83,10 +78,14 @@ export default function Numbers() {
         <input
           className={styles.numberInput}
           type="text"
-          value={input}
+          value={input === '' ? '' : format(parseInt(input))}
           onChange={e => {
-            const val = e.target.value.replaceAll(/\s/g, '');
-            if (val === '' || goal.isValid(val)) setInput(val);
+            // this may not unformat Chinese / Arabic options on the Intl formatter
+            const val = e.target.value.replaceAll(/\s/g, '').replaceAll('.', '').replaceAll(',', '');
+            if (val === '' || goal.isValid(val)) {
+              setInput(val);
+              if (val === goal.number.toString()) handleWin();
+            }
           }}
         />
 
