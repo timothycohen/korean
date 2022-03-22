@@ -1,0 +1,20 @@
+import Head from 'next/head';
+import styles from '@/pages/index.module.css';
+import Link from 'next/link';
+
+export default function Home() {
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Cards | Home</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main>
+        <h1 className={styles.title}>TCo&apos;s Korean</h1>
+        <Link href="/numbers">Numbers</Link>
+        <Link href="https://timothycohen.github.io/korean-colors/">Colors</Link>
+      </main>
+    </div>
+  );
+}

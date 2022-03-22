@@ -1,0 +1,60 @@
+.container {
+  min-height: 100%;
+}
+
+.header {
+  box-shadow: 1px 1px 3px 1px lightgray;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  place-items: center;
+  gap: 1rem;
+}
+.title {
+  font-size: 2rem;
+}
+.select {
+  font-size: 1.3rem;
+}
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.checkbox__label {
+  font-size: 1.3rem;
+}
+.checkbox__input {
+  margin-top: 0.3rem;
+}
+
+.main {
+  font-size: larger;
+  font-weight: 700;
+  padding-top: 10%;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.goalHangul {
+  font-size: xx-large;
+  width: 100%;
+}
+
+.goalNumber {
+  font-size: xx-large;
+  width: 100%;
+  min-height: 3.75rem;
+}
+
+.numberInput {
+  width: 200px;
+}
+
+.userHangul {
+  width: 100%;
+  min-height: 3.75rem;
+}
