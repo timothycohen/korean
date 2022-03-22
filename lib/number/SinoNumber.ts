@@ -140,4 +140,8 @@ export class SinoNumber extends HanNumber {
       Number.parseInt(str, 10) <= 10 ** this.absMax - 1
     );
   };
+
+  fromNumArr = (numArr: number[]): HangulNumberObj[] => {
+    return numArr.map(this.fromNumber);
+  };
 }
