@@ -4,9 +4,13 @@ import { getNumAtPos, getRanInt } from './utils';
 export class NativeNumber extends HanNumber {
   number: number;
   hangul: string;
+  private absMin: number;
+  private absMax: number;
 
   constructor(public option: NativeNumberOption) {
     super();
+    this.absMin = option === 'sequence' || option === 'repetition' ? 1 : 0;
+    this.absMax = 99;
     const ran = this.getRandom();
     this.hangul = ran.hangul;
     this.number = ran.number;
@@ -23,22 +27,34 @@ export class NativeNumber extends HanNumber {
     },
   };
 
-  // order of magnitude, [0, 99)
-  private absMin = 0;
-  private absMax = 2;
-
   fromNumber = (number: number): HangulNumberObj => {
-    if (number > 10 ** this.absMax - 1 || number < 10 ** this.absMin - 1)
-      throw new Error(`Number is not within orders of magnitude
-        min OOM: ${this.absMin}
-        max OOM: ${this.absMax}`);
+    if (number > this.absMax || number < this.absMin)
+      throw new Error(`Number is not within range
+        min: ${this.absMin}
+        max: ${this.absMax}`);
 
     const onesDig = getNumAtPos(number, 0);
     const tensDig = getNumAtPos(number, 1);
     let hangul = '';
 
-    // counters and repetition ordinals use the modified native numbers
-    const type = this.option === 'counter' || this.option === 'repetition' ? 'nativeModified' : 'native';
+    const getMap = (num: number, option: NativeNumberOption): 'native' | 'nativeModified' => {
+      // cardinal uses native for all
+      if (option === 'cardinal') return 'native';
+
+      // sequence uses special for 1 and modified for 20, 11, 12, 21, 22, ..., 91, 92
+      if (option === 'sequence') {
+        if (num < 11) return 'native';
+        if (num === 20) return 'nativeModified';
+        if (num % 10 === 1) return 'nativeModified';
+        if (num % 10 === 2) return 'nativeModified';
+        return 'native';
+      }
+
+      // counter and repetition use modified for all
+      return 'nativeModified';
+    };
+
+    const type = getMap(number, this.option);
 
     // if 0-9, return just the zeros digit
     if (!tensDig) hangul = NativeNumber.nativeMap[type].ones[onesDig];
@@ -62,7 +78,7 @@ export class NativeNumber extends HanNumber {
   };
 
   getRandom = (): HangulNumberObj => {
-    const randomNum = getRanInt(10 ** this.absMin - 1, 10 ** this.absMax - 1);
+    const randomNum = getRanInt(this.absMin, this.absMax);
     return this.fromNumber(randomNum);
   };
 
@@ -73,8 +89,14 @@ export class NativeNumber extends HanNumber {
       // spaces only before/after number (not between)
       /^\s*\d+\s*$/.test(str) &&
       // between min and max
-      Number.parseInt(str, 10) >= 10 ** this.absMin - 1 &&
-      Number.parseInt(str, 10) <= 10 ** this.absMax - 1
+      Number.parseInt(str, 10) >= this.absMin &&
+      Number.parseInt(str, 10) <= this.absMax
     );
+  }
+
+  printAll(): string[] {
+    return Array.from(Array(this.absMax - this.absMin + 1).keys())
+      .map(x => (x += this.absMin))
+      .map(n => this.fromNumber(n).hangul);
   }
 }

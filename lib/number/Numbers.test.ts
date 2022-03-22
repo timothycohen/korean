@@ -1,4 +1,5 @@
 import { HangulNumber } from './HangulNumber';
+import { nativeSnapshot } from './nativeSnapshot';
 
 describe('nativeCardinal fromNumber', () => {
   const nativeCardinal = HangulNumber.createNative('cardinal');
@@ -69,9 +70,8 @@ describe('nativeRepetition fromNumber', () => {
     expect(nativeRepetition.fromNumber(99).number).toBe(99);
   });
 
-  it('handles 0', () => {
-    expect(nativeRepetition.fromNumber(0).hangul).toBe('영 번째');
-    expect(nativeRepetition.fromNumber(0).number).toBe(0);
+  test('0 is out of scope for ordinals', () => {
+    expect(() => nativeRepetition.fromNumber(0)).toThrowError();
   });
 
   it('handles the special 1 case', () => {
@@ -125,9 +125,8 @@ describe('nativeSequence fromNumber', () => {
     expect(nativeSequence.fromNumber(99).number).toBe(99);
   });
 
-  it('handles 0', () => {
-    expect(nativeSequence.fromNumber(0).hangul).toBe('영째');
-    expect(nativeSequence.fromNumber(0).number).toBe(0);
+  test('0 is out of scope for ordinals', () => {
+    expect(() => nativeSequence.fromNumber(0)).toThrowError();
   });
 
   it('handles the special 1 case', () => {
@@ -140,9 +139,11 @@ describe('nativeSequence fromNumber', () => {
     expect(nativeSequence.fromNumber(2).number).toBe(2);
   });
 
-  it('treats 11, 21, etc. as normal', () => {
-    expect(nativeSequence.fromNumber(11).hangul).toBe('열하나째');
-    expect(nativeSequence.fromNumber(11).number).toBe(11);
+  it('treats 11, 21, 12, 22, etc. as modified', () => {
+    expect(nativeSequence.fromNumber(11).hangul).toBe('열한째');
+    expect(nativeSequence.fromNumber(12).hangul).toBe('열두째');
+    expect(nativeSequence.fromNumber(21).hangul).toBe('스물한째');
+    expect(nativeSequence.fromNumber(22).hangul).toBe('스물두째');
   });
 
   it('does not show 0 if the number simply ends in 0', () => {
@@ -279,5 +280,19 @@ describe('sino getRandom', () => {
     const randomCounter = sinoCounter.getRandom();
     const parsedCounter = sinoCounter.fromNumber(randomCounter.number);
     expect(randomCounter).toStrictEqual(parsedCounter);
+  });
+});
+
+describe('printAll matches snapshot', () => {
+  test('native', () => {
+    const nativeCardinalGen = HangulNumber.createNative('cardinal').printAll();
+    const nativeCounterGen = HangulNumber.createNative('counter').printAll();
+    const nativeSequenceGen = HangulNumber.createNative('sequence').printAll();
+    const nativeRepetitionGen = HangulNumber.createNative('repetition').printAll();
+
+    expect(nativeCardinalGen).toStrictEqual(nativeSnapshot.cardinal);
+    expect(nativeCounterGen).toStrictEqual(nativeSnapshot.counter);
+    expect(nativeSequenceGen).toStrictEqual(nativeSnapshot.sequence);
+    expect(nativeRepetitionGen).toStrictEqual(nativeSnapshot.repetition);
   });
 });
