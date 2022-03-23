@@ -81,12 +81,14 @@ export abstract class HanNumber {
     if (num < this.absMin) throw new Error(`${num} is smaller than the absMin of ${this.absMin}`);
     if (num > this._max) throw new Error(`${num} is larger than the current max of ${this._max}`);
     this._min = num;
+    if (this.number < this._min) this.setRandom();
   }
 
   set max(num: number) {
     if (num > this.absMax) throw new Error(`${num} is larger than the absMax of ${this.absMax}`);
     if (num < this._min) throw new Error(`${num} is smaller than the current min of ${this._min}`);
     this._max = num;
+    if (this.number > this._max) this.setRandom();
   }
 
   get range(): [number, number] {
@@ -99,4 +101,6 @@ export abstract class HanNumber {
     this.min = min;
     this.max = max;
   }
+
+  abstract formattedRange: [string, string];
 }

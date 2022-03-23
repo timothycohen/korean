@@ -135,6 +135,9 @@ export class SinoNumber extends HanNumber {
     return this.fromNumber(randomNum);
   };
 
+  private OOMToMin = (num: number): number => (num === 0 ? 0 : 10 ** (num - 1));
+  private OOMToMax = (num: number): number => 10 ** num - 1;
+
   // 0 --> 0 - 0
   // 1 --> 1 - 9
   // 2 --> 10 - 99
@@ -146,15 +149,15 @@ export class SinoNumber extends HanNumber {
     if (!/^\s*\d+\s*$/.test(numAsString)) return false;
 
     const num = Number.parseInt(numAsString, 10);
-    const OOMToMin = (num: number): number => (num === 0 ? 0 : 10 ** (num - 1));
-    const OOMToMax = (num: number): number => 10 ** num - 1;
 
     // allow out of range numbers for all numbers below (to allow typing 9999 when the range is 10000)
-    if (option === 'possible' && num > OOMToMax(this._max)) return false;
+    if (option === 'possible' && num > this.OOMToMax(this._max)) return false;
     // only allow when number is within min/max
-    if (option === 'local' && (num > OOMToMax(this._max) || num < OOMToMin(this._min))) return false;
+    if (option === 'local' && (num > this.OOMToMax(this._max) || num < this.OOMToMin(this._min)))
+      return false;
     // only allow when number is within absMin/absMax
-    if (option === 'abs' && (num > OOMToMax(this.absMax) || num < 10 ** OOMToMin(this.absMin))) return false;
+    if (option === 'abs' && (num > this.OOMToMax(this.absMax) || num < 10 ** this.OOMToMin(this.absMin)))
+      return false;
 
     return true;
   };
@@ -162,4 +165,8 @@ export class SinoNumber extends HanNumber {
   fromNumArr = (numArr: number[]): HangulNumberObj[] => {
     return numArr.map(this.fromNumber);
   };
+
+  get formattedRange(): [string, string] {
+    return [format(this.OOMToMin(this._min)), format(this.OOMToMax(this._max))];
+  }
 }

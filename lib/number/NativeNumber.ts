@@ -113,4 +113,8 @@ export class NativeNumber extends HanNumber {
       .map(x => (x += this._min))
       .map(n => this.fromNumber(n).hangul);
   }
+
+  get formattedRange(): [string, string] {
+    return [this._min.toString(), this._max.toString()];
+  }
 }
