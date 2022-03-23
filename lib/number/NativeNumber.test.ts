@@ -223,7 +223,7 @@ describe('isValid', () => {
     expect(nativeCardinal.isValid('38 ')).toBe(true);
   });
 
-  test('allows any number in lower order of magnitudes', () => {
+  test('possible allows any lower number', () => {
     const nativeCardinal = HangulNumber.createNative('cardinal');
     nativeCardinal.range = [37, 43];
     expect(nativeCardinal.isValid('0')).toBe(true);
@@ -231,11 +231,35 @@ describe('isValid', () => {
     expect(nativeCardinal.isValid('7')).toBe(true);
   });
 
-  test('does not allow any number greater than the max', () => {
+  test('possible does not allow any number greater than the max', () => {
     const nativeCardinal = HangulNumber.createNative('cardinal');
     nativeCardinal.range = [37, 43];
     expect(nativeCardinal.isValid('7')).toBe(true);
+    expect(nativeCardinal.isValid('37')).toBe(true);
     expect(nativeCardinal.isValid('39')).toBe(true);
+    expect(nativeCardinal.isValid('43')).toBe(true);
     expect(nativeCardinal.isValid('44')).toBe(false);
+  });
+
+  test('abs allows only numbers between absMin/absMax', () => {
+    const nativeCardinal = HangulNumber.createNative('cardinal');
+    nativeCardinal.range = [37, 43];
+    expect(nativeCardinal.isValid('0', 'abs')).toBe(true);
+    expect(nativeCardinal.isValid('40', 'abs')).toBe(true);
+    expect(nativeCardinal.isValid('7', 'abs')).toBe(true);
+    expect(nativeCardinal.isValid('99', 'abs')).toBe(true);
+    expect(nativeCardinal.isValid('-1', 'abs')).toBe(false);
+    expect(nativeCardinal.isValid('100', 'abs')).toBe(false);
+  });
+
+  test('local allows only numbers between min/max', () => {
+    const nativeCardinal = HangulNumber.createNative('cardinal');
+    nativeCardinal.range = [37, 43];
+    expect(nativeCardinal.isValid('7', 'local')).toBe(false);
+    expect(nativeCardinal.isValid('-5', 'local')).toBe(false);
+    expect(nativeCardinal.isValid('100', 'local')).toBe(false);
+    expect(nativeCardinal.isValid('39', 'local')).toBe(true);
+    expect(nativeCardinal.isValid('43', 'local')).toBe(true);
+    expect(nativeCardinal.isValid('37', 'local')).toBe(true);
   });
 });

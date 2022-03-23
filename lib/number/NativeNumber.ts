@@ -2,6 +2,7 @@ import { HanNumber, NativeNumberOption, HangulNumberObj } from './HanNumber';
 import { getNumAtPos, getRanInt } from './utils';
 
 export class NativeNumber extends HanNumber {
+  readonly type: 'native';
   readonly number: number;
   readonly hangul: string;
   readonly absMin: number;
@@ -12,6 +13,7 @@ export class NativeNumber extends HanNumber {
 
   constructor(option: NativeNumberOption) {
     super();
+    this.type = 'native';
     this.option = option;
     this.absMin = option === 'sequence' || option === 'repetition' ? 1 : 0;
     this.absMax = 99;
@@ -34,10 +36,10 @@ export class NativeNumber extends HanNumber {
   };
 
   fromNumber = (number: number): HangulNumberObj => {
-    if (number > this.max || number < this.min)
+    if (number > this.absMax || number < this.absMin)
       throw new Error(`Number is not within range
-        min: ${this.min}
-        max: ${this.max}`);
+        absMin: ${this.absMin}
+        absMax: ${this.absMax}`);
 
     const onesDig = getNumAtPos(number, 0);
     const tensDig = getNumAtPos(number, 1);
@@ -84,24 +86,31 @@ export class NativeNumber extends HanNumber {
   };
 
   getRandom = (): HangulNumberObj => {
-    const randomNum = getRanInt(this.min, this.max);
+    const randomNum = getRanInt(this._min, this._max);
     return this.fromNumber(randomNum);
   };
 
-  isValid = (str: string): boolean => {
+  isValid = (numAsString: string, option: 'possible' | 'abs' | 'local' = 'possible'): boolean => {
     // no leading zeros
-    if (/^0.+/.test(str)) return false;
+    if (/^0.+/.test(numAsString)) return false;
     // spaces only before/after number (not between)
-    if (!/^\s*\d+\s*$/.test(str)) return false;
-    // allow out of range numbers only until the OOM is correct
-    if (str.length >= this.max.toString().length && Number.parseInt(str, 10) > this.max) return false;
+    if (!/^\s*\d+\s*$/.test(numAsString)) return false;
+
+    const num = Number.parseInt(numAsString, 10);
+
+    // allow out of range numbers for all numbers below (to allow typing 6 when the range is 50-70)
+    if (option === 'possible' && num > this._max) return false;
+    // only allow when number is within min/max
+    if (option === 'local' && (num > this._max || num < this._min)) return false;
+    // only allow when number is within absMin/absMax
+    if (option === 'abs' && (num > this.absMax || num < this.absMin)) return false;
 
     return true;
   };
 
   printAll(): string[] {
-    return Array.from(Array(this.max - this.min + 1).keys())
-      .map(x => (x += this.min))
+    return Array.from(Array(this._max - this._min + 1).keys())
+      .map(x => (x += this._min))
       .map(n => this.fromNumber(n).hangul);
   }
 }

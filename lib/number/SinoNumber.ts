@@ -2,6 +2,7 @@ import { HanNumber, SinoNumberOption, HangulNumberObj } from './HanNumber';
 import { format, getNumAtPos, getRanIntByOOM } from './utils';
 
 export class SinoNumber extends HanNumber {
+  readonly type: 'sino';
   readonly number: number;
   readonly hangul: string;
   readonly absMin: number;
@@ -12,10 +13,11 @@ export class SinoNumber extends HanNumber {
 
   constructor(option: SinoNumberOption) {
     super();
+    this.type = 'sino';
     this.option = option;
     // sino numbers increment units by 10^4 and not 10^3 like the West
     // therefore the highest number with 조 is 10^12 * 10^4 - 1 = (10,000 trillion - 1)
-    // 10 ^ 16 - 1 > Number.MAX_SAFE_INTEGER (9007_1992_5474_0991) and would require BigInt so limit to 10^15 - 1
+    // 10 ^ 16 - 1 > Number.MAX_SAFE_INTEGER (9007_1992_5474_0991) and would require BigInt so limit to 10^15 - 1 = 999_9999_9999_9999
     this.absMin = 0;
     this.absMax = 15;
     this._min = this.absMin;
@@ -37,10 +39,10 @@ export class SinoNumber extends HanNumber {
   };
 
   fromNumber = (number: number): HangulNumberObj => {
-    if (number > 10 ** this.max - 1 || number < 10 ** this.min - 1)
+    if (number > 10 ** this.absMax - 1 || number < 10 ** this.absMin - 1)
       throw new Error(`Number is not within orders of magnitude
-        min OOM: ${format(this.min)}
-        max OOM: ${format(this.max)}`);
+        absMin OOM: ${format(this.absMin)}
+        absMax OOM: ${format(this.absMax)}`);
 
     // Sino-Korean numbers increment units by 10,000 and not 1,000 like the West
     // therefore, parse by fours
@@ -129,18 +131,30 @@ export class SinoNumber extends HanNumber {
   };
 
   getRandom = (): HangulNumberObj => {
-    const randomNum = getRanIntByOOM(this.min, this.max);
+    const randomNum = getRanIntByOOM(this._min, this._max);
     return this.fromNumber(randomNum);
   };
 
-  isValid = (str: string): boolean => {
+  // 0 --> 0 - 0
+  // 1 --> 1 - 9
+  // 2 --> 10 - 99
+  // 3 --> 100 - 999
+  isValid = (numAsString: string, option: 'possible' | 'abs' | 'local' = 'possible'): boolean => {
     // no leading zeros
-    if (/^0.+/.test(str)) return false;
+    if (/^0.+/.test(numAsString)) return false;
     // spaces only before/after number (not between)
-    if (!/^\s*\d+\s*$/.test(str)) return false;
-    // allow out of range numbers only until the OOM is correct
-    if (str.length >= this.max.toString().length && Number.parseInt(str, 10) > 10 ** this.max - 1)
-      return false;
+    if (!/^\s*\d+\s*$/.test(numAsString)) return false;
+
+    const num = Number.parseInt(numAsString, 10);
+    const OOMToMin = (num: number): number => (num === 0 ? 0 : 10 ** (num - 1));
+    const OOMToMax = (num: number): number => 10 ** num - 1;
+
+    // allow out of range numbers for all numbers below (to allow typing 9999 when the range is 10000)
+    if (option === 'possible' && num > OOMToMax(this._max)) return false;
+    // only allow when number is within min/max
+    if (option === 'local' && (num > OOMToMax(this._max) || num < OOMToMin(this._min))) return false;
+    // only allow when number is within absMin/absMax
+    if (option === 'abs' && (num > OOMToMax(this.absMax) || num < 10 ** OOMToMin(this.absMin))) return false;
 
     return true;
   };

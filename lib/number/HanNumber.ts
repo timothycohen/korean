@@ -37,6 +37,7 @@ export type HangulNumberOptions =
     };
 
 export abstract class HanNumber {
+  abstract type: 'native' | 'sino';
   abstract number: number;
   abstract hangul: string;
   abstract absMin: number;
@@ -46,7 +47,7 @@ export abstract class HanNumber {
   abstract option: string;
   abstract fromNumber: (number: number) => HangulNumberObj;
   abstract getRandom: () => HangulNumberObj;
-  abstract isValid: (str: string) => boolean;
+  abstract isValid: (str: string, option?: 'possible' | 'abs' | 'local') => boolean;
 
   setRandom = (): this => {
     const obj = this.getRandom();
@@ -66,6 +67,8 @@ export abstract class HanNumber {
     return format(this.number);
   }
 
+  // making _min OOM and min the int in Sino would match NativeNumber API,
+  // but setting Sino min/max by OOM is likely more convenient
   get min(): number {
     return this._min;
   }
@@ -76,13 +79,13 @@ export abstract class HanNumber {
 
   set min(num: number) {
     if (num < this.absMin) throw new Error(`${num} is smaller than the absMin of ${this.absMin}`);
-    if (num > this.max) throw new Error(`${num} is larger than the current max of ${this.max}`);
+    if (num > this._max) throw new Error(`${num} is larger than the current max of ${this._max}`);
     this._min = num;
   }
 
   set max(num: number) {
     if (num > this.absMax) throw new Error(`${num} is larger than the absMax of ${this.absMax}`);
-    if (num < this.min) throw new Error(`${num} is smaller than the current min of ${this.min}`);
+    if (num < this._min) throw new Error(`${num} is smaller than the current min of ${this._min}`);
     this._max = num;
   }
 

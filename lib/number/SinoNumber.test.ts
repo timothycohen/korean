@@ -147,7 +147,7 @@ describe('isValid', () => {
     expect(sinoCardinal.isValid('38 ')).toBe(true);
   });
 
-  test('allows any number in lower order of magnitudes', () => {
+  test('possible allows any number in lower order of magnitudes', () => {
     const sinoCardinal = HangulNumber.createSino('cardinal');
     sinoCardinal.range = [4, 8];
     expect(sinoCardinal.isValid('0')).toBe(true);
@@ -155,11 +155,40 @@ describe('isValid', () => {
     expect(sinoCardinal.isValid('100')).toBe(true);
   });
 
-  test('does not allow any number greater than the max', () => {
+  test('possible does not allow any number greater than the max', () => {
     const sinoCardinal = HangulNumber.createSino('cardinal');
     sinoCardinal.range = [4, 8];
     expect(sinoCardinal.isValid('65457843')).toBe(true);
     expect(sinoCardinal.isValid('99999999')).toBe(true);
     expect(sinoCardinal.isValid('100000000')).toBe(false);
   });
+});
+
+test('abs allows only numbers between absMin/absMax', () => {
+  const sinoCardinal = HangulNumber.createSino('cardinal');
+  sinoCardinal.range = [3, 5];
+  expect(sinoCardinal.isValid('100', 'abs')).toBe(true);
+  expect(sinoCardinal.isValid('99999', 'abs')).toBe(true);
+  expect(sinoCardinal.isValid('600', 'abs')).toBe(true);
+  expect(sinoCardinal.isValid('5238', 'abs')).toBe(true);
+  // expect(sinoCardinal.isValid('0', 'abs')).toBe(true);
+  expect(sinoCardinal.isValid('5', 'abs')).toBe(true);
+  expect(sinoCardinal.isValid('-1', 'abs')).toBe(false);
+  expect(sinoCardinal.isValid('999999999999999', 'abs')).toBe(true);
+  expect(sinoCardinal.isValid('1000000000000000', 'abs')).toBe(false);
+});
+
+test('local allows only numbers between min/max', () => {
+  const sinoCardinal = HangulNumber.createSino('cardinal');
+  sinoCardinal.range = [3, 5];
+  expect(sinoCardinal.isValid('100', 'local')).toBe(true);
+  expect(sinoCardinal.isValid('99999', 'local')).toBe(true);
+  expect(sinoCardinal.isValid('600', 'local')).toBe(true);
+  expect(sinoCardinal.isValid('5238', 'local')).toBe(true);
+  expect(sinoCardinal.isValid('-1', 'local')).toBe(false);
+  expect(sinoCardinal.isValid('0', 'local')).toBe(false);
+  expect(sinoCardinal.isValid('99', 'local')).toBe(false);
+  expect(sinoCardinal.isValid('12345', 'local')).toBe(true);
+  expect(sinoCardinal.isValid('123456', 'local')).toBe(false);
+  expect(sinoCardinal.isValid('100_0000_0000_0000', 'local')).toBe(false);
 });
