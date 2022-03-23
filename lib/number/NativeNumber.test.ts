@@ -207,3 +207,35 @@ describe('printAll matches snapshot', () => {
     expect(nativeRepetitionGen).toStrictEqual(nativeSnapshot.repetition);
   });
 });
+
+describe('isValid', () => {
+  test('no leading zeros', () => {
+    const nativeCardinal = HangulNumber.createNative('cardinal');
+    nativeCardinal.range = [37, 43];
+    expect(nativeCardinal.isValid('03')).toBe(false);
+  });
+
+  test('no spaces between numbers', () => {
+    const nativeCardinal = HangulNumber.createNative('cardinal');
+    nativeCardinal.range = [37, 43];
+    expect(nativeCardinal.isValid('3 8')).toBe(false);
+    expect(nativeCardinal.isValid(' 38')).toBe(true);
+    expect(nativeCardinal.isValid('38 ')).toBe(true);
+  });
+
+  test('allows any number in lower order of magnitudes', () => {
+    const nativeCardinal = HangulNumber.createNative('cardinal');
+    nativeCardinal.range = [37, 43];
+    expect(nativeCardinal.isValid('0')).toBe(true);
+    expect(nativeCardinal.isValid('2')).toBe(true);
+    expect(nativeCardinal.isValid('7')).toBe(true);
+  });
+
+  test('does not allow any number greater than the max', () => {
+    const nativeCardinal = HangulNumber.createNative('cardinal');
+    nativeCardinal.range = [37, 43];
+    expect(nativeCardinal.isValid('7')).toBe(true);
+    expect(nativeCardinal.isValid('39')).toBe(true);
+    expect(nativeCardinal.isValid('44')).toBe(false);
+  });
+});

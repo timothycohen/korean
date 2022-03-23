@@ -40,7 +40,9 @@ export abstract class HanNumber {
   abstract number: number;
   abstract hangul: string;
   abstract absMin: number;
+  protected abstract _min: number;
   abstract absMax: number;
+  protected abstract _max: number;
   abstract option: string;
   abstract fromNumber: (number: number) => HangulNumberObj;
   abstract getRandom: () => HangulNumberObj;
@@ -62,5 +64,36 @@ export abstract class HanNumber {
 
   get formattedNumber(): string {
     return format(this.number);
+  }
+
+  get min(): number {
+    return this._min;
+  }
+
+  get max(): number {
+    return this._max;
+  }
+
+  set min(num: number) {
+    if (num < this.absMin) throw new Error(`${num} is smaller than the absMin of ${this.absMin}`);
+    if (num > this.max) throw new Error(`${num} is larger than the current max of ${this.max}`);
+    this._min = num;
+  }
+
+  set max(num: number) {
+    if (num > this.absMax) throw new Error(`${num} is larger than the absMax of ${this.absMax}`);
+    if (num < this.min) throw new Error(`${num} is smaller than the current min of ${this.min}`);
+    this._max = num;
+  }
+
+  get range(): [number, number] {
+    return [this.min, this.max];
+  }
+
+  set range(numArr: [number, number]) {
+    if (numArr.length !== 2) throw new Error(`Proper argument: [min, max]`);
+    const [min, max] = [Math.min(numArr[0], numArr[1]), Math.max(numArr[0], numArr[1])];
+    this.min = min;
+    this.max = max;
   }
 }

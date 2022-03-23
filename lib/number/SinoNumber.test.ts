@@ -131,3 +131,35 @@ describe('sino numArr', () => {
     expect(sinoCounter.fromNumArr([0, 1, 2, 17, 36, 1055, 23443, 3428324])).toStrictEqual(expected);
   });
 });
+
+describe('isValid', () => {
+  test('no leading zeros', () => {
+    const sinoCardinal = HangulNumber.createSino('cardinal');
+    sinoCardinal.range = [4, 12];
+    expect(sinoCardinal.isValid('03')).toBe(false);
+  });
+
+  test('no spaces between numbers', () => {
+    const sinoCardinal = HangulNumber.createSino('cardinal');
+    sinoCardinal.range = [4, 8];
+    expect(sinoCardinal.isValid('3 8')).toBe(false);
+    expect(sinoCardinal.isValid(' 38')).toBe(true);
+    expect(sinoCardinal.isValid('38 ')).toBe(true);
+  });
+
+  test('allows any number in lower order of magnitudes', () => {
+    const sinoCardinal = HangulNumber.createSino('cardinal');
+    sinoCardinal.range = [4, 8];
+    expect(sinoCardinal.isValid('0')).toBe(true);
+    expect(sinoCardinal.isValid('10000')).toBe(true);
+    expect(sinoCardinal.isValid('100')).toBe(true);
+  });
+
+  test('does not allow any number greater than the max', () => {
+    const sinoCardinal = HangulNumber.createSino('cardinal');
+    sinoCardinal.range = [4, 8];
+    expect(sinoCardinal.isValid('65457843')).toBe(true);
+    expect(sinoCardinal.isValid('99999999')).toBe(true);
+    expect(sinoCardinal.isValid('100000000')).toBe(false);
+  });
+});

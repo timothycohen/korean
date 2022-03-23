@@ -5,7 +5,9 @@ export class NativeNumber extends HanNumber {
   readonly number: number;
   readonly hangul: string;
   readonly absMin: number;
+  protected _min: number;
   readonly absMax: number;
+  protected _max: number;
   readonly option: NativeNumberOption;
 
   constructor(option: NativeNumberOption) {
@@ -13,6 +15,8 @@ export class NativeNumber extends HanNumber {
     this.option = option;
     this.absMin = option === 'sequence' || option === 'repetition' ? 1 : 0;
     this.absMax = 99;
+    this._min = this.absMin;
+    this._max = this.absMax;
     const ran = this.getRandom();
     this.hangul = ran.hangul;
     this.number = ran.number;
@@ -30,10 +34,10 @@ export class NativeNumber extends HanNumber {
   };
 
   fromNumber = (number: number): HangulNumberObj => {
-    if (number > this.absMax || number < this.absMin)
+    if (number > this.max || number < this.min)
       throw new Error(`Number is not within range
-        min: ${this.absMin}
-        max: ${this.absMax}`);
+        min: ${this.min}
+        max: ${this.max}`);
 
     const onesDig = getNumAtPos(number, 0);
     const tensDig = getNumAtPos(number, 1);
@@ -80,25 +84,24 @@ export class NativeNumber extends HanNumber {
   };
 
   getRandom = (): HangulNumberObj => {
-    const randomNum = getRanInt(this.absMin, this.absMax);
+    const randomNum = getRanInt(this.min, this.max);
     return this.fromNumber(randomNum);
   };
 
   isValid = (str: string): boolean => {
-    return (
-      // no leading zeros
-      !/^0.+/.test(str) &&
-      // spaces only before/after number (not between)
-      /^\s*\d+\s*$/.test(str) &&
-      // between min and max
-      Number.parseInt(str, 10) >= this.absMin &&
-      Number.parseInt(str, 10) <= this.absMax
-    );
+    // no leading zeros
+    if (/^0.+/.test(str)) return false;
+    // spaces only before/after number (not between)
+    if (!/^\s*\d+\s*$/.test(str)) return false;
+    // allow out of range numbers only until the OOM is correct
+    if (str.length >= this.max.toString().length && Number.parseInt(str, 10) > this.max) return false;
+
+    return true;
   };
 
   printAll(): string[] {
-    return Array.from(Array(this.absMax - this.absMin + 1).keys())
-      .map(x => (x += this.absMin))
+    return Array.from(Array(this.max - this.min + 1).keys())
+      .map(x => (x += this.min))
       .map(n => this.fromNumber(n).hangul);
   }
 }

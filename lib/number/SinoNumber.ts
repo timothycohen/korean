@@ -5,7 +5,9 @@ export class SinoNumber extends HanNumber {
   readonly number: number;
   readonly hangul: string;
   readonly absMin: number;
+  protected _min: number;
   readonly absMax: number;
+  protected _max: number;
   readonly option: SinoNumberOption;
 
   constructor(option: SinoNumberOption) {
@@ -16,6 +18,8 @@ export class SinoNumber extends HanNumber {
     // 10 ^ 16 - 1 > Number.MAX_SAFE_INTEGER (9007_1992_5474_0991) and would require BigInt so limit to 10^15 - 1
     this.absMin = 0;
     this.absMax = 15;
+    this._min = this.absMin;
+    this._max = this.absMax;
     const ran = this.getRandom();
     this.hangul = ran.hangul;
     this.number = ran.number;
@@ -33,10 +37,10 @@ export class SinoNumber extends HanNumber {
   };
 
   fromNumber = (number: number): HangulNumberObj => {
-    if (number > 10 ** this.absMax - 1 || number < 10 ** this.absMin - 1)
+    if (number > 10 ** this.max - 1 || number < 10 ** this.min - 1)
       throw new Error(`Number is not within orders of magnitude
-        min OOM: ${format(this.absMin)}
-        max OOM: ${format(this.absMax)}`);
+        min OOM: ${format(this.min)}
+        max OOM: ${format(this.max)}`);
 
     // Sino-Korean numbers increment units by 10,000 and not 1,000 like the West
     // therefore, parse by fours
@@ -125,20 +129,20 @@ export class SinoNumber extends HanNumber {
   };
 
   getRandom = (): HangulNumberObj => {
-    const randomNum = getRanIntByOOM(this.absMin, this.absMax);
+    const randomNum = getRanIntByOOM(this.min, this.max);
     return this.fromNumber(randomNum);
   };
 
   isValid = (str: string): boolean => {
-    return (
-      // no leading zeros
-      !/^0.+/.test(str) &&
-      // spaces only before/after number (not between)
-      /^\s*\d+\s*$/.test(str) &&
-      // between min and max
-      Number.parseInt(str, 10) >= 10 ** this.absMin - 1 &&
-      Number.parseInt(str, 10) <= 10 ** this.absMax - 1
-    );
+    // no leading zeros
+    if (/^0.+/.test(str)) return false;
+    // spaces only before/after number (not between)
+    if (!/^\s*\d+\s*$/.test(str)) return false;
+    // allow out of range numbers only until the OOM is correct
+    if (str.length >= this.max.toString().length && Number.parseInt(str, 10) > 10 ** this.max - 1)
+      return false;
+
+    return true;
   };
 
   fromNumArr = (numArr: number[]): HangulNumberObj[] => {
