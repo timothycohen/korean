@@ -9,7 +9,7 @@ interface VisibilityBtnProps {
   label: string;
 }
 
-export default function ShowAnswerBtn({ showFlag, setShowFlag, label }: VisibilityBtnProps) {
+export default function VisibilityBtn({ showFlag, setShowFlag, label }: VisibilityBtnProps) {
   return (
     <Button sx={{ color: 'var(--blue)' }} type="button" onClick={() => setShowFlag(!showFlag)}>
       {label}

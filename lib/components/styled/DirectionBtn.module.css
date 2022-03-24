@@ -1,0 +1,14 @@
+.button {
+  padding: 0.5rem;
+  color: var(--blue);
+  font-weight: bolder;
+}
+
+.arrowContainer {
+  display: grid;
+}
+
+.left {
+  transform: rotate(180deg);
+  transform-origin: center;
+}
