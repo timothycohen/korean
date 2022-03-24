@@ -32,3 +32,8 @@ textarea,
 select {
   font: inherit;
 }
+
+:root {
+  --red: #cd2e3a;
+  --blue: #0047a0;
+}
