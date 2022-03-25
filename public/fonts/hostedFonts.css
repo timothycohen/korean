@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'BioRhyme';
+  src: url('./BioRhyme/BioRhyme-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'BioRhyme';
+  src: url('./BioRhyme/BioRhyme-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'BioRhyme';
+  src: url('./BioRhyme/BioRhyme-ExtraBold.ttf');
+  font-weight: bolder;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceMono';
+  src: url('./Space_Mono/SpaceMono-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceMono';
+  src: url('./Space_Mono/SpaceMono-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
