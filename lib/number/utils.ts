@@ -37,5 +37,9 @@ export const getNumAtPos = (num: number, pos: number): number => {
 
 export const format = (num: number): string => new Intl.NumberFormat().format(num);
 
+// this may not unformat Chinese / Arabic options on the Intl formatter
+export const unFormat = (str: string): string =>
+  str.replaceAll(/\s/g, '').replaceAll('.', '').replaceAll(',', '');
+
 export const camelToHuman = (str: string) =>
   str.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());

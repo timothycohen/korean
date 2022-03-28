@@ -44,7 +44,7 @@ export abstract class HanNumber {
   protected abstract _min: number;
   abstract absMax: number;
   protected abstract _max: number;
-  abstract option: string;
+  abstract option: NativeNumberOption | SinoNumberOption;
   abstract fromNumber: (number: number) => HangulNumberObj;
   abstract getRandom: () => HangulNumberObj;
   abstract isValid: (str: string, option?: 'possible' | 'abs' | 'local') => boolean;
