@@ -19,8 +19,8 @@ interface InputProps {
 const InputStyled = styled('input')(({ theme }) => ({
   width: '100%',
   height: '3rem',
-  fontSize: 'xx-large',
-  padding: '0.2rem',
+  fontSize: 'clamp(1rem, 5.25vw, 2.5rem)',
+  padding: '0 1.25rem',
   textAlign: 'center',
   border: `2px solid ${theme.palette.primary['2']}`,
   '&:focus-visible': {
@@ -28,16 +28,14 @@ const InputStyled = styled('input')(({ theme }) => ({
     outline: `2px solid ${theme.palette.primary['4']}`,
   },
   borderRadius: '4px',
-  margin: '0 0 1rem 0',
 }));
 
 const visibilityStyles = {
   position: 'relative',
   justifySelf: 'right',
-  marginRight: '.5rem',
-  fontSize: '30px',
-  marginTop: '-3px',
-  top: '-50px',
+  fontSize: '1.875rem',
+  top: '-2.4rem',
+  right: '.5rem',
   color: 'gray.4',
   cursor: 'pointer',
 };
@@ -83,7 +81,7 @@ export default function Input({
       key={goal.number} /* this is necessary to prevent 한글 autocomplete carrying over from the last word */
       autoFocus={true}
       value={input}
-      sx={{ fontFamily: 'GowunDodum' }}
+      sx={{ fontFamily: 'GowunDodum', marginBottom: '1.875rem' }}
       onChange={e => {
         setInput(e.currentTarget.value.replaceAll(/\d/g, '').replaceAll('.', '').replaceAll(',', ''));
       }}
@@ -97,7 +95,7 @@ export default function Input({
         type="text"
         autoFocus={true}
         value={input === '' ? '' : format(parseInt(input))}
-        sx={{ fontFamily: 'BioRhyme', padding: '0 .75rem' }}
+        sx={{ fontFamily: 'BioRhyme' }}
         onChange={e => {
           let userInputNum = unFormat(e.currentTarget.value);
           if (userInputNum === '') setInput('');

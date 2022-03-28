@@ -22,14 +22,14 @@ const Goal = styled('h1')(({ theme }) => ({
 
 const GoalAnswer = styled('h2')(({ theme }) => ({
   fontSize: 'clamp(1.5rem, 5vw, 3rem)',
-  minHeight: '3rem',
+  minHeight: '4.5rem',
   color: theme.palette.gray['5'],
 }));
 
 const ParsedUserInput = styled('h2')(({ theme }) => ({
   fontSize: 'clamp(2rem, 1.25rem + 3.3333vw, 3rem)',
   fontWeight: '400',
-  minHeight: '3rem',
+  minHeight: '4.5rem',
   width: '100%',
   fontFamily: 'GowunDodum',
   color: theme.palette.gray['4'],
