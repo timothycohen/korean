@@ -11,7 +11,7 @@ interface VisibilityBtnProps {
 
 export default function VisibilityBtn({ showFlag, setShowFlag, label }: VisibilityBtnProps) {
   return (
-    <Button sx={{ color: 'var(--blue)' }} type="button" onClick={() => setShowFlag(!showFlag)}>
+    <Button type="button" onClick={() => setShowFlag(!showFlag)}>
       {label}
       {showFlag ? <VisibilityOffTwoToneIcon /> : <VisibilityTwoToneIcon />}
     </Button>

@@ -2,8 +2,8 @@ import { MouseEventHandler } from 'react';
 import Button from '@mui/material/Button';
 import { CSSTransition } from 'react-transition-group';
 import rotateTransition from '../../../styles/transitions/rotate.module.css';
-import styles from './DirectionBtn.module.css';
-import ArrowRightAltTwoToneIcon from '@mui/icons-material/ArrowRightAltTwoTone';
+import RightArrow from '@mui/icons-material/ArrowRightAltTwoTone';
+import styled from '@mui/system/styled';
 
 interface DirectionBtnProps {
   labelLeft?: JSX.Element | string;
@@ -12,6 +12,11 @@ interface DirectionBtnProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
+const LeftArrow = styled(RightArrow)({
+  transform: 'rotate(180deg)',
+  transforOrigin: 'center',
+});
+
 export default function DirectionBtn({
   direction,
   onClick,
@@ -19,12 +24,10 @@ export default function DirectionBtn({
   labelRight,
 }: DirectionBtnProps): JSX.Element {
   return (
-    <Button onClick={onClick} className={styles.button}>
-      {labelLeft}
+    <Button variant="contained" onClick={onClick}>
+      <span style={{ fontFamily: 'GowunDodum', fontSize: '1.2rem', fontWeight: '700' }}>{labelLeft}</span>
       <CSSTransition in={direction === 'left'} timeout={400} classNames={rotateTransition}>
-        <div className={styles.arrowContainer}>
-          <ArrowRightAltTwoToneIcon className={direction === 'left' ? styles.left : ''} />
-        </div>
+        <div style={{ display: 'grid' }}>{direction === 'left' ? <LeftArrow /> : <RightArrow />}</div>
       </CSSTransition>
       {labelRight}
     </Button>
