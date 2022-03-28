@@ -1,34 +1,47 @@
-import { useState } from 'react';
-import styles from './RangeSlider.module.css';
 import { Slider } from '@mui/material';
-import { HangulNumber } from 'lib/number';
+import { HangulNumber, NativeNumber, SinoNumber } from 'lib/number';
+import Typography from '@mui/material/Typography';
 
 type RangeSliderProps = {
-  goal: HangulNumber;
+  goal: NativeNumber | SinoNumber;
+  setGoal: React.Dispatch<React.SetStateAction<NativeNumber | SinoNumber>>;
 };
 
-export default function RangeSlider({ goal }: RangeSliderProps) {
-  const [emit, setEmit] = useState(true);
-
-  const handleChange = (_e: Event, newValue: [number, number]) => {
-    goal.range = newValue;
-    setEmit(!emit);
-  };
-
-  let formattedRange = goal?.formattedRange ? goal.formattedRange : [0, 0];
+export default function RangeSlider({ goal, setGoal }: RangeSliderProps) {
+  let formattedRange = goal?.formattedRange ? goal.formattedRange : ['0', '0'];
 
   return (
     <>
-      <h1>{`${formattedRange[0]} - ${formattedRange[1]}`}</h1>
+      <Typography
+        variant="h1"
+        sx={{
+          width: '100%',
+          textAlign: 'center',
+          fontSize: 'clamp(1.3rem, 8vw, 3.2rem)',
+          color: 'primary.2',
+        }}
+      >{`${formattedRange[0]} - ${formattedRange[1]}`}</Typography>
 
       <Slider
-        className={styles.slider}
+        sx={{
+          width: '90%',
+          margin: 'auto',
+        }}
         step={1}
         min={goal.absMin}
         max={goal.absMax}
         value={[goal.min, goal.max]}
-        onChange={handleChange}
         valueLabelDisplay="auto"
+        onChange={(_event: Event, newValue: number | number[]): void => {
+          if (typeof newValue === 'number') return;
+          if (goal.range[0] !== newValue[0] || goal.range[1] !== newValue[1]) {
+            setGoal(({ type, option }): NativeNumber | SinoNumber => {
+              const newGoal = HangulNumber.create(type, option);
+              newGoal.range = [newValue[0], newValue[1]];
+              return newGoal;
+            });
+          }
+        }}
       />
     </>
   );
