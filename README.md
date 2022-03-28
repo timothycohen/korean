@@ -1,6 +1,7 @@
 ### Tools to learn Korean
 
-- [ ] Colors
 - [ ] Numbers
+- Todo: playwright e2e testing
+- [ ] Colors
 - [ ] Counters
 - [ ] Spaced Repetition Cards
