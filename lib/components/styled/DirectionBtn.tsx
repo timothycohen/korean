@@ -10,6 +10,7 @@ interface DirectionBtnProps {
   labelRight?: JSX.Element | string;
   direction: 'left' | 'right';
   onClick: MouseEventHandler<HTMLButtonElement>;
+  ariaLabel: string;
 }
 
 const LeftArrow = styled(RightArrow)({
@@ -22,9 +23,10 @@ export default function DirectionBtn({
   onClick,
   labelLeft,
   labelRight,
+  ariaLabel,
 }: DirectionBtnProps): JSX.Element {
   return (
-    <Button variant="contained" onClick={onClick}>
+    <Button variant="contained" onClick={onClick} aria-label={ariaLabel}>
       <span style={{ fontFamily: 'GowunDodum', fontSize: '1.2rem', fontWeight: '700' }}>{labelLeft}</span>
       <CSSTransition in={direction === 'left'} timeout={400} classNames={rotateTransition}>
         <div style={{ display: 'grid' }}>{direction === 'left' ? <LeftArrow /> : <RightArrow />}</div>

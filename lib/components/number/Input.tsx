@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import styled from '@mui/system/styled';
 import VisibilityOff from '@mui/icons-material/VisibilityOffTwoTone';
 import Visibility from '@mui/icons-material/VisibilityTwoTone';
-import { Box } from '@mui/system';
+import Box from '@mui/system/Box';
 
 interface InputProps {
   input: string;
@@ -33,11 +33,25 @@ const InputStyled = styled('input')(({ theme }) => ({
 const visibilityStyles = {
   position: 'relative',
   justifySelf: 'right',
-  fontSize: '1.875rem',
   top: '-2.4rem',
   right: '.5rem',
   color: 'gray.4',
   cursor: 'pointer',
+  background: 'none',
+  border: 'none',
+  padding: '0',
+  height: '2rem',
+};
+
+const visuallyHidden = {
+  border: '0',
+  clip: 'rect(0 0 0 0)',
+  height: '1px',
+  margin: '-1px',
+  overflow: 'hidden',
+  padding: '0',
+  position: 'absolute',
+  width: '1px',
 };
 
 export default function Input({
@@ -75,23 +89,36 @@ export default function Input({
   // }
 
   const UserHanGoalNum = (
-    <InputStyled
-      lang="ko"
-      type="text"
-      key={goal.number} /* this is necessary to prevent 한글 autocomplete carrying over from the last word */
-      autoFocus={true}
-      value={input}
-      sx={{ fontFamily: 'GowunDodum', marginBottom: '1.875rem' }}
-      onChange={e => {
-        setInput(e.currentTarget.value.replaceAll(/\d/g, '').replaceAll('.', '').replaceAll(',', ''));
-      }}
-    />
+    <>
+      <label htmlFor="userHanGoalNum" style={visuallyHidden}>
+        Write in hangul: {goal.number}
+      </label>
+      <InputStyled
+        id="userHanGoalNum"
+        lang="ko"
+        type="text"
+        key={
+          goal.number
+        } /* this is necessary to prevent 한글 autocomplete carrying over from the last word */
+        aria-label={`Enter hangul. Goal ${goal.number}`}
+        autoFocus={true}
+        value={input}
+        sx={{ fontFamily: 'GowunDodum', marginBottom: '1.875rem' }}
+        onChange={e => {
+          setInput(e.currentTarget.value.replaceAll(/\d/g, '').replaceAll('.', '').replaceAll(',', ''));
+        }}
+      />
+    </>
   );
 
   const UserNumGoalHan = (
     <Box sx={{ display: 'grid', width: '100%' }}>
+      <label htmlFor="userNumGoalHan" style={visuallyHidden}>
+        Write numbers: {goal.hangul}
+      </label>
       <InputStyled
         lang="ko"
+        id="userNumGoalHan"
         type="text"
         autoFocus={true}
         value={input === '' ? '' : format(parseInt(input))}
@@ -104,9 +131,23 @@ export default function Input({
         }}
       />
       {showParsedInput ? (
-        <Visibility sx={visibilityStyles} onClick={() => setShowParsedInput(false)} />
+        <button
+          type="button"
+          style={visibilityStyles}
+          onClick={() => setShowParsedInput(false)}
+          title="hide hangul input"
+        >
+          <Visibility sx={{ fontSize: '2rem' }} />
+        </button>
       ) : (
-        <VisibilityOff sx={visibilityStyles} onClick={() => setShowParsedInput(true)} />
+        <button
+          type="button"
+          style={visibilityStyles}
+          onClick={() => setShowParsedInput(true)}
+          title="show hangul input"
+        >
+          <VisibilityOff sx={{ fontSize: '2rem' }} />
+        </button>
       )}
     </Box>
   );

@@ -13,6 +13,7 @@ export default function DirectionBtn({ direction, setDirection }: DirectionBtnPr
       labelLeft={`한글`}
       labelRight={<LooksOneTwoToneIcon />}
       direction={direction === 'userHanGoalNum' ? 'left' : 'right'}
+      ariaLabel={direction === 'userHanGoalNum' ? 'change to number input' : 'change to hangul input'}
       onClick={() => {
         setDirection(direction === 'userNumGoalHan' ? 'userHanGoalNum' : 'userNumGoalHan');
       }}

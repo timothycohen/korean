@@ -77,7 +77,12 @@ export default function Numbers() {
         <RangeSlider goal={goal} setGoal={setGoal} />
 
         <Toggles>
-          <VisibilitySwitch showFlag={showGoalAnswer} setShowFlag={setShowGoalAnswer} label="Answer" />
+          <VisibilitySwitch
+            showFlag={showGoalAnswer}
+            setShowFlag={setShowGoalAnswer}
+            label="Answer"
+            ariaLabel="Show answer"
+          />
 
           <DirectionBtn direction={direction} setDirection={setDirection} />
 
@@ -85,6 +90,7 @@ export default function Numbers() {
             showFlag={showParsedInput}
             setShowFlag={setShowParsedInput}
             label="Input As Hangul"
+            ariaLabel="Show input as hangul"
             disabled={direction !== 'userNumGoalHan'}
           />
         </Toggles>
@@ -108,7 +114,12 @@ export default function Numbers() {
           setShowParsedInput={setShowParsedInput}
         />
         <Toggles>
-          <VisibilitySwitch showFlag={showGoalAnswer} setShowFlag={setShowGoalAnswer} label="Answer" />
+          <VisibilitySwitch
+            showFlag={showGoalAnswer}
+            setShowFlag={setShowGoalAnswer}
+            label="Answer"
+            ariaLabel="Show answer"
+          />
 
           <DirectionBtn direction={direction} setDirection={setDirection} />
         </Toggles>

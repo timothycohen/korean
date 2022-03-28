@@ -73,6 +73,7 @@ type VisibilitySwitchProps = {
   setShowFlag: Dispatch<SetStateAction<boolean>>;
   label: string;
   disabled?: boolean;
+  ariaLabel?: string;
 };
 
 export default function VisibilitySwitch({
@@ -80,6 +81,7 @@ export default function VisibilitySwitch({
   setShowFlag,
   label,
   disabled = false,
+  ariaLabel,
 }: VisibilitySwitchProps) {
   return (
     <FormGroup>
@@ -87,6 +89,7 @@ export default function VisibilitySwitch({
         control={<MaterialUISwitch sx={{ m: 1 }} checked={showFlag} />}
         sx={{ color: 'primary.main', fontWeight: '700' }}
         label={label}
+        aria-label={ariaLabel}
         onChange={() => setShowFlag(!showFlag)}
         disabled={disabled}
       />

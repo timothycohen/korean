@@ -14,7 +14,7 @@ const Container = styled('div')({
 });
 
 const Goal = styled('h1')(({ theme }) => ({
-  fontSize: 'clamp(2.2rem, 1.25rem + 3.3333vw, 3rem)',
+  fontSize: 'clamp(1.8rem, 1.25rem + 3.3333vw, 3rem)',
   minHeight: '3rem',
   width: '100%',
   color: theme.palette.gray['5'],
@@ -57,13 +57,24 @@ const styles = {
 export default function Display({ direction, goal, input, showGoalAnswer, showParsedInput }: DisplayProps) {
   return (
     <Container>
-      <Goal sx={styles[direction === 'userNumGoalHan' ? 'hangulGoal' : 'numberGoal']}>
+      <Goal
+        sx={styles[direction === 'userNumGoalHan' ? 'hangulGoal' : 'numberGoal']}
+        tabIndex={0}
+        aria-label={`Goal ${goal.hangul}`}
+      >
         {direction === 'userNumGoalHan' ? goal.hangul : goal.formattedNumber}
       </Goal>
-      <GoalAnswer sx={styles[direction === 'userNumGoalHan' ? 'numberAnswer' : 'hangulAnswer']}>
+      <GoalAnswer
+        sx={styles[direction === 'userNumGoalHan' ? 'numberAnswer' : 'hangulAnswer']}
+        tabIndex={showGoalAnswer ? 0 : -1}
+        aria-label={`Answer: ${goal.number}`}
+      >
         {showGoalAnswer ? (direction === 'userNumGoalHan' ? goal.formattedNumber : goal.hangul) : ' '}
       </GoalAnswer>
-      <ParsedUserInput>
+      <ParsedUserInput
+        tabIndex={showParsedInput && direction === 'userNumGoalHan' ? 0 : -1}
+        aria-label={`Your input as hangul: ${goal.hangul}`}
+      >
         {showParsedInput && direction === 'userNumGoalHan' && input !== ''
           ? ((): string => {
               try {
