@@ -8,10 +8,10 @@ interface HangulNumberTypeSelectProps {
 
 const styles = {
   optgroup: {
-    fontSize: '1.6rem',
+    fontSize: '1.4rem',
   },
   option: {
-    fontSize: '1.3rem',
+    fontSize: '1.1rem',
   },
 };
 
@@ -33,24 +33,24 @@ export default function HangulNumberTypeSelect({ goal, setGoal }: HangulNumberTy
     >
       <optgroup style={styles.optgroup} label="한글 숫자 Native">
         <option style={styles.option} value="native-cardinal">
-          Cardinal
+          Native Cardinal
         </option>
         <option style={styles.option} value="native-counter">
-          Cardinal: Counter
+          Native Cardinal Counter
         </option>
         <option style={styles.option} value="native-repetition">
-          Ordinal: Repetition
+          Native Ordinal Repetition
         </option>
         <option style={styles.option} value="native-sequence">
-          Ordinal: Sequence
+          Native Ordinal Sequence
         </option>
       </optgroup>
       <optgroup style={styles.optgroup} label="한자 숫자 Sino">
         <option style={styles.option} value="sino-cardinal">
-          Cardinal
+          Sino Cardinal
         </option>
         <option style={styles.option} value="sino-counter">
-          Cardinal: Counter
+          Sino Cardinal Counter
         </option>
       </optgroup>
     </select>

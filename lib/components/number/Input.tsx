@@ -5,6 +5,19 @@ import styled from '@mui/system/styled';
 import VisibilityOff from '@mui/icons-material/VisibilityOffTwoTone';
 import Visibility from '@mui/icons-material/VisibilityTwoTone';
 import Box from '@mui/system/Box';
+import { Input as InputStyled } from '../styled';
+
+// todo no back to back duplicates. handle 0
+// while (userInputNum === goal.number.toString()) {
+//   setGoal(goal.setRandom());
+// }
+
+// todo range slider keyboard usage is broken because of input autofocus.
+// on success: 1) clear input 2) clear language composition 3) keep focus 4) present new goal to screen readers 5) don't pull focus from other components
+// can't remove key (which rerenders input) because that's how the hangul input composition is reset. simply setting input to '' will not work
+// can't add autofocus to the input because it pulls focus when updating other components that cause it to rerender
+// can't do a simple focus after the onchange because the input hasn't rerendered yet (even when wrapped in a timeout to delay on the event loop)
+// can't remove and readd on the range slider update because then focus wouldn't be on when input is rerendered after sucessful input
 
 interface InputProps {
   input: string;
@@ -16,21 +29,7 @@ interface InputProps {
   setShowParsedInput: Dispatch<SetStateAction<boolean>>;
 }
 
-const InputStyled = styled('input')(({ theme }) => ({
-  width: '100%',
-  height: '3rem',
-  fontSize: 'clamp(1rem, 5.25vw, 2.5rem)',
-  padding: '0 1.25rem',
-  textAlign: 'center',
-  border: `2px solid ${theme.palette.primary['2']}`,
-  '&:focus-visible': {
-    border: '2px solid transparent',
-    outline: `2px solid ${theme.palette.primary['4']}`,
-  },
-  borderRadius: '4px',
-}));
-
-const visibilityStyles = {
+const StyledVisibilityButton = styled('button')({
   position: 'relative',
   justifySelf: 'right',
   top: '-2.4rem',
@@ -41,18 +40,7 @@ const visibilityStyles = {
   border: 'none',
   padding: '0',
   height: '2rem',
-};
-
-const visuallyHidden = {
-  border: '0',
-  clip: 'rect(0 0 0 0)',
-  height: '1px',
-  margin: '-1px',
-  overflow: 'hidden',
-  padding: '0',
-  position: 'absolute',
-  width: '1px',
-};
+});
 
 export default function Input({
   input,
@@ -83,45 +71,50 @@ export default function Input({
     }
   }, [direction, goal.hangul, goal.number, goal.option, goal.range, goal.type, input, setGoal, setInput]);
 
-  // todo no back to back duplicates. handle 0
-  // while (userInputNum === goal.number.toString()) {
-  //   setGoal(goal.setRandom());
-  // }
-
   const UserHanGoalNum = (
-    <>
-      <label htmlFor="userHanGoalNum" style={visuallyHidden}>
-        Write in hangul: {goal.number}
-      </label>
-      <InputStyled
-        id="userHanGoalNum"
-        lang="ko"
-        type="text"
-        key={
-          goal.number
-        } /* this is necessary to prevent 한글 autocomplete carrying over from the last word */
-        aria-label={`Enter hangul. Goal ${goal.number}`}
-        autoFocus={true}
-        value={input}
-        sx={{ fontFamily: 'GowunDodum', marginBottom: '1.875rem' }}
-        onChange={e => {
-          setInput(e.currentTarget.value.replaceAll(/\d/g, '').replaceAll('.', '').replaceAll(',', ''));
-        }}
-      />
-    </>
+    <InputStyled
+      id="userHanGoalNum"
+      lang="en"
+      type="text"
+      autoFocus={true}
+      /* rerender the input to prevent 한글 autocomplete carrying over from the last word */
+      /* this also presents the aria information again to screen readers */
+      key={goal.number}
+      aria-label={`Enter hangul. Goal ${goal.number}`}
+      value={input}
+      autoComplete="off"
+      sx={{ fontFamily: 'GowunDodum', marginBottom: '1.875rem' }}
+      onChange={e => {
+        setInput(e.currentTarget.value.replaceAll(/\d/g, '').replaceAll('.', '').replaceAll(',', ''));
+      }}
+    />
+  );
+
+  const VisibilityButton = (
+    <StyledVisibilityButton
+      type="button"
+      onClick={(): void => (showParsedInput ? setShowParsedInput(false) : setShowParsedInput(true))}
+      title={showParsedInput ? 'hide hangul input' : 'show hangul input'}
+    >
+      {showParsedInput ? (
+        <Visibility sx={{ fontSize: '2rem' }} />
+      ) : (
+        <VisibilityOff sx={{ fontSize: '2rem' }} />
+      )}
+    </StyledVisibilityButton>
   );
 
   const UserNumGoalHan = (
     <Box sx={{ display: 'grid', width: '100%' }}>
-      <label htmlFor="userNumGoalHan" style={visuallyHidden}>
-        Write numbers: {goal.hangul}
-      </label>
       <InputStyled
         lang="ko"
         id="userNumGoalHan"
         type="text"
         autoFocus={true}
+        key={goal.number}
+        aria-label={`Enter number. Goal ${goal.hangul}`}
         value={input === '' ? '' : format(parseInt(input))}
+        autoComplete="off"
         sx={{ fontFamily: 'BioRhyme' }}
         onChange={e => {
           let userInputNum = unFormat(e.currentTarget.value);
@@ -130,25 +123,7 @@ export default function Input({
           else if (goal.isValid(userInputNum)) setInput(userInputNum);
         }}
       />
-      {showParsedInput ? (
-        <button
-          type="button"
-          style={visibilityStyles}
-          onClick={() => setShowParsedInput(false)}
-          title="hide hangul input"
-        >
-          <Visibility sx={{ fontSize: '2rem' }} />
-        </button>
-      ) : (
-        <button
-          type="button"
-          style={visibilityStyles}
-          onClick={() => setShowParsedInput(true)}
-          title="show hangul input"
-        >
-          <VisibilityOff sx={{ fontSize: '2rem' }} />
-        </button>
-      )}
+      {VisibilityButton}
     </Box>
   );
 

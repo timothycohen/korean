@@ -4,7 +4,6 @@ import { HangulNumber, NativeNumber, SinoNumber } from '../lib/number';
 import { DirectionBtn, Display, HangulNumberTypeSelect, Input, RangeSlider } from '../lib/components/number';
 import { VisibilitySwitch, BottomDrawer, WavePage } from '../lib/components/styled';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import styled from '@mui/system/styled';
 
 const Main = styled('main')({
@@ -17,6 +16,12 @@ const Main = styled('main')({
   justifyContent: 'center',
   flexWrap: 'wrap',
 });
+
+const Heading = styled('h1')(({ theme }) => ({
+  fontSize: '2rem',
+  fontWeight: 700,
+  color: theme.palette.primary.main,
+}));
 
 const Toggles = styled('div')({
   display: 'flex',
@@ -53,8 +58,8 @@ export default function Numbers() {
   }, []);
 
   // toggles
-  const [showParsedInput, setShowParsedInput] = useState(true);
-  const [showGoalAnswer, setShowGoalAnswer] = useState(true);
+  const [showParsedInput, setShowParsedInput] = useState(false);
+  const [showGoalAnswer, setShowGoalAnswer] = useState(false);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [direction, setDirection] = useState<'userNumGoalHan' | 'userHanGoalNum'>('userNumGoalHan');
 
@@ -63,12 +68,10 @@ export default function Numbers() {
   return (
     <WavePage>
       <Head>
-        <title>Cards | Numbers | {goal.type.replace(/^./, str => str.toUpperCase())}</title>
+        <title>Numbers | {goal.type.replace(/^./, str => str.toUpperCase())}</title>
       </Head>
       <Header>
-        <Typography variant={'h1'} sx={{ fontSize: '2rem', fontWeight: 700, color: 'primary.main' }}>
-          Korean Numbers
-        </Typography>
+        <Heading>Korean Numbers</Heading>
         <SettingsBtn onClick={() => setDrawerIsOpen(true)}>Settings</SettingsBtn>
       </Header>
       <BottomDrawer isOpen={drawerIsOpen} setIsOpen={setDrawerIsOpen}>

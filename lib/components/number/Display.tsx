@@ -1,5 +1,6 @@
 import { HangulNumber } from 'lib/number';
 import styled from '@mui/system/styled';
+import { unFormat } from '../../number/utils';
 
 interface DisplayProps {
   direction: 'userNumGoalHan' | 'userHanGoalNum';
@@ -55,35 +56,48 @@ const styles = {
 };
 
 export default function Display({ direction, goal, input, showGoalAnswer, showParsedInput }: DisplayProps) {
+  let parsedInput = ' ';
+
+  if (direction === 'userNumGoalHan' && input !== '') {
+    try {
+      parsedInput = goal.fromNumber(Number.parseInt(input)).hangul;
+    } catch {
+      parsedInput = ' ';
+    }
+  }
+
   return (
     <Container>
       <Goal
         sx={styles[direction === 'userNumGoalHan' ? 'hangulGoal' : 'numberGoal']}
         tabIndex={0}
-        aria-label={`Goal ${goal.hangul}`}
+        aria-label={direction === 'userNumGoalHan' ? `Goal ${goal.hangul}` : `Goal ${goal.number}`}
+        lang={direction === 'userNumGoalHan' ? 'ko' : 'en'}
       >
-        {direction === 'userNumGoalHan' ? goal.hangul : goal.formattedNumber}
+        {direction === 'userNumGoalHan' ? <span lang="ko">{goal.hangul}</span> : goal.formattedNumber}
       </Goal>
       <GoalAnswer
         sx={styles[direction === 'userNumGoalHan' ? 'numberAnswer' : 'hangulAnswer']}
         tabIndex={showGoalAnswer ? 0 : -1}
-        aria-label={`Answer: ${goal.number}`}
+        aria-label={direction === 'userNumGoalHan' ? `Answer ${goal.number}` : `Answer ${goal.hangul}`}
+        lang={direction === 'userNumGoalHan' ? 'en' : 'ko'}
       >
-        {showGoalAnswer ? (direction === 'userNumGoalHan' ? goal.formattedNumber : goal.hangul) : ' '}
+        {showGoalAnswer ? (
+          direction === 'userNumGoalHan' ? (
+            goal.formattedNumber
+          ) : (
+            <span lang="ko">{goal.hangul}</span>
+          )
+        ) : (
+          ' '
+        )}
       </GoalAnswer>
       <ParsedUserInput
         tabIndex={showParsedInput && direction === 'userNumGoalHan' ? 0 : -1}
-        aria-label={`Your input as hangul: ${goal.hangul}`}
+        aria-label={`Your input ${parsedInput}`}
+        lang="ko"
       >
-        {showParsedInput && direction === 'userNumGoalHan' && input !== ''
-          ? ((): string => {
-              try {
-                return goal.fromNumber(Number.parseInt(input)).hangul;
-              } catch {
-                return ' ';
-              }
-            })()
-          : ' '}
+        {showParsedInput && parsedInput}
       </ParsedUserInput>
     </Container>
   );

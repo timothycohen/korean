@@ -87,7 +87,7 @@ export default function VisibilitySwitch({
     <FormGroup>
       <FormControlLabel
         control={<MaterialUISwitch sx={{ m: 1 }} checked={showFlag} />}
-        sx={{ color: 'primary.main', fontWeight: '700' }}
+        sx={{ color: 'primary.main', fontWeight: '700', wordBreak: 'keep-all' }}
         label={label}
         aria-label={ariaLabel}
         onChange={() => setShowFlag(!showFlag)}
