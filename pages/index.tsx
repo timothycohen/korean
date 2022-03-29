@@ -12,7 +12,7 @@ export default function Home() {
       <main>
         <h1>TCo&apos;s Korean</h1>
         <Link href="/numbers">Numbers</Link>
-        <Link href="https://timothycohen.github.io/korean-colors/">Colors</Link>
+        <Link href="/colors">Colors</Link>
       </main>
     </div>
   );
