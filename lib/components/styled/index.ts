@@ -5,7 +5,9 @@ import BottomDrawer from './BottomDrawer';
 import WavePage from './WavePage';
 import { Input, HangulInput } from './Input';
 import HiddenLabel from './HiddenLabel';
+import BlackContainer from './BlackContainer';
 export {
+  BlackContainer,
   DirectionBtn,
   VisibilityBtn,
   VisibilitySwitch,

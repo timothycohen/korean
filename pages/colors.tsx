@@ -2,9 +2,9 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import styled from '@mui/system/styled';
 import Color from '../lib/color/Color';
-import { HiddenLabel, HangulInput, VisibilitySwitch } from '../lib/components/styled';
-import { CSSTransition } from 'react-transition-group';
-import { fadeUp, fadeDown } from '../styles/transitions';
+import { HiddenLabel, HangulInput, VisibilitySwitch, BlackContainer } from '../lib/components/styled';
+import KeyContainer from 'lib/components/color/KeyContainer';
+import KoreanContainer from 'lib/components/color/KoreanContainer';
 
 const Page = styled('main')<{ bg: string }>(({ bg }) => ({
   height: '100%',
@@ -12,28 +12,7 @@ const Page = styled('main')<{ bg: string }>(({ bg }) => ({
   backgroundColor: bg,
 }));
 
-const Container = styled('div')(({ theme }) => ({
-  backgroundColor: 'black',
-  borderRadius: '5px',
-  margin: '0 auto',
-  textAlign: 'center',
-  position: 'absolute',
-  boxShadow: `${theme.palette.gray['3']} 0px 1px 0px`,
-}));
-
-const KoreanContainer = styled(Container)(({ theme }) => ({
-  minWidth: '35%',
-  top: '10%',
-  left: 'calc(50% - calc(35% / 2))',
-
-  '& h1': {
-    fontFamily: 'GowunDodum',
-    fontSize: '4rem',
-    color: theme.palette.primary.main,
-  },
-}));
-
-const InputContainer = styled(Container)({
+const InputContainer = styled(BlackContainer)({
   width: '90%',
   height: '6rem',
   top: '30%',
@@ -55,28 +34,6 @@ const Input = styled(HangulInput)(({ theme }) => ({
     border: '1px solid transparent',
     outline: `2px solid ${theme.palette.gray['4']}`,
   },
-}));
-
-const KeyContainer = styled(Container)({
-  width: '90%',
-  top: '50%',
-  left: 'calc(50% - calc(90% / 2))',
-
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '1rem',
-  padding: '1rem',
-  fontSize: '2rem',
-  backgroundColor: 'black',
-  justifyContent: 'center',
-});
-
-const KeyItem = styled('span')<{ color: string; bg: string }>(({ bg, color }) => ({
-  color: color,
-  fontFamily: 'GowunDodum',
-  backgroundColor: bg,
-  borderRadius: '3px',
-  fontWeight: '700',
 }));
 
 export default function ColorsPage(): JSX.Element | null {
@@ -106,11 +63,7 @@ export default function ColorsPage(): JSX.Element | null {
       <Head>
         <title>Colors</title>
       </Head>
-      <CSSTransition in={showKorean} timeout={300} classNames={fadeDown}>
-        <KoreanContainer>
-          <h1 lang="ko">{color.Korean}</h1>
-        </KoreanContainer>
-      </CSSTransition>
+      <KoreanContainer showKorean={showKorean} Korean={color.Korean} />
       <InputContainer>
         <VisibilitySwitch
           label="한글"
@@ -137,29 +90,7 @@ export default function ColorsPage(): JSX.Element | null {
         />
         <VisibilitySwitch label="Key" ariaLabel="Show Key" showFlag={showKey} setShowFlag={setShowKey} />
       </InputContainer>
-      <CSSTransition in={showKey} timeout={300} classNames={fadeUp}>
-        <KeyContainer>
-          {Color.all.map(c => {
-            let bg = 'transparent';
-            if (c.English === 'black' || c.Korean === '남색' || c.Korean === '보라색') {
-              bg = 'white';
-            }
-            return (
-              <KeyItem
-                color={c.hex}
-                bg={bg}
-                key={c.hex}
-                tabIndex={showKey ? 0 : -1}
-                role="img"
-                lang="ko"
-                aria-label={`${c.English} is ${c.Korean}`}
-              >
-                <span lang="ko">{c.Korean}</span>
-              </KeyItem>
-            );
-          })}
-        </KeyContainer>
-      </CSSTransition>
+      <KeyContainer showKey={showKey} />
     </Page>
   );
 }
