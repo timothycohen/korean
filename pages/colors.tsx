@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import styled from '@mui/system/styled';
-import Color from '../lib/colors/Color';
+import Color from '../lib/color/Color';
 import { HiddenLabel, HangulInput, VisibilitySwitch } from '../lib/components/styled';
 import { CSSTransition } from 'react-transition-group';
 import { fadeUp, fadeDown } from '../styles/transitions';
@@ -139,7 +139,7 @@ export default function ColorsPage(): JSX.Element | null {
       </InputContainer>
       <CSSTransition in={showKey} timeout={300} classNames={fadeUp}>
         <KeyContainer>
-          {color.all.map(c => {
+          {Color.all.map(c => {
             let bg = 'transparent';
             if (c.English === 'black' || c.Korean === '남색' || c.Korean === '보라색') {
               bg = 'white';
