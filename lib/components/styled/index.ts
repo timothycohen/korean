@@ -6,6 +6,8 @@ import WavePage from './WavePage';
 import { Input, HangulInput } from './Input';
 import HiddenLabel from './HiddenLabel';
 import BlackContainer from './BlackContainer';
+import { KoreanContainer } from './KoreanContainer';
+
 export {
   BlackContainer,
   DirectionBtn,
@@ -16,4 +18,5 @@ export {
   Input,
   HangulInput,
   HiddenLabel,
+  KoreanContainer,
 };

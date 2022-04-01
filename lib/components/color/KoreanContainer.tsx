@@ -1,25 +1,21 @@
-import styled from '@mui/system/styled';
 import { CSSTransition } from 'react-transition-group';
-import { fadeDown } from '../../../styles/transitions';
-import { BlackContainer } from '../styled';
+import { fadeDown } from 'styles/transitions';
+import { KoreanContainer as KoreanContainerStyled } from 'lib/components/styled';
 
-const KoreanContainerStyled = styled(BlackContainer)(({ theme }) => ({
-  minWidth: '35%',
-  top: '10%',
-  left: 'calc(50% - calc(35% / 2))',
-
-  '& h1': {
-    fontFamily: 'GowunDodum',
-    fontSize: '4rem',
-    color: theme.palette.primary.main,
-  },
-}));
-
-export default function KoreanContainer({ showKorean, Korean }: { showKorean: boolean; Korean: string }) {
+export default function KoreanContainer({
+  showKorean,
+  Korean,
+  children,
+}: {
+  showKorean: boolean;
+  Korean: string;
+  children?: React.ReactNode;
+}): JSX.Element {
   return (
     <CSSTransition in={showKorean} timeout={300} classNames={fadeDown}>
-      <KoreanContainerStyled>
+      <KoreanContainerStyled sx={{ justifyContent: children ? 'space-around' : 'center' }}>
         <h1 lang="ko">{Korean}</h1>
+        {children}
       </KoreanContainerStyled>
     </CSSTransition>
   );
