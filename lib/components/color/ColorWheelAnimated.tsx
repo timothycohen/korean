@@ -26,6 +26,7 @@ const Button = styled('button')(({ height, width }: { height?: string; width?: s
 const ColorWheelContainer = styled('div')(({ height, width }: { height?: string; width?: string }) => ({
   height: height ?? '100%',
   width: width ?? '100%',
+  cursor: 'pointer',
 }));
 
 interface ColorWheelAnimatedProps {
@@ -35,6 +36,8 @@ interface ColorWheelAnimatedProps {
   onClick?: () => void;
   height?: string;
   width?: string;
+  onExited?: () => void;
+  show?: boolean;
 }
 
 export function ColorWheelAnimated({
@@ -44,10 +47,12 @@ export function ColorWheelAnimated({
   onClick,
   height,
   width,
+  onExited,
+  show = true,
 }: ColorWheelAnimatedProps): JSX.Element {
   const Contents = (
     <>
-      <CSSTransition in={animationToggle} timeout={300} classNames={spinIn}>
+      <CSSTransition in={animationToggle} timeout={300} classNames={spinIn} onExited={onExited}>
         <Container>
           <ColorWheel hex={animationToggle ? hexColor : nextHexColor} />
         </Container>
@@ -62,11 +67,11 @@ export function ColorWheelAnimated({
 
   return onClick ? (
     <Button type="button" onClick={onClick} height={height} width={width}>
-      {Contents}
+      {show && Contents}
     </Button>
   ) : (
-    <ColorWheelContainer height={height} width={width}>
-      {Contents}
+    <ColorWheelContainer title="toggle animation" height={height} width={width} role="img">
+      {show && Contents}
     </ColorWheelContainer>
   );
 }
