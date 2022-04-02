@@ -1,96 +1,75 @@
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import styled from '@mui/system/styled';
-import Color from '../lib/color/Color';
-import { HiddenLabel, HangulInput, VisibilitySwitch, BlackContainer } from '../lib/components/styled';
-import KeyContainer from 'lib/components/color/KeyContainer';
-import KoreanContainer from 'lib/components/color/KoreanContainer';
+import { useState, useEffect } from 'react';
+import { HangulToColor, ColorToHangul } from 'lib/components/color';
+import { DirectionBtn } from 'lib/components/styled';
+import { Color } from 'lib/color';
+import styled from '@emotion/styled';
 
-const Page = styled('main')<{ bg: string }>(({ bg }) => ({
-  height: '100%',
-  minHeight: '100vh',
-  backgroundColor: bg,
-}));
-
-const InputContainer = styled(BlackContainer)({
-  width: '90%',
-  height: '6rem',
-  top: '30%',
-  left: 'calc(50% - calc(90% / 2))',
-
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-around',
+const DirectionButtonContainer = styled('div')({
+  position: 'absolute',
+  left: '1.5rem',
+  top: 'calc(1rem + 25px)',
 });
 
-const Input = styled(HangulInput)(({ theme }) => ({
-  width: '50%',
-  border: `1px solid ${theme.palette.gray['5']}`,
-  fontSize: '3rem',
-  padding: '2rem',
-  backgroundColor: 'black',
-  color: theme.palette.primary.main,
-  '&:focus-visible': {
-    border: '1px solid transparent',
-    outline: `2px solid ${theme.palette.gray['4']}`,
-  },
-}));
-
-export default function ColorsPage(): JSX.Element | null {
-  const [input, setInput] = useState('');
-  const [showKorean, setShowKorean] = useState(true);
+export default function Colors2Page(): JSX.Element | null {
+  // toggles
+  const [direction, setDirection] = useState<'colorToHangul' | 'hangulToColor'>('colorToHangul');
   const [showKey, setShowKey] = useState(true);
+
+  // set initial server state
   const [color, setColor] = useState<Color | null>(null);
+  const [nextColor, setNextColor] = useState<Color | null>(null);
 
+  // update initial client state
   useEffect((): void => {
-    setColor(new Color());
-  }, []);
-
-  if (!color) return null;
-
-  const changeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const val = e.currentTarget.value;
-    if (val === color.Korean) {
-      setColor(new Color());
-      setInput('');
-    } else {
-      setInput(val);
+    let color = new Color();
+    while (color.English === 'white') {
+      color = new Color();
     }
+    setColor(color);
+    setNextColor(new Color());
+  }, [setColor]);
+
+  // state on server will be null until useEffect
+  if (!color || !nextColor) return null;
+
+  const updateColor = (): void => {
+    const oldNextColor = nextColor;
+    let newColor = oldNextColor;
+    while (newColor.hex === oldNextColor.hex) {
+      newColor = new Color();
+    }
+    setColor(oldNextColor);
+    setNextColor(newColor);
   };
 
+  const ColorToHangulProps = { showKey, setShowKey, color, setColor, nextColor, setNextColor, updateColor };
+  const HangulToColorProps = { showKey, setShowKey, color, updateColor };
+
+  const Page =
+    direction === 'colorToHangul' ? (
+      <ColorToHangul {...ColorToHangulProps} />
+    ) : (
+      <HangulToColor {...HangulToColorProps} />
+    );
+
   return (
-    <Page bg={color.hex}>
+    <>
       <Head>
         <title>Colors</title>
       </Head>
-      <KoreanContainer showKorean={showKorean} Korean={color.Korean} />
-      <InputContainer>
-        <VisibilitySwitch
-          label="한글"
-          ariaLabel="Show hangul answer heading."
-          showFlag={showKorean}
-          setShowFlag={setShowKorean}
+      <DirectionButtonContainer>
+        <DirectionBtn
+          direction={direction === 'colorToHangul' ? 'left' : 'right'}
+          onClick={() => {
+            setDirection(direction === 'colorToHangul' ? 'hangulToColor' : 'colorToHangul');
+          }}
+          labelLeft={'한글'}
+          labelRight={'Color'}
+          ariaLabel={'TODO'} // todo
         />
-        {showKorean ? (
-          <HiddenLabel htmlFor="koreanColor">
-            Type {color.English} in hangul. <span lang="ko">{color.Korean}</span>
-          </HiddenLabel>
-        ) : (
-          <HiddenLabel htmlFor="koreanColor">Type {color.English} in hangul.</HiddenLabel>
-        )}
-        <Input
-          id="koreanColor"
-          type="text"
-          lang="ko"
-          value={input}
-          onChange={changeInput}
-          key={color.hex}
-          autoFocus={true}
-          autoComplete="off"
-        />
-        <VisibilitySwitch label="Key" ariaLabel="Show Key" showFlag={showKey} setShowFlag={setShowKey} />
-      </InputContainer>
-      <KeyContainer showKey={showKey} />
-    </Page>
+      </DirectionButtonContainer>
+      {Page}
+    </>
   );
 }

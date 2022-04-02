@@ -1,11 +1,21 @@
-### Tools to learn Korean
+## Tools to learn Korean
 
-- [x] Numbers
-- [x] Colors
-- [ ] Counters
-- [ ] Spaced Repetition Cards
+### Numbers
+- [ ] fix input pulling keyboard focus
+- [ ] Make UI fill more space
 
-## Todos:
+### Colors
+- [ ] add shuffle feature to hangul --> color
+- [ ] fix hangul autocomplete on fast typing
+- [ ] responsive styling
+- [ ] check a11y
 
-- playwright e2e testing
-- fix numbers input focus capture
+### Counters
+
+### Spaced Repetition Cards
+
+### Todos
+style main page
+add nav
+colors unit testing
+playwright e2e testing
