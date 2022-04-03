@@ -5,7 +5,6 @@
 - [ ] Make UI fill more space
 
 ### Colors
-- [ ] add shuffle feature to hangul --> color
 - [ ] responsive styling
 - [ ] check a11y
 

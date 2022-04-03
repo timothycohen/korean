@@ -4,6 +4,7 @@ import { Color, ColorMap } from 'lib/color';
 import { BlackContainer } from 'lib/components/styled';
 import { useState, useEffect } from 'react';
 import { shake as shakeAnimation } from 'styles/transitions';
+import ShuffleOnTwoToneIcon from '@mui/icons-material/ShuffleOnTwoTone';
 
 const KeyContainerStyled = styled(BlackContainer)({
   width: '90%',
@@ -16,11 +17,29 @@ const KeyContainerStyled = styled(BlackContainer)({
   padding: '1rem',
 });
 
+const shuffle = (array: ColorMap[]): ColorMap[] => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 interface KeyItemBtnProps {
   theme?: any;
   showkey?: 'true' | 'false';
   c: ColorMap;
 }
+
+const getRanVisibleColor = (colors: ColorMap[]): string => {
+  let i = 0;
+  const lowContrast = ['노란색', '하얀색', '베이지색', '회색'];
+  while (lowContrast.includes(colors[i].Korean)) {
+    i++;
+  }
+  return colors[i].hex;
+};
 
 const KeyItemBtn = styled(Button, {
   shouldForwardProp: () => true,
@@ -47,13 +66,13 @@ const KeyItemBtn = styled(Button, {
     : { ...hidden, '&:hover': { ...hidden, ...hover } };
 });
 
-export default function SelectionContainer({
-  showKey,
-  onClick,
-}: {
+interface SelectionContainerProps {
   showKey: boolean;
   onClick: (hex: string) => boolean;
-}): JSX.Element {
+}
+
+export default function SelectionContainer({ showKey, onClick }: SelectionContainerProps): JSX.Element {
+  const [colors, setColors] = useState(Color.all);
   const [shake, setShake] = useState('');
 
   useEffect(() => {
@@ -66,7 +85,7 @@ export default function SelectionContainer({
 
   return (
     <KeyContainerStyled>
-      {Color.all.map(c => {
+      {colors.map(c => {
         return (
           <KeyItemBtn
             key={c.hex}
@@ -85,6 +104,17 @@ export default function SelectionContainer({
           </KeyItemBtn>
         );
       })}
+      <Button sx={{ padding: '0rem' }} onClick={(): void => setColors(shuffle(Color.all))}>
+        <ShuffleOnTwoToneIcon
+          aria-label="shuffle colors"
+          sx={{
+            fontSize: '5rem',
+            color: getRanVisibleColor(colors),
+            backgroundColor: 'primary.main',
+            borderRadius: '5px',
+          }}
+        />
+      </Button>
     </KeyContainerStyled>
   );
 }
