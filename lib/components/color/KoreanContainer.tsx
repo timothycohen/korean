@@ -1,22 +1,33 @@
-import { CSSTransition } from 'react-transition-group';
-import { fadeDown } from 'styles/transitions';
+import { useState } from 'react';
+import { fade } from 'styles/transitions';
+import { ColorMap } from 'lib/color';
 import { KoreanContainer as KoreanContainerStyled } from 'lib/components/styled';
+import useUpdate from 'lib/hooks/useUpdate';
 
 export default function KoreanContainer({
-  showKorean,
-  Korean,
+  showAnswer,
+  color,
   children,
 }: {
-  showKorean: boolean;
-  Korean: string;
+  showAnswer: boolean;
+  color: ColorMap;
   children?: React.ReactNode;
-}): JSX.Element {
+}): JSX.Element | null {
+  // prevent it lifting on first page load
+  const [animationStatus, setAnimationStatus] = useState(false);
+  useUpdate((): void => {
+    setAnimationStatus(true);
+  }, []);
+
+  if (!showAnswer) return null;
+
   return (
-    <CSSTransition in={showKorean} timeout={300} classNames={fadeDown}>
-      <KoreanContainerStyled sx={{ justifyContent: children ? 'space-around' : 'center' }}>
-        <h1 lang="ko">{Korean}</h1>
-        {children}
-      </KoreanContainerStyled>
-    </CSSTransition>
+    <KoreanContainerStyled
+      className={`${fade.fade} ${animationStatus ? fade.fadeDownAndIn : undefined}`}
+      color={color}
+    >
+      <h1 lang="ko">{color.Korean}</h1>
+      {children}
+    </KoreanContainerStyled>
   );
 }

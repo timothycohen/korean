@@ -13,8 +13,9 @@ const DirectionButtonContainer = styled('div')({
 
 export default function Colors2Page(): JSX.Element | null {
   // toggles
-  const [direction, setDirection] = useState<'colorToHangul' | 'hangulToColor'>('colorToHangul');
-  const [showKey, setShowKey] = useState(true);
+  const [direction, setDirection] = useState<'colorToHangul' | 'hangulToColor'>('hangulToColor');
+  const [showKey, setShowKey] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   // set initial server state
   const [color, setColor] = useState<Color | null>(null);
@@ -43,14 +44,20 @@ export default function Colors2Page(): JSX.Element | null {
     setNextColor(newColor);
   };
 
-  const ColorToHangulProps = { showKey, setShowKey, color, setColor, nextColor, setNextColor, updateColor };
-  const HangulToColorProps = { showKey, setShowKey, color, updateColor };
+  const props = {
+    showKey,
+    setShowKey,
+    showAnswer,
+    setShowAnswer,
+    color,
+    updateColor,
+  };
 
   const Page =
     direction === 'colorToHangul' ? (
-      <ColorToHangul {...ColorToHangulProps} />
+      <ColorToHangul {...props} nextColor={nextColor} />
     ) : (
-      <HangulToColor {...HangulToColorProps} />
+      <HangulToColor {...props} />
     );
 
   return (

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import styled from '@mui/system/styled';
-import Color from 'lib/color/Color';
-import { HiddenLabel, HangulInput, VisibilitySwitch, BlackContainer } from 'lib/components/styled';
-import { KeyContainer, KoreanContainer, ColorWheelAnimated } from 'lib/components/color';
 import { CSSTransition } from 'react-transition-group';
 import { spinIn } from '@/styles/transitions';
+import { Color } from 'lib/color';
+import { HiddenLabel, HangulInput, VisibilitySwitch, BlackContainer } from 'lib/components/styled';
+import { KeyContainer, ColorWheelAnimated, KoreanContainer } from 'lib/components/color';
 
 const Page = styled('main')<{ bg: string }>(({ bg }) => ({
   height: '100%',
@@ -45,22 +45,21 @@ const ColorWheelContainer = styled('div')({
 export default function ColorToHangul({
   showKey,
   setShowKey,
+  showAnswer,
+  setShowAnswer,
   color,
-  setColor,
-  nextColor,
-  setNextColor,
   updateColor,
+  nextColor,
 }: {
   showKey: boolean;
   setShowKey: React.Dispatch<React.SetStateAction<boolean>>;
+  showAnswer: boolean;
+  setShowAnswer: React.Dispatch<React.SetStateAction<boolean>>;
   color: Color;
-  setColor: React.Dispatch<React.SetStateAction<Color | null>>;
   nextColor: Color;
-  setNextColor: React.Dispatch<React.SetStateAction<Color | null>>;
   updateColor: () => void;
 }): JSX.Element | null {
   // toggles
-  const [showKoreanAnswer, setShowKoreanAnswer] = useState(true);
   const [showAnimationWheel, setShowAnimationWheel] = useState(true);
   const [animateColorWheel, setAnimateColorWheel] = useState(false);
 
@@ -78,17 +77,28 @@ export default function ColorToHangul({
     }
   };
 
+  // prevent rerendering (and playing animation) when parent rerenders. It will still rerender (and animate) when the color changes
+  const KoreanContainerMemo = useMemo(() => {
+    return <KoreanContainer color={color} showAnswer={showAnswer} />;
+  }, [color, showAnswer]);
+
+  const KeyContainerMemo = useMemo(() => {
+    return <KeyContainer showKey={showKey} />;
+  }, [showKey]);
+
   return (
     <Page bg={color.hex}>
-      <KoreanContainer showKorean={showKoreanAnswer} Korean={color.Korean} />
+      {KoreanContainerMemo}
       <InputContainer>
         <VisibilitySwitch
-          label="한글"
-          ariaLabel="Show hangul answer heading."
-          showFlag={showKoreanAnswer}
-          setShowFlag={setShowKoreanAnswer}
+          label="Key"
+          ariaLabel="Show Key"
+          showFlag={showKey}
+          setShowFlag={(): void => {
+            setShowKey(!showKey);
+          }}
         />
-        {showKoreanAnswer ? (
+        {showAnswer ? (
           <HiddenLabel htmlFor="koreanColor">
             Type {color.English} in hangul. <span lang="ko">{color.Korean}</span>
           </HiddenLabel>
@@ -105,9 +115,14 @@ export default function ColorToHangul({
           autoFocus={true}
           autoComplete="off"
         />
-        <VisibilitySwitch label="Key" ariaLabel="Show Key" showFlag={showKey} setShowFlag={setShowKey} />
+        <VisibilitySwitch
+          label="Answer"
+          ariaLabel="Show hangul answer heading."
+          showFlag={showAnswer}
+          setShowFlag={setShowAnswer}
+        />
       </InputContainer>
-      <KeyContainer showKey={showKey} />
+      {KeyContainerMemo}
       <CSSTransition in={showAnimationWheel} timeout={300} classNames={spinIn}>
         <ColorWheelContainer>
           <ColorWheelAnimated

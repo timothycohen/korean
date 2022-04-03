@@ -1,23 +1,31 @@
 import styled from '@mui/system/styled';
 import { Color } from 'lib/color';
-import { VisibilitySwitch } from 'lib/components/styled';
 import { SelectionContainer } from 'lib/components/color';
-import { KoreanContainer } from 'lib/components/styled';
+import { KoreanContainer as KoreanContainerStyled, VisibilitySwitch } from 'lib/components/styled';
 
-const Page = styled('main')<{ bg: string }>({
+const Page = styled('main')(({ bg }: { bg: string }) => ({
   height: '100%',
   minHeight: '100vh',
-  backgroundColor: 'black',
+  backgroundColor: bg,
+}));
+
+const Container = styled('div')({
+  display: 'grid',
+  placeContent: 'center',
 });
 
 export default function HangulToColor({
   showKey,
   setShowKey,
+  showAnswer,
+  setShowAnswer,
   color,
   updateColor,
 }: {
   showKey: boolean;
   setShowKey: React.Dispatch<React.SetStateAction<boolean>>;
+  showAnswer: boolean;
+  setShowAnswer: React.Dispatch<React.SetStateAction<boolean>>;
   color: Color;
   updateColor: () => void;
 }): JSX.Element | null {
@@ -31,11 +39,20 @@ export default function HangulToColor({
   };
 
   return (
-    <Page bg={color.hex}>
-      <KoreanContainer>
+    <Page bg={showAnswer ? color.hex : 'black'}>
+      <KoreanContainerStyled color={showAnswer ? color : undefined}>
         <h1 lang="ko">{color.Korean}</h1>
-        <VisibilitySwitch label="Key" ariaLabel="Show Key" showFlag={showKey} setShowFlag={setShowKey} />
-      </KoreanContainer>
+        <Container>
+          <VisibilitySwitch label="Key" ariaLabel="Show Key" showFlag={showKey} setShowFlag={setShowKey} />
+          <VisibilitySwitch
+            label="Answer"
+            ariaLabel="Show Answer"
+            showFlag={showAnswer}
+            setShowFlag={setShowAnswer}
+          />
+        </Container>
+      </KoreanContainerStyled>
+
       <SelectionContainer showKey={showKey} onClick={handleClick} />
     </Page>
   );

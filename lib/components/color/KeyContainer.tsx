@@ -1,8 +1,9 @@
-import { Color } from '../../../lib/color';
 import styled from '@mui/system/styled';
-import { CSSTransition } from 'react-transition-group';
-import { fadeUp } from '../../../styles/transitions';
-import { BlackContainer } from '../styled';
+import { fade } from 'styles/transitions';
+import { Color } from 'lib/color';
+import { BlackContainer } from 'lib/components/styled';
+import { useState } from 'react';
+import useUpdate from 'lib/hooks/useUpdate';
 
 const KeyContainerStyled = styled(BlackContainer)({
   width: '90%',
@@ -26,30 +27,39 @@ const KeyItemStyled = styled('span')<{ color: string; bg: string }>(({ bg, color
   fontWeight: '700',
 }));
 
-export default function KeyContainer({ showKey }: { showKey: boolean }): JSX.Element {
+interface KeyContainerProps {
+  showKey: boolean;
+}
+
+export default function KeyContainer({ showKey }: KeyContainerProps): JSX.Element | null {
+  // prevent it lifting on first page load
+  const [animationStatus, setAnimationStatus] = useState(false);
+  useUpdate((): void => {
+    setAnimationStatus(true);
+  }, []);
+
+  if (!showKey) return null;
   return (
-    <CSSTransition in={showKey} timeout={300} classNames={fadeUp}>
-      <KeyContainerStyled>
-        {Color.all.map(c => {
-          let bg = 'transparent';
-          if (c.English === 'black' || c.Korean === '남색' || c.Korean === '보라색') {
-            bg = 'white';
-          }
-          return (
-            <KeyItemStyled
-              color={c.hex}
-              bg={bg}
-              key={c.hex}
-              tabIndex={showKey ? 0 : -1}
-              role="img"
-              lang="ko"
-              aria-label={`${c.English} is ${c.Korean}`}
-            >
-              <span lang="ko">{c.Korean}</span>
-            </KeyItemStyled>
-          );
-        })}
-      </KeyContainerStyled>
-    </CSSTransition>
+    <KeyContainerStyled className={`${fade.fade} ${animationStatus ? fade.fadeUpAndIn : undefined}`}>
+      {Color.all.map(c => {
+        let bg = 'transparent';
+        if (c.English === 'black' || c.Korean === '남색' || c.Korean === '보라색') {
+          bg = 'white';
+        }
+        return (
+          <KeyItemStyled
+            color={c.hex}
+            bg={bg}
+            key={c.hex}
+            tabIndex={showKey ? 0 : -1}
+            role="img"
+            lang="ko"
+            aria-label={`${c.English} is ${c.Korean}`}
+          >
+            <span lang="ko">{c.Korean}</span>
+          </KeyItemStyled>
+        );
+      })}
+    </KeyContainerStyled>
   );
 }

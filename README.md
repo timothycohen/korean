@@ -6,7 +6,6 @@
 
 ### Colors
 - [ ] add shuffle feature to hangul --> color
-- [ ] fix hangul autocomplete on fast typing
 - [ ] responsive styling
 - [ ] check a11y
 
@@ -17,5 +16,6 @@
 ### Todos
 style main page
 add nav
+/ should focus on the input box
 colors unit testing
 playwright e2e testing
