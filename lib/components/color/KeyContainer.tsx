@@ -5,25 +5,26 @@ import { BlackContainer } from 'lib/components/styled';
 import { useState } from 'react';
 import useUpdate from 'lib/hooks/useUpdate';
 
-const KeyContainerStyled = styled(BlackContainer)({
+const KeyContainerStyled = styled(BlackContainer)(({ theme }) => ({
   width: '90%',
-  top: '50%',
-  left: 'calc(50% - calc(90% / 2))',
 
   display: 'flex',
   flexWrap: 'wrap',
   gap: '1rem',
   padding: '1rem',
-  fontSize: '2rem',
+  fontSize: '1.5rem',
   backgroundColor: 'black',
   justifyContent: 'center',
-});
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '2rem',
+  },
+}));
 
 const KeyItemStyled = styled('span')<{ color: string; bg: string }>(({ bg, color }) => ({
   color: color,
   fontFamily: 'GowunDodum',
   backgroundColor: bg,
-  borderRadius: '3px',
+  borderRadius: '4px',
   fontWeight: '700',
 }));
 

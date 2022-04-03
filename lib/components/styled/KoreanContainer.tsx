@@ -12,14 +12,16 @@ export const KoreanContainer = ({
   className?: string;
 }): JSX.Element => {
   const StyledKoreanContainerColored = styled(BlackContainer)(({ theme }) => ({
-    minWidth: '35%',
-    top: '10%',
-    left: 'calc(50% - calc(35% / 2))',
     display: 'grid',
-    gridAutoFlow: 'column',
     alignItems: 'center',
     wordBreak: 'keep-all',
 
+    [theme.breakpoints.up('sm')]: {
+      lineHeight: '1.4',
+      gridAutoFlow: 'column',
+      alignItems: 'end',
+      gap: '.75rem',
+    },
     '& h1': {
       fontFamily: 'GowunDodum',
       fontSize: '4rem',
@@ -28,8 +30,11 @@ export const KoreanContainer = ({
         color?.English === 'black' || color?.Korean === '남색' || color?.Korean === '보라색'
           ? 'white'
           : 'black',
-      borderRadius: '0.5rem',
+      borderRadius: '4px',
       padding: '0rem 1rem',
+      [theme.breakpoints.up('sm')]: {
+        fontSize: '5rem',
+      },
     },
   }));
 

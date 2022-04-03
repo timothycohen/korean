@@ -6,16 +6,17 @@ import { useState, useEffect } from 'react';
 import { shake as shakeAnimation } from 'styles/transitions';
 import ShuffleOnTwoToneIcon from '@mui/icons-material/ShuffleOnTwoTone';
 
-const KeyContainerStyled = styled(BlackContainer)({
+const KeyContainerStyled = styled(BlackContainer)(({ theme }) => ({
   width: '90%',
-  top: '35%',
-  left: 'calc(50% - calc(90% / 2))',
 
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(10rem, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(5rem, 1fr))',
   gap: '1rem',
   padding: '1rem',
-});
+  [theme.breakpoints.up('sm')]: {
+    gridTemplateColumns: 'repeat(auto-fit, minmax(10rem, 1fr))',
+  },
+}));
 
 const shuffle = (array: ColorMap[]): ColorMap[] => {
   const arr = [...array];
@@ -48,11 +49,14 @@ const KeyItemBtn = styled(Button, {
     color: c.hex,
     backgroundColor:
       c.English === 'black' || c.Korean === '남색' || c.Korean === '보라색' ? 'white' : 'black',
-    fontSize: '3rem',
+    fontSize: '1.3rem',
     fontWeight: 'bolder',
     fontFamily: 'GowunDodum',
     wordBreak: 'keep-all',
     height: '5rem',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '2.75rem',
+    },
   };
 
   let hidden = { ...shown, color: c.hex, backgroundColor: c.hex };
@@ -111,7 +115,7 @@ export default function SelectionContainer({ showKey, onClick }: SelectionContai
             fontSize: '5rem',
             color: getRanVisibleColor(colors),
             backgroundColor: 'primary.main',
-            borderRadius: '5px',
+            borderRadius: '4px',
           }}
         />
       </Button>

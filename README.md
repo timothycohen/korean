@@ -5,7 +5,6 @@
 - [ ] Make UI fill more space
 
 ### Colors
-- [ ] responsive styling
 - [ ] check a11y
 
 ### Counters

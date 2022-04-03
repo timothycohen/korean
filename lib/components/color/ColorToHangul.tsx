@@ -6,25 +6,37 @@ import { Color } from 'lib/color';
 import { HiddenLabel, HangulInput, VisibilitySwitch, BlackContainer } from 'lib/components/styled';
 import { KeyContainer, ColorWheelAnimated, KoreanContainer } from 'lib/components/color';
 
-const Page = styled('main')<{ bg: string }>(({ bg }) => ({
+const StyledPage = styled('main')<{ bg: string }>(({ bg }) => ({
   height: '100%',
   minHeight: '100vh',
   backgroundColor: bg,
+  display: 'grid',
+  padding: '1rem 0',
+  gridTemplateRows: '1fr 1fr 1fr',
+  gridTemplateAreas: `"answerDisplay" "inputDisplay" "keyDisplay"`,
+  placeItems: 'center',
 }));
 
-const InputContainer = styled(BlackContainer)({
+const StyledInputContainer = styled(BlackContainer)(({ theme }) => ({
   width: '90%',
-  height: '6rem',
-  top: '30%',
-  left: 'calc(50% - calc(90% / 2))',
+  padding: '1rem',
 
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-});
+  display: 'grid',
+  placeItems: 'center',
 
-const Input = styled(HangulInput)(({ theme }) => ({
-  width: '50%',
+  gridTemplateColumns: '1fr 1fr',
+  gridTemplateRows: '1fr 1fr',
+  gridTemplateAreas: `"textInput textInput" "keySwitch answerSwitch"`,
+
+  [theme.breakpoints.up('sm')]: {
+    gridTemplateColumns: 'auto 1fr auto',
+    gridTemplateRows: '1fr',
+    gridTemplateAreas: `"keySwitch textInput answerSwitch"`,
+  },
+}));
+
+const StyledInput = styled(HangulInput)(({ theme }) => ({
+  gridArea: 'textInput',
   border: `1px solid ${theme.palette.gray['5']}`,
   fontSize: '3rem',
   padding: '2rem',
@@ -36,7 +48,26 @@ const Input = styled(HangulInput)(({ theme }) => ({
   },
 }));
 
-const ColorWheelContainer = styled('div')({
+const StyledAnswerDisplayGridItem = styled('div')({
+  gridArea: 'answerDisplay',
+  minWidth: '18rem',
+  alignSelf: 'end',
+});
+
+const StyledKeyDisplayGridItem = styled('div')({
+  gridArea: 'keyDisplay',
+  alignSelf: 'start',
+});
+
+const StyledAnswerSwitchGridItem = styled('div')({
+  gridArea: 'answerSwitch',
+});
+
+const StyledKeySwitchGridItem = styled('div')({
+  gridArea: 'keySwitch',
+});
+
+const StyledColorWheelContainer = styled('div')({
   position: 'absolute',
   right: '1.5rem',
   top: '1rem',
@@ -79,63 +110,97 @@ export default function ColorToHangul({
 
   // prevent rerendering (and playing animation) when parent rerenders. It will still rerender (and animate) when the color changes
   const KoreanContainerMemo = useMemo(() => {
-    return <KoreanContainer color={color} showAnswer={showAnswer} />;
+    return (
+      <StyledAnswerDisplayGridItem>
+        <KoreanContainer color={color} showAnswer={showAnswer} />
+      </StyledAnswerDisplayGridItem>
+    );
   }, [color, showAnswer]);
 
   const KeyContainerMemo = useMemo(() => {
-    return <KeyContainer showKey={showKey} />;
+    return (
+      <StyledKeyDisplayGridItem>
+        <KeyContainer showKey={showKey} />
+      </StyledKeyDisplayGridItem>
+    );
   }, [showKey]);
 
+  const HiddenInputLabel = showAnswer ? (
+    <HiddenLabel htmlFor="koreanColor">
+      Type {color.English} in hangul. <span lang="ko">{color.Korean}</span>
+    </HiddenLabel>
+  ) : (
+    <HiddenLabel htmlFor="koreanColor">Type {color.English} in hangul.</HiddenLabel>
+  );
+
+  const ShowKeySwitch = (
+    <StyledKeySwitchGridItem>
+      <VisibilitySwitch
+        label="Key"
+        ariaLabel="Show Key"
+        showFlag={showKey}
+        setShowFlag={(): void => {
+          setShowKey(!showKey);
+        }}
+      />
+    </StyledKeySwitchGridItem>
+  );
+
+  const ShowAnswerSwitch = (
+    <StyledAnswerSwitchGridItem>
+      <VisibilitySwitch
+        label="Answer"
+        ariaLabel="Show hangul answer heading."
+        showFlag={showAnswer}
+        setShowFlag={setShowAnswer}
+      />
+    </StyledAnswerSwitchGridItem>
+  );
+
+  const TextInput = (
+    <StyledInput
+      id="koreanColor"
+      type="text"
+      lang="ko"
+      value={input}
+      onChange={changeInput}
+      key={color.hex}
+      autoFocus={true}
+      autoComplete="off"
+    />
+  );
+
+  const InputContainer = (
+    <StyledInputContainer>
+      {HiddenInputLabel}
+      {ShowKeySwitch}
+      {TextInput}
+      {ShowAnswerSwitch}
+    </StyledInputContainer>
+  );
+
+  const ColorWheel = (
+    <CSSTransition in={showAnimationWheel} timeout={300} classNames={spinIn}>
+      <StyledColorWheelContainer>
+        <ColorWheelAnimated
+          onClick={(): void => setShowAnimationWheel(!showAnimationWheel)}
+          show={showAnimationWheel}
+          hexColor={color.hex}
+          nextHexColor={nextColor.hex}
+          animationToggle={animateColorWheel}
+          height="100px"
+          width="100px"
+        />
+      </StyledColorWheelContainer>
+    </CSSTransition>
+  );
+
   return (
-    <Page bg={color.hex}>
+    <StyledPage bg={color.hex}>
+      {ColorWheel}
       {KoreanContainerMemo}
-      <InputContainer>
-        <VisibilitySwitch
-          label="Key"
-          ariaLabel="Show Key"
-          showFlag={showKey}
-          setShowFlag={(): void => {
-            setShowKey(!showKey);
-          }}
-        />
-        {showAnswer ? (
-          <HiddenLabel htmlFor="koreanColor">
-            Type {color.English} in hangul. <span lang="ko">{color.Korean}</span>
-          </HiddenLabel>
-        ) : (
-          <HiddenLabel htmlFor="koreanColor">Type {color.English} in hangul.</HiddenLabel>
-        )}
-        <Input
-          id="koreanColor"
-          type="text"
-          lang="ko"
-          value={input}
-          onChange={changeInput}
-          key={color.hex}
-          autoFocus={true}
-          autoComplete="off"
-        />
-        <VisibilitySwitch
-          label="Answer"
-          ariaLabel="Show hangul answer heading."
-          showFlag={showAnswer}
-          setShowFlag={setShowAnswer}
-        />
-      </InputContainer>
+      {InputContainer}
       {KeyContainerMemo}
-      <CSSTransition in={showAnimationWheel} timeout={300} classNames={spinIn}>
-        <ColorWheelContainer>
-          <ColorWheelAnimated
-            onClick={(): void => setShowAnimationWheel(!showAnimationWheel)}
-            show={showAnimationWheel}
-            hexColor={color.hex}
-            nextHexColor={nextColor.hex}
-            animationToggle={animateColorWheel}
-            height="100px"
-            width="100px"
-          />
-        </ColorWheelContainer>
-      </CSSTransition>
-    </Page>
+    </StyledPage>
   );
 }
