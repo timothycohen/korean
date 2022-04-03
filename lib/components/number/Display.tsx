@@ -1,6 +1,5 @@
-import { HangulNumber } from 'lib/number';
 import styled from '@mui/system/styled';
-import { unFormat } from '../../number/utils';
+import { HangulNumber } from 'lib/number';
 
 interface DisplayProps {
   direction: 'userNumGoalHan' | 'userHanGoalNum';

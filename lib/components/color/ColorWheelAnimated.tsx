@@ -1,7 +1,7 @@
-import { ColorWheel } from './ColorWheel';
 import { CSSTransition } from 'react-transition-group';
-import { spinIn } from '../../../styles/transitions';
 import styled from '@mui/system/styled';
+import { spinIn } from 'styles/transitions';
+import { ColorWheel } from './ColorWheel';
 
 const Container = styled('div')({
   height: '100%',

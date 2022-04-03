@@ -1,10 +1,9 @@
-import { DirectionBtn as StyledDirectionBtn } from '../styled';
 import LooksOneTwoToneIcon from '@mui/icons-material/LooksOneTwoTone';
-import { Dispatch, SetStateAction } from 'react';
+import { DirectionBtn as StyledDirectionBtn } from 'lib/components/styled';
 
 interface DirectionBtnProps {
   direction: 'userHanGoalNum' | 'userNumGoalHan';
-  setDirection: Dispatch<SetStateAction<'userHanGoalNum' | 'userNumGoalHan'>>;
+  setDirection: React.Dispatch<React.SetStateAction<'userHanGoalNum' | 'userNumGoalHan'>>;
 }
 
 export default function DirectionBtn({ direction, setDirection }: DirectionBtnProps): JSX.Element {

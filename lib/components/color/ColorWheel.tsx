@@ -1,5 +1,5 @@
-import Color from '../../color/Color';
 import styled from '@mui/system/styled';
+import { Color } from 'lib/color';
 import { createURL } from './utils';
 
 const createColorWheel = (pickedHex: string = 'none'): string => {

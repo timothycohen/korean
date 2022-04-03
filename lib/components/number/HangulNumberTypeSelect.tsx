@@ -1,5 +1,4 @@
-import { HangulNumberOptions } from '../../number/HanNumber';
-import { HangulNumber, NativeNumber, SinoNumber } from 'lib/number';
+import { HangulNumber, NativeNumber, SinoNumber, HangulNumberOptions } from 'lib/number';
 
 interface HangulNumberTypeSelectProps {
   goal: NativeNumber | SinoNumber;

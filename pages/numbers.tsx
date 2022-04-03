@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import { HangulNumber, NativeNumber, SinoNumber } from '../lib/number';
-import { DirectionBtn, Display, HangulNumberTypeSelect, Input, RangeSlider } from '../lib/components/number';
-import { VisibilitySwitch, BottomDrawer, WavePage } from '../lib/components/styled';
 import Button from '@mui/material/Button';
 import styled from '@mui/system/styled';
+import { HangulNumber, NativeNumber, SinoNumber } from 'lib/number';
+import { DirectionBtn, Display, HangulNumberTypeSelect, Input, RangeSlider } from 'lib/components/number';
+import { VisibilitySwitch, BottomDrawer, WavePage } from 'lib/components/styled';
 
 const Main = styled('main')({
   minHeight: '100%',

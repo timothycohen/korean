@@ -1,11 +1,10 @@
-import { HangulNumber, SinoNumber, NativeNumber } from 'lib/number';
-import { format, unFormat } from 'lib/number/utils';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from '@mui/system/styled';
 import VisibilityOff from '@mui/icons-material/VisibilityOffTwoTone';
 import Visibility from '@mui/icons-material/VisibilityTwoTone';
 import Box from '@mui/system/Box';
-import { Input as InputStyled } from '../styled';
+import { HangulNumber, SinoNumber, NativeNumber, format, unFormat } from 'lib/number';
+import { Input as InputStyled } from 'lib/components/styled';
 
 // todo no back to back duplicates. handle 0
 // while (userInputNum === goal.number.toString()) {
@@ -21,12 +20,12 @@ import { Input as InputStyled } from '../styled';
 
 interface InputProps {
   input: string;
-  setInput: Dispatch<SetStateAction<string>>;
+  setInput: React.Dispatch<React.SetStateAction<string>>;
   direction: 'userNumGoalHan' | 'userHanGoalNum';
   goal: NativeNumber | SinoNumber;
   setGoal: React.Dispatch<React.SetStateAction<NativeNumber | SinoNumber>>;
   showParsedInput: boolean;
-  setShowParsedInput: Dispatch<SetStateAction<boolean>>;
+  setShowParsedInput: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const StyledVisibilityButton = styled('button')({

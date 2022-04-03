@@ -1,7 +1,6 @@
 import '@/styles/global.css';
 import type { AppProps } from 'next/app';
 
-import * as React from 'react';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 
@@ -10,8 +9,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import createEmotionCache from '../utility/createEmotionCache';
-import lightTheme from '../styles/theme/lightTheme';
+import createEmotionCache from 'utility/createEmotionCache';
+import lightTheme from 'styles/theme/lightTheme';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;

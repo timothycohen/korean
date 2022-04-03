@@ -1,15 +1,14 @@
-import { MouseEventHandler } from 'react';
-import Button from '@mui/material/Button';
-import { CSSTransition } from 'react-transition-group';
-import { rotate } from '../../../styles/transitions';
-import RightArrow from '@mui/icons-material/ArrowRightAltTwoTone';
 import styled from '@mui/system/styled';
+import Button from '@mui/material/Button';
+import RightArrow from '@mui/icons-material/ArrowRightAltTwoTone';
+import { CSSTransition } from 'react-transition-group';
+import { rotate } from 'styles/transitions';
 
 interface DirectionBtnProps {
   labelLeft?: JSX.Element | string;
   labelRight?: JSX.Element | string;
   direction: 'left' | 'right';
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   ariaLabel: string;
 }
 
