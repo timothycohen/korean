@@ -64,6 +64,7 @@ export default function Colors2Page(): JSX.Element | null {
     <>
       <Head>
         <title>Colors</title>
+        <link rel="icon" href="/favicon.svg" />
       </Head>
       <DirectionButtonContainer>
         <DirectionBtn
