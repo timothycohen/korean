@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react';
 import Button from '@mui/material/Button';
 import { CSSTransition } from 'react-transition-group';
-import rotateTransition from '../../../styles/transitions/rotate.module.css';
+import { rotate } from '../../../styles/transitions';
 import RightArrow from '@mui/icons-material/ArrowRightAltTwoTone';
 import styled from '@mui/system/styled';
 
@@ -28,7 +28,7 @@ export default function DirectionBtn({
   return (
     <Button variant="contained" onClick={onClick} aria-label={ariaLabel}>
       <span style={{ fontFamily: 'GowunDodum', fontSize: '1.2rem', fontWeight: '700' }}>{labelLeft}</span>
-      <CSSTransition in={direction === 'left'} timeout={400} classNames={rotateTransition}>
+      <CSSTransition in={direction === 'left'} timeout={400} classNames={rotate}>
         <div style={{ display: 'grid' }}>{direction === 'left' ? <LeftArrow /> : <RightArrow />}</div>
       </CSSTransition>
       {labelRight}
