@@ -1,5 +1,5 @@
 import Counter from 'lib/counters/Counter';
-import { counters } from 'lib/counters/counters';
+import { allCounters as counters } from 'lib/counters/counters';
 
 export default function CountersPage(): JSX.Element | null {
   const flattenedCounters = Object.values(counters)

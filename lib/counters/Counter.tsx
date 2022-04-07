@@ -1,48 +1,68 @@
 import { NativeNumber } from '../number/NativeNumber';
 import { SinoNumber } from '../number/SinoNumber';
-import { type CounterObject, type Countable, counters } from './counters';
+import { type CounterObject, type CounterExample, allCounters as counters } from './counters';
 import pluralize from 'pluralize';
 
-// TODO known issues:
-// 1) write a utility to conjugate object particle correctly for example sentences
-// 2) add a countable/uncountable flag to force singular for # counters of countable pattern
-// 3) pulled example sentences from https://www.90daykorean.com/korean-counters/ as lorem ipsum. change them up!
-// 4) make a safer api for the Counter class
-
-/*
-the general pattern for counters depends on the type of number ('native' or 'sino')
-
-native:
-item + modified native + counter
-피자 한 조각 (or less commonly: 피자 1조각)
-OR
-modified native number + counter
-
-sino:
-sino number + counter
-오 분 (or equivalently: 5분)
-
-Furthermore, there are at least four situations:
-1) Both English and Korean use counters with another noun
-- 피자 두 조각 two slices of pizza
-
-2) The counter is, itself, the noun
+/* Cases for counters (measure words)
+1) Counters must be used with a number and no other noun. Counter && !Noun
+This is the same as in English and it's not included in this tool
+수영장 50미터이다. A swimming pool is 50 meters.
 세 번 3 times
 
-3) Korean uses counters with a separate noun, English only uses the noun
-고약이 2마리 two cats, NOT two cat animals
-나무 열 그루 10 trees, NOT 10 tree things
+2) Counter can be used by itself with a number OR with another noun and number. Counter && Noun || Counter && !Noun
+a) If the English word is an uncountable noun (juice, pizza, rice), the counter word is used (not using it changes the meaning)
+두 병         two bottles
+주스 두 병    two bottles of juice
+두 조각       two slices
+피자 두 조각  two slices of pizza
+두 장        two sheets
+종이 두 장    2 sheets of paper
 
-4) Even when English does have an equivalent counter:
-3a) English doesn't include the counter if the noun is countable (countable: 2 chairs, uncountable: furniture):
-  '두 개' (2 things) | '사과 두 개' '2 apples' NOT '2 apples thing'
-English does include the counter if the item is uncountable
-  '두 장' (two sheets) | '종이 두 장' '2 sheets of paper'
+b) If the English word is a countable noun, the counter word is NOT used in English.
+두 개            two things
+사과 두 개       '2 apples' NOT '2 things of apple'
+
+3) Counter is not used by itself. Must be with another noun and number. Counter && Noun
+I can't think of any counters in English that aren't usable by themselves
+고약이           cat
+동물             animal
+마리             animal counter
+고야이 2마리      two cats (NOT two cat animals)
+두 마리의 동물    two animals (NOT two animal counter animals)
+나무 열 그루      10 trees, NOT 10 tree things
+
+Each counter has either sino or native numbers associated with it
+The general structure is item? & sino | modified native number & counter
+
+native:
+피자 한 조각 (or less commonly: 피자 1조각)
+2 slices of pizza
+두 조각
+2 slices
+
+sino:
+(item) + modified native number + counter
+불고기 삼 인분 (or commonly: 불고기 3인분)
+3 servings of bulgogi
+삼 인분
+3 servings
+*/
+
+/*
+TODO:
+1) write a utility to check for 받침 and add appropriate object or subject particle. (check out the hangul jamo?)
+2) pluralize pairs of * to pairs of *
+3) pulled some example sentences from https://www.90daykorean.com/korean-counters/ as lorem ipsum. change them up!
+4) make a safer api for the Counter class
+  - should overload as counter | counterName & disambiguation instead of making all optional and throwing an error
+5) extend the SinoNumber api to include more precision instead of just order of magnitude
+6) write a more versatile examples creater function
+  - include random nouns that aren't related to the noun / measure word / number
 */
 
 export default class Counter {
   #counter: CounterObject;
-  #countable: Countable;
+  #counterExample: CounterExample;
   #number: NativeNumber | SinoNumber;
   #countableKoreanItem: string | undefined;
   #countableEnglishItem: string | undefined;
@@ -70,17 +90,18 @@ export default class Counter {
     if (!countablesPot || !countablesPot.length)
       throw new Error(`No examples for counter "${this.#counter.counterKo}".`);
 
-    this.#countable = countablesPot[Math.floor(Math.random() * countablesPot.length)];
+    this.#counterExample = countablesPot[Math.floor(Math.random() * countablesPot.length)];
 
     // get a random noun to be used in that example
-    if (this.#countable.countable) {
-      let noun = this.#countable.countable[Math.floor(Math.random() * this.#countable.countable.length)];
+    if (this.#counterExample.countable) {
+      let noun =
+        this.#counterExample.countable[Math.floor(Math.random() * this.#counterExample.countable.length)];
       this.#countableKoreanItem = noun.Ko;
       this.#countableEnglishItem = noun.En;
     }
 
     // create a random HangulNumber to be used in that example
-    const range = this.#countable.range;
+    const range = this.#counterExample.range;
     const num =
       this.#counter.numberType === 'native' ? new NativeNumber('counter') : new SinoNumber('counter');
     if (range) num.range = range;
@@ -120,10 +141,10 @@ export default class Counter {
     return this.#countableEnglishItem;
   }
   get exampleKo(): string {
-    return this.#countable.createExampleKo(this.counterKo, this.#number, this.countableKo);
+    return this.#counterExample.createExampleKo(this.counterKo, this.#number, this.countableKo);
   }
   get exampleEn(): string {
-    return this.#countable.createExampleEn(
+    return this.#counterExample.createExampleEn(
       pluralize(this.counterEn, this.#number.number),
       this.#number,
       this.countableEn ? pluralize(this.countableEn, this.#number.number) : undefined

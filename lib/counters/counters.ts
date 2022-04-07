@@ -1,51 +1,24 @@
 import { NativeNumber } from '../number/NativeNumber';
 import { SinoNumber } from '../number/SinoNumber';
+import { fruits, animals, drinks, clothing } from './countables';
+import { relations, shows } from './groupsOfNouns';
 
-export interface CounterObject {
-  counterKo: string;
-  counterEn: string;
-  numberType: 'native' | 'sino';
-  desc: string;
-  examples: Countable[];
-}
-
-const fruits = [
-  { Ko: '바나나', En: 'banana' },
-  { Ko: '사과', En: 'apple' },
-  { Ko: '배', En: 'pear' },
-  { Ko: '복숭아', En: 'peach' },
-  { Ko: '망고', En: 'mango' },
-];
-
-const animals = [
-  { Ko: '고양이', En: 'cat' },
-  { Ko: '개', En: 'dog' },
-];
-
-const drinks = {
-  coffee: [
-    { Ko: '커피', En: 'coffee' },
-    { Ko: '아메리카노', En: 'americano' },
-    { Ko: '카페라떼', En: 'cafe latte' },
-    { Ko: '카푸치노', En: 'cappuccino' },
-    { Ko: '카페모카', En: 'cafe mocha' },
-  ],
-  other: [
-    { Ko: '콜라', En: 'cola' },
-    { Ko: '사이다', En: 'sprite' },
-    { Ko: '오렌지주스', En: 'orange juice' },
-    { Ko: '물', En: 'water' },
-  ],
-};
-
-export interface Countable {
+export interface CounterExample {
   countable?: { Ko?: string; En?: string }[];
   createExampleKo: (counterKo: string, number: NativeNumber | SinoNumber, countableKo?: string) => string;
   createExampleEn: (counterEn: string, number: NativeNumber | SinoNumber, countableEn?: string) => string;
   range?: [number, number];
 }
 
-export const counters: Record<string, CounterObject | CounterObject[]> = {
+export interface CounterObject {
+  counterKo: string;
+  counterEn: string;
+  numberType: 'native' | 'sino';
+  desc: string;
+  examples: CounterExample[];
+}
+
+const generalCounters: Record<string, CounterObject | CounterObject[]> = {
   개: {
     counterKo: '개',
     counterEn: 'thing',
@@ -64,24 +37,24 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   마리: {
     counterKo: '마리',
-    numberType: 'native',
     counterEn: 'animal',
+    numberType: 'native',
     desc: 'A counter used for animals.',
     examples: [
       {
         countable: animals,
         createExampleKo: (counterKo, number, countableKo): string =>
-          `우리 가족은 ${countableKo}를 ${number.hangul} ${counterKo} 키우고 있어요.`,
+          `${relations[8].Ko}은 ${countableKo}를 ${number.hangul} ${counterKo} 키우고 있어요.`,
         createExampleEn: (counterEn, number, countableEn): string =>
-          `My family has ${number.formattedNumber} ${countableEn}.`,
+          `My ${relations[8].En} has ${number.formattedNumber} ${countableEn}.`,
         range: [1, 5],
       },
     ],
   },
   권: {
     counterKo: '권',
+    counterEn: 'volumes',
     numberType: 'native',
-    counterEn: 'book / notebook',
     desc: 'A counter used for books and notebooks.',
     examples: [
       {
@@ -94,23 +67,10 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  살: {
-    counterKo: '살',
-    numberType: 'native',
-    counterEn: 'year',
-    desc: 'A counter used for age.',
-    examples: [
-      {
-        createExampleKo: (counterKo, number): string => `저는 ${number.hangul} ${counterKo} 살이에요.`,
-        createExampleEn: (counterEn, number): string => `I am ${number.formattedNumber} ${counterEn} old.`,
-        range: [1, 60],
-      },
-    ],
-  },
   명: {
     counterKo: '명',
-    numberType: 'native',
     counterEn: 'person',
+    numberType: 'native',
     desc: 'A counter used to describe how many people there are.',
     examples: [
       {
@@ -124,8 +84,8 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   사람: {
     counterKo: '사람',
-    numberType: 'native',
     counterEn: 'person',
+    numberType: 'native',
     desc: 'A counter used for people.',
     examples: [
       {
@@ -137,42 +97,10 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  분: [
-    {
-      counterKo: '분',
-      numberType: 'native',
-      counterEn: 'person',
-      desc: 'A polite counter used for people.',
-      examples: [
-        {
-          createExampleKo: (counterKo, number): string =>
-            `저녁 식사에 총 ${number.hangul} ${counterKo} 맞으세요?`,
-          createExampleEn: (counterEn, number): string =>
-            `Is it for a total of ${number.formattedNumber} ${counterEn} for dinner?`,
-          range: [1, 36],
-        },
-      ],
-    },
-    {
-      counterKo: '분',
-      numberType: 'sino',
-      counterEn: 'minute',
-      desc: 'A counter for minutes.',
-      examples: [
-        {
-          createExampleKo: (counterKo, number): string =>
-            `${number.formattedNumber} ${counterKo}만 이따 전화할게.`,
-          createExampleEn: (counterEn, number): string =>
-            `I'll call you back in just ${number.formattedNumber} ${counterEn}.`,
-          range: [1, 1],
-        },
-      ],
-    },
-  ],
   조각: {
     counterKo: '조각',
-    numberType: 'native',
     counterEn: 'slice',
+    numberType: 'native',
     desc: 'A counter used for slices.',
     examples: [
       {
@@ -187,8 +115,8 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   장: {
     counterKo: '장',
-    numberType: 'native',
     counterEn: 'sheet',
+    numberType: 'native',
     desc: 'A counter for sheets of paper.',
     examples: [
       {
@@ -203,8 +131,8 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   잔: {
     counterKo: '잔',
-    numberType: 'native',
     counterEn: 'cup',
+    numberType: 'native',
     desc: 'A counter for drinks.',
     examples: [
       {
@@ -219,8 +147,8 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   병: {
     counterKo: '병',
-    numberType: 'native',
     counterEn: 'bottle',
+    numberType: 'native',
     desc: 'A counter for bottles.',
     examples: [
       {
@@ -235,8 +163,8 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   대: {
     counterKo: '대',
-    numberType: 'native',
     counterEn: 'car / machine',
+    numberType: 'native',
     desc: 'A counter for cars and machines.',
     examples: [
       {
@@ -251,8 +179,8 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   그릇: {
     counterKo: '그릇',
-    numberType: 'native',
     counterEn: 'bowl',
+    numberType: 'native',
     desc: 'A counter for a bowl of something.',
     examples: [
       {
@@ -267,8 +195,8 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   채: {
     counterKo: '채',
-    numberType: 'native',
     counterEn: 'building',
+    numberType: 'native',
     desc: 'A counter for houses and buildings.',
     examples: [
       {
@@ -283,8 +211,8 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
   },
   그루: {
     counterKo: '그루',
-    numberType: 'native',
     counterEn: 'tree',
+    numberType: 'native',
     desc: 'A counter for trees.',
     examples: [
       {
@@ -293,277 +221,348 @@ export const counters: Record<string, CounterObject | CounterObject[]> = {
           `식목일에 ${countableKo} ${number.hangul} ${counterKo}를 심는 게 목표예요.`,
         createExampleEn: (counterEn, number, countableEn): string =>
           `My goal is to plant ${number.number} ${counterEn} on Arbor Day.`,
+        range: [0, 50],
       },
     ],
   },
-  // 벌: {
-  //   counterKo: '벌',
-  //   numberType: 'native',
-  //   counterEn: 'clothes',
-  //   desc: 'A counter for clothes.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `회사를 다니기 위해서 새 옷을 두 벌 샀어요.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 켤레: {
-  //   counterKo: '켤레',
-  //   numberType: 'native',
-  //   counterEn: 'pair of shoes',
-  //   desc: 'A counter for pairs of shoes.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `결혼식을 위해 구두 두 켤레를 샀어요.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 가지: {
-  //   counterKo: '가지',
-  //   numberType: 'native',
-  //   counterEn: 'kind',
-  //   desc: 'A counter for kinds, varieties, sorts.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `사람은 다섯 가지감각이 있습니다.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 군데: {
-  //   counterKo: '군데',
-  //   numberType: 'native',
-  //   counterEn: 'place',
-  //   desc: 'A counter for places.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `국내 여행을 세 군데 생각해 봤어.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 번: {
-  //   counterKo: '번',
-  //   numberType: 'native',
-  //   counterEn: 'time (number of)',
-  //   desc: 'A counter for number of times.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `벌써 세 번 연락해봤어.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 시: {
-  //   counterKo: '시',
-  //   numberType: 'native',
-  //   counterEn: 'hour (time)',
-  //   desc: 'A counter for hours (time).',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `지금 오후 한 시예요?`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 달: {
-  //   counterKo: '달',
-  //   numberType: 'native',
-  //   counterEn: 'month',
-  //   desc: 'A counter for months.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `다섯 달 전에 한국에 왔어요.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
+  벌: {
+    counterKo: '벌',
+    counterEn: 'piece of clothing',
+    numberType: 'native',
+    desc: 'A counter for clothes.',
+    examples: [
+      {
+        countable: clothing,
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `회사를 다니기 위해서 새 ${countableKo}를 ${number.hangul} ${counterKo} 샀어요.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `I bought ${number.formattedNumber} new ${countableEn} to go to work.`,
+        range: [1, 5],
+      },
+    ],
+  },
+  켤레: {
+    counterKo: '켤레',
+    counterEn: 'pair of shoes',
+    numberType: 'native',
+    desc: 'A counter for pairs of shoes.',
+    examples: [
+      {
+        countable: [{ Ko: '구두', En: 'pair of dress shoes' }],
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `결혼식을 위해 ${countableKo} ${number.hangul} ${counterKo}를 샀어요.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `I bought ${number.formattedNumber} new ${countableEn} for the wedding.`,
+        range: [1, 3],
+      },
+    ],
+  },
+
+  가지: {
+    counterKo: '가지',
+    counterEn: 'kind',
+    numberType: 'native',
+    desc: 'A counter for kinds, varieties, sorts.',
+    examples: [
+      {
+        countable: [{ Ko: '언어', En: 'language' }],
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `나는 ${number.hangul} ${counterKo} 다른 ${countableKo}를 말할 수 있다.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `I can speak ${number.formattedNumber} different ${counterEn} of ${countableEn}.`,
+        range: [2, 5],
+      },
+    ],
+  },
+  군데: {
+    counterKo: '군데',
+    counterEn: 'place',
+    numberType: 'native',
+    desc: 'A counter for places.',
+    examples: [
+      {
+        countable: [
+          { Ko: '커피숍', En: 'coffee shop' },
+          { Ko: '식당', En: 'restaurant' },
+        ],
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `이 근처에 ${countableKo}이 ${number.hangul} ${counterKo} 있어요.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `There are ${number.formattedNumber} ${countableEn} nearby.`,
+        range: [1, 7],
+      },
+    ],
+  },
+  번: {
+    counterKo: '번',
+    counterEn: 'time',
+    numberType: 'native',
+    desc: 'A counter for number of times.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `그 ${shows[0].Ko}를 ${number.hangul} ${counterKo} 봤어.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `I've seen that ${shows[0].En} ${number.formattedNumber} ${counterEn}.`,
+        range: [1, 5],
+      },
+    ],
+  },
+  층: {
+    counterKo: '층',
+    counterEn: 'floor',
+    numberType: 'sino',
+    desc: 'A counter for floors in a building.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `건물은 ${number.hangul} ${counterKo}이 있어요.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `The building has ${number.formattedNumber} ${counterEn}.`,
+        range: [1, 1],
+      },
+    ],
+  },
+};
+
+const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
+  분: [
+    {
+      counterKo: '분',
+      counterEn: 'person',
+      numberType: 'native',
+      desc: 'A polite counter used for people.',
+      examples: [
+        {
+          createExampleKo: (counterKo, number): string =>
+            `저녁 식사에 총 ${number.hangul} ${counterKo} 맞으세요?`,
+          createExampleEn: (counterEn, number): string =>
+            `Is it for a total of ${number.formattedNumber} ${counterEn} for dinner?`,
+          range: [1, 36],
+        },
+      ],
+    },
+    {
+      counterKo: '분',
+      counterEn: 'minute',
+      numberType: 'sino',
+      desc: 'A counter for minutes.',
+      examples: [
+        {
+          createExampleKo: (counterKo, number): string =>
+            `${number.formattedNumber} ${counterKo}만 이따 전화할게.`,
+          createExampleEn: (counterEn, number): string =>
+            `I'll call you back in just ${number.formattedNumber} ${counterEn}.`,
+          range: [1, 1],
+        },
+      ],
+    },
+  ],
+  시: {
+    counterKo: '시',
+    counterEn: 'hour (time)',
+    numberType: 'native',
+    desc: 'A counter for hours (time).',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `지금 ${number.number < 7 ? '오후' : number.number < 7 ? '저녁' : '밤'} ${
+            number.hangul
+          } ${counterKo}야?`,
+        createExampleEn: (counterEn, number, countableEn): string => `Is it ${number.formattedNumber} p.m.?`,
+        range: [1, 13],
+      },
+    ],
+  },
+  시간: {
+    counterKo: '시간',
+    counterEn: 'hour',
+    numberType: 'native',
+    desc: 'A counter for duration in hours.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `만드는 데 ${number.hangul} ${counterKo}이 걸린다.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `It takes ${number.formattedNumber} ${counterEn} to produce.`,
+        range: [1, 21],
+      },
+    ],
+  },
+  일: {
+    counterKo: '일',
+    counterEn: 'day',
+    numberType: 'sino',
+    desc: 'A counter for days (duration and calendar).',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `(${number.hangul}) ${number.number}${counterKo} 후에 봐요.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `See you in ${number.formattedNumber} ${counterEn}.`,
+        range: [1, 1],
+      },
+      {
+        // todo INTL formatter
+        // todo range of [1, 31] is currently not possible with sino OOM range API
+        createExampleKo: (counterKo, number, countableKo): string => `오늘은 (이) 2일입니다.`,
+        createExampleEn: (counterEn, number, countableEn): string => `Today is the 2nd.`,
+      },
+    ],
+  },
+  주: {
+    counterKo: '주',
+    counterEn: 'week',
+    numberType: 'sino',
+    desc: 'A counter for weeks. The same as 주일',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `${number.hangul} ${counterKo} 전에 등록했어요.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `I signed up ${number.formattedNumber} ${counterEn} ago.`,
+        range: [1, 2],
+      },
+    ],
+  },
+  월: {
+    counterKo: '월',
+    counterEn: 'month',
+    numberType: 'sino',
+    desc: 'A counter for the calendar month.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string => `그 영화는 (사) 4월에 개봉해요.`,
+        createExampleEn: (counterEn, number, countableEn): string => `The movie comes out in April.`,
+        range: [0, 1],
+      },
+    ],
+  },
+  개월: {
+    counterKo: '개월',
+    counterEn: 'month',
+    numberType: 'sino',
+    desc: 'A counter for duration of months.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `저는 한국어를 ${number.hangul} ${counterKo} 동안 공부했습니다.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `I have studied Korean for ${number.formattedNumber} ${counterEn}.`,
+        range: [1, 1],
+      },
+    ],
+  },
+  달: {
+    counterKo: '달',
+    counterEn: 'month',
+    numberType: 'native',
+    desc: 'A counter for months. Usually used only with small numbers, after which 개월 is preferred.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `${number.hangul} ${counterKo} 전에 한국에 왔어요.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `I came to Korea ${number.formattedNumber} ${counterEn} ago.`,
+        range: [1, 4],
+      },
+    ],
+  },
+  년: {
+    counterKo: '년',
+    counterEn: 'year',
+    numberType: 'sino',
+    desc: 'A counter for years.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `저는 ${number.hangul} ${counterKo} 동안 한국에 있을 거예요.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `I will be in Korea for ${number.formattedNumber} ${counterEn}.`,
+        range: [1, 1],
+      },
+    ],
+  },
+  초: {
+    counterKo: '초',
+    counterEn: 'second',
+    numberType: 'sino',
+    desc: 'A counter for seconds.',
+    examples: [
+      // todo create an example for the clock
+      // todo range of [1, 59] is currently not possible with sino OOM range API
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `그는 정확히 ${number.hangul} ${counterKo}만에 끝났어.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `He finished in exactly ${number.formattedNumber} ${counterEn}.`,
+        range: [1, 2],
+      },
+    ],
+  },
   // 해: {
   //   counterKo: '해',
   //   numberType: 'native',
   //   counterEn: 'year',
-  //   desc: 'A counter for years.',
+  //   desc: `A counter for years. Mostly used in expressions and not with numbers, which is why it hasn't been included.`,
   //   examples: [
   //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `여기서 일 한지 벌써 여섯 해야.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
+  //       countable: [{ Ko: '', En: '' }],
+  //       createExampleKo: (counterKo, number, countableKo): string => ``
+  //       createExampleEn: (counterEn, number, countableEn): string => ``
   //     },
   //   ],
   // },
-  // 시간: {
-  //   counterKo: '시간',
-  //   numberType: 'native',
-  //   counterEn: 'hour (duration)',
-  //   desc: 'A counter for duration in hours.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `이 시험은 네 시간 걸릴 거예요.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 일: {
-  //   counterKo: '일',
-  //   numberType: 'sino',
-  //   counterEn: 'day',
-  //   desc: 'A counter for days.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `삼 일 뒤에 다시 갈 거야.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 주일: {
-  //   counterKo: '주일',
-  //   numberType: 'sino',
-  //   counterEn: 'week',
-  //   desc: 'A counter for weeks.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `개학하고 나서 삼 주일이나 학교에 못 갔어.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 월: {
-  //   counterKo: '월',
-  //   numberType: 'sino',
-  //   counterEn: 'month',
-  //   desc: 'A counter for months.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `오늘은 오 월 십이 일입니다.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 개월: {
-  //   counterKo: '개월',
-  //   numberType: 'sino',
-  //   counterEn: 'month (duration)',
-  //   desc: 'A counter for duration of months.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `지금까지 남자친구랑 칠 개월 동안 만나고 있어요.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 년: {
-  //   counterKo: '년',
-  //   numberType: 'sino',
-  //   counterEn: 'year',
-  //   desc: 'A counter for years.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `일 년 뒤에 승진할 수 있어!`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 초: {
-  //   counterKo: '초',
-  //   numberType: 'sino',
-  //   counterEn: 'second',
-  //   desc: 'A counter for seconds.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `나는 34분 20초에 5킬러미터를 달릴 수 있어요.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 층: {
-  //   counterKo: '층',
-  //   numberType: 'sino',
-  //   counterEn: 'floor',
-  //   desc: 'A counter for floors in a building.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `우리 건물은 6층이 있어요.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 킬로그램: {
-  //   counterKo: '킬로그램',
-  //   numberType: 'sino',
-  //   counterEn: 'kilogram',
-  //   desc: 'A counter for kilograms.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `기내 수화물은 15킬로그램까지 가능합니다.`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
-  // 미터: {
-  //   counterKo: '미터',
-  //   numberType: 'sino',
-  //   counterEn: 'meter',
-  //   desc: 'A counter for meters.',
-  //   examples: [
-  //     {
-  //       // countable: [{ Ko: '', En: '' }],
-  //       // createExampleKo: (counterKo, number, countableKo): string =>
-  //       // `가로 길이는 삼 미터이고, 세로 길이는 일 미터인 테이블이 좋겠어!`,
-  //       // createExampleEn: (counterEn, number, countableEn): string =>
-  //       // ``
-  //     },
-  //   ],
-  // },
+};
+
+const measureWordIsAlwaysTheNounCounters: Record<string, CounterObject | CounterObject[]> = {
+  미터: {
+    counterKo: '미터',
+    counterEn: 'meter',
+    numberType: 'sino',
+    desc: 'A counter for meters.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `그것은 길이가 ${number.hangul} ${counterKo}이다.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `It's ${number.formattedNumber} ${counterEn} long.`,
+        range: [1, 2],
+      },
+    ],
+  },
+  킬로그램: {
+    counterKo: '킬로그램',
+    counterEn: 'kilogram',
+    numberType: 'sino',
+    desc: 'A counter for kilograms.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number, countableKo): string =>
+          `무게는 ${number.hangul} ${counterKo}입니다.`,
+        createExampleEn: (counterEn, number, countableEn): string =>
+          `The weight is ${number.formattedNumber} ${counterEn}.`,
+        range: [1, 3],
+      },
+    ],
+  },
+  살: {
+    counterKo: '살',
+    counterEn: 'year',
+    numberType: 'native',
+    desc: 'A counter used for age.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number): string => `저는 ${number.hangul} ${counterKo} 살이에요.`,
+        createExampleEn: (counterEn, number): string => `I am ${number.formattedNumber} ${counterEn} old.`,
+        range: [1, 60],
+      },
+    ],
+  },
+};
+
+export const allCounters = {
+  ...generalCounters,
+  ...dateAndTimeCounters,
+  ...measureWordIsAlwaysTheNounCounters,
 };
