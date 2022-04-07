@@ -45,7 +45,7 @@ const SettingsBtn = styled(Button)(({ theme }) => ({
   borderRadius: '0px',
 }));
 
-export default function Numbers() {
+export default function NumbersPage() {
   // state
   const [input, setInput] = useState('1');
   const [goal, setGoal] = useState<NativeNumber | SinoNumber>({} as SinoNumber);

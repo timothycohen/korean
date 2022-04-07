@@ -11,7 +11,7 @@ const DirectionButtonContainer = styled('div')({
   top: 'calc(1rem + 25px)',
 });
 
-export default function Colors2Page(): JSX.Element | null {
+export default function ColorsPage(): JSX.Element | null {
   // toggles
   const [direction, setDirection] = useState<'colorToHangul' | 'hangulToColor'>('hangulToColor');
   const [showKey, setShowKey] = useState(false);
