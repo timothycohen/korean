@@ -74,7 +74,8 @@ export default function Input({
     <div style={{ display: 'grid', width: '100%' }}>
       <InputStyled
         lang="ko"
-        type="number"
+        // todo, number is preferred, but will need to change validation and remove 'e'
+        type="text"
         autoFocus={true}
         key={goal.number}
         aria-label={`Enter number. Goal ${goal.hangul}`}
