@@ -53,3 +53,10 @@
   font-weight: 400; /* normal */
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Digital';
+  src: url('./Digital/DIGITALDREAMFATSKEW.ttf');
+  font-weight: 400; /* normal */
+  font-style: normal;
+}
