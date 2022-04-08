@@ -57,6 +57,7 @@ const theme = {
     fontFamily: [
       'BioRhyme',
       'SpaceMono',
+      'Digital',
       'Arial',
       '-apple-system',
       'BlinkMacSystemFont',

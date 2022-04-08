@@ -2,7 +2,7 @@ import { HangulNumber, NativeNumber, SinoNumber, HangulNumberOptions } from 'lib
 
 interface HangulNumberTypeSelectProps {
   goal: NativeNumber | SinoNumber;
-  setGoal: React.Dispatch<React.SetStateAction<NativeNumber | SinoNumber>>;
+  setGoal: React.Dispatch<React.SetStateAction<NativeNumber | SinoNumber | undefined>>;
 }
 
 const styles = {

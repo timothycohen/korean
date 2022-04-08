@@ -1,26 +1,14 @@
 import { useEffect } from 'react';
 import VisibilityOff from '@mui/icons-material/VisibilityOffTwoTone';
 import Visibility from '@mui/icons-material/VisibilityTwoTone';
-import { SinoNumber, NativeNumber, format, unFormat } from 'lib/number';
+import { HangulTime } from 'lib/time';
 import { Input as InputStyled, InputVisibilityBtn } from 'lib/components/styled';
-
-// todo no back to back duplicates. handle 0
-// while (userInputNum === goal.number.toString()) {
-//   setGoal(goal.setRandom());
-// }
-
-// todo range slider keyboard usage is broken because of input autofocus.
-// on success: 1) clear input 2) clear language composition 3) keep focus 4) present new goal to screen readers 5) don't pull focus from other components
-// can't remove key (which rerenders input) because that's how the hangul input composition is reset. simply setting input to '' will not work
-// can't add autofocus to the input because it pulls focus when updating other components that cause it to rerender
-// can't do a simple focus after the onchange because the input hasn't rerendered yet (even when wrapped in a timeout to delay on the event loop)
-// can't remove and readd on the range slider update because then focus wouldn't be on when input is rerendered after sucessful input
 
 interface InputProps {
   input: string;
   setInput: React.Dispatch<React.SetStateAction<string>>;
-  direction: 'userNumGoalHan' | 'userHanGoalNum';
-  goal: NativeNumber | SinoNumber;
+  direction: 'userTimeGoalHan' | 'userHanGoalTime';
+  goal: HangulTime;
   showParsedInput: boolean;
   setShowParsedInput: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -45,13 +33,19 @@ export default function Input({
       /* rerender the input to prevent 한글 autocomplete carrying over from the last word */
       /* this also presents the aria information again to screen readers */
       /* additionally prevents invalid input from the previous direction's input */
-      key={goal.number}
-      aria-label={`Enter hangul. Goal ${goal.number}`}
+      key={goal.HHMM}
+      aria-label={`Enter hangul. Goal ${goal.HHMM}`}
       value={input}
       autoComplete="off"
       sx={{ fontFamily: 'GowunDodum', marginBottom: '1.875rem' }}
       onChange={e => {
-        setInput(e.currentTarget.value.replaceAll(/\d/g, '').replaceAll('.', '').replaceAll(',', ''));
+        if (HangulTime.isValidHangul(e.currentTarget.value)) {
+          console.log('setting input as ' + e.currentTarget.value);
+          setInput(e.currentTarget.value);
+        } else {
+          // todo show error message on page
+          console.log('write in hangul');
+        }
       }}
     />
   );
@@ -74,24 +68,29 @@ export default function Input({
     <div style={{ display: 'grid', width: '100%' }}>
       <InputStyled
         lang="ko"
-        // todo, number is preferred, but will need to change validation and remove 'e'
+        // todo the mobile keyboard should show as number + :
+        // unfortunately number doesn't show : and with text the user has to manually reset to numbers every time
+        // I could also do type="time" and have the clock popup... but it's a modal and covers the goal
+        // best solution is to just do numbers and automatically insert the :
         type="text"
         autoFocus={true}
-        key={goal.number}
+        key={goal.hangul}
         aria-label={`Enter number. Goal ${goal.hangul}`}
-        value={input === '' ? '' : format(parseInt(input))}
+        value={input}
         autoComplete="off"
         sx={{ fontFamily: 'BioRhyme' }}
         onChange={e => {
-          let userInputNum = unFormat(e.currentTarget.value);
-          if (userInputNum === '') setInput('');
-          else if (/^0.$/.test(userInputNum)) setInput(userInputNum[1]);
-          else if (goal.isValid(userInputNum)) setInput(userInputNum);
+          const userTime = e.currentTarget.value;
+          if (HangulTime.isValidHHMM(userTime)) {
+            setInput(userTime);
+          }
+          // todo show error message on page
+          console.log('input a valid time');
         }}
       />
       {VisibilityButton}
     </div>
   );
 
-  return direction === 'userHanGoalNum' ? UserHanGoalNum : UserNumGoalHan;
+  return direction === 'userHanGoalTime' ? UserHanGoalNum : UserNumGoalHan;
 }

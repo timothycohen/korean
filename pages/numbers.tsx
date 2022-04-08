@@ -1,54 +1,33 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import styled from '@mui/system/styled';
-import { HangulNumber, NativeNumber, SinoNumber } from 'lib/number';
+import { HangulNumber, NativeNumber, SinoNumber, unFormat } from 'lib/number';
 import { DirectionBtn, Display, HangulNumberTypeSelect, Input, RangeSlider } from 'lib/components/number';
-import { VisibilitySwitch, BottomDrawer, WavePage } from 'lib/components/styled';
+import {
+  VisibilitySwitch,
+  BottomDrawer,
+  WavePage,
+  Heading,
+  Main,
+  TogglesContainer,
+  Header,
+  SettingsBtn,
+} from 'lib/components/styled';
 
-const Main = styled('main')({
-  minHeight: '100%',
-  width: '100%',
-  paddingTop: '15%',
-  margin: '0 auto',
-  textAlign: 'center',
-  display: 'flex',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-});
+type DefinedSetGoal = React.Dispatch<React.SetStateAction<NativeNumber | SinoNumber>>;
 
-const Heading = styled('h1')(({ theme }) => ({
-  fontSize: '2rem',
-  fontWeight: 700,
-  color: theme.palette.primary.main,
-}));
-
-const Toggles = styled('div')({
-  display: 'flex',
-  flexWrap: 'wrap',
-  width: '100%',
-  justifyContent: 'space-around',
-  gap: '2rem',
-});
-
-const Header = styled('header')({
-  display: 'grid',
-  gridTemplateColumns: '1fr',
-  gridAutoFlow: 'column',
-});
-
-const SettingsBtn = styled(Button)(({ theme }) => ({
-  fontFamily: 'SpaceMono',
-  textTransform: 'lowercase',
-  backgroundColor: theme.palette.gray['5'],
-  border: `4px solid ${theme.palette.primary.main}`,
-  borderRadius: '0px',
-}));
-
-export default function Numbers() {
+export default function NumbersPage(): JSX.Element | null {
   // state
+  const [goal, setGoal] = useState<NativeNumber | SinoNumber | undefined>();
   const [input, setInput] = useState('1');
-  const [goal, setGoal] = useState<NativeNumber | SinoNumber>({} as SinoNumber);
+  const [parsedInput, setParsedInput] = useState('');
+
+  // toggles
+  const [showParsedInput, setShowParsedInput] = useState(false);
+  const [showGoalAnswer, setShowGoalAnswer] = useState(false);
+  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const [direction, setDirection] = useState<'userNumGoalHan' | 'userHanGoalNum'>('userNumGoalHan');
+
+  // calculate state only on client to prevent server/client mismatch
   useEffect((): void => {
     setGoal((): NativeNumber | SinoNumber => {
       const num = HangulNumber.create('sino', 'cardinal').setRandom();
@@ -57,13 +36,52 @@ export default function Numbers() {
     });
   }, []);
 
-  // toggles
-  const [showParsedInput, setShowParsedInput] = useState(false);
-  const [showGoalAnswer, setShowGoalAnswer] = useState(false);
-  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-  const [direction, setDirection] = useState<'userNumGoalHan' | 'userHanGoalNum'>('userNumGoalHan');
+  // wipe the input when settings change
+  useEffect((): void => {
+    if (!goal?.option) return;
+    setInput('');
+  }, [direction, goal?.option, goal?.min, goal?.max, goal?.type]);
 
-  if (!goal.hangul) return null;
+  // derive parsedInput on input change
+  useEffect((): void => {
+    if (!goal) return;
+
+    if (direction === 'userHanGoalNum') {
+      setParsedInput('');
+      return;
+    }
+    if (input.length === 0) {
+      setParsedInput('…');
+      return;
+    }
+    // when the settings change, the input reset to '' will not be triggered before this hook
+    // therefore, try catch for out of range numbers
+    try {
+      setParsedInput(goal.fromNumber(Number.parseInt(input)).hangul);
+    } catch {
+      setParsedInput('…');
+    }
+  }, [direction, goal, input, setGoal, setInput]);
+
+  // handle correct answers
+  useEffect((): void => {
+    if (!goal) return;
+    const handleWin = () => {
+      const newGoal = HangulNumber.create(goal.type, goal.option);
+      newGoal.range = goal.range;
+      setGoal(newGoal);
+      setInput('');
+    };
+
+    if (
+      (direction === 'userHanGoalNum' && input === goal.hangul) ||
+      (direction === 'userNumGoalHan' && input !== '' && parseInt(unFormat(input)) === goal.number)
+    ) {
+      handleWin();
+    }
+  }, [direction, goal, input]);
+
+  if (!goal) return null;
 
   return (
     <WavePage>
@@ -72,14 +90,14 @@ export default function Numbers() {
       </Head>
       <Header>
         <Heading>Korean Numbers</Heading>
-        <SettingsBtn onClick={() => setDrawerIsOpen(true)}>Settings</SettingsBtn>
+        <SettingsBtn onClick={(): void => setDrawerIsOpen(true)}>Settings</SettingsBtn>
       </Header>
       <BottomDrawer isOpen={drawerIsOpen} setIsOpen={setDrawerIsOpen}>
         <HangulNumberTypeSelect goal={goal} setGoal={setGoal} />
 
-        <RangeSlider goal={goal} setGoal={setGoal} />
+        <RangeSlider goal={goal} setGoal={setGoal as DefinedSetGoal} />
 
-        <Toggles>
+        <TogglesContainer>
           <VisibilitySwitch
             showFlag={showGoalAnswer}
             setShowFlag={setShowGoalAnswer}
@@ -96,13 +114,13 @@ export default function Numbers() {
             ariaLabel="Show input as hangul"
             disabled={direction !== 'userNumGoalHan'}
           />
-        </Toggles>
+        </TogglesContainer>
       </BottomDrawer>
       <Main>
         <Display
           direction={direction}
           goal={goal}
-          input={input}
+          parsedInput={parsedInput}
           showGoalAnswer={showGoalAnswer}
           showParsedInput={showParsedInput}
         />
@@ -112,11 +130,10 @@ export default function Numbers() {
           setInput={setInput}
           direction={direction}
           goal={goal}
-          setGoal={setGoal}
           showParsedInput={showParsedInput}
           setShowParsedInput={setShowParsedInput}
         />
-        <Toggles>
+        <TogglesContainer>
           <VisibilitySwitch
             showFlag={showGoalAnswer}
             setShowFlag={setShowGoalAnswer}
@@ -125,7 +142,7 @@ export default function Numbers() {
           />
 
           <DirectionBtn direction={direction} setDirection={setDirection} />
-        </Toggles>
+        </TogglesContainer>
       </Main>
     </WavePage>
   );
