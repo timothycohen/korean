@@ -13,6 +13,7 @@ export default function Home() {
         <h1>TCo&apos;s Korean</h1>
         <Link href="/numbers">Numbers</Link>
         <Link href="/colors">Colors</Link>
+        <Link href="/time">Time</Link>
       </main>
     </div>
   );

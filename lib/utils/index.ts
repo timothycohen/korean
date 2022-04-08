@@ -1,0 +1,1 @@
+export { isHangul } from './language';
