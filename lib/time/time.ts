@@ -35,7 +35,7 @@ export const createHangulTime = (time?: Time): HangulTime => {
 
 // just console logged a for loop. clean this up upon proposals #43505 #15480
 
-interface Time {
+export interface Time {
   hour: Hour;
   minute: Minute;
 }
@@ -45,9 +45,9 @@ export type HangulTime = {
   formattedTime: string;
 } & Time;
 
-type Hour = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type Hour = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-type Minute =
+export type Minute =
   | 0
   | 1
   | 2

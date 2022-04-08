@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { createHangulTime, type HangulTime } from 'lib/counters/time';
+import { createHangulTime, type HangulTime } from 'lib/time';
+import { Clock } from 'lib/components/time';
 
 export default function TimePage(): JSX.Element {
   const [time, setTime] = useState<HangulTime>(createHangulTime());
@@ -9,19 +10,20 @@ export default function TimePage(): JSX.Element {
   useEffect((): void => {
     const hour = parseInt(hr, 10);
     const minute = parseInt(min, 10);
-    if (!(hour >= 1 && hour <= 12)) return;
-    if (!(minute >= 0 && minute <= 59)) return;
-    setTime(
-      (): HangulTime =>
-        createHangulTime({
-          hour: hour as HangulTime['hour'],
-          minute: minute as HangulTime['minute'],
-        })
-    );
+    if (hour >= 1 && hour <= 12 && minute >= 0 && minute <= 59) {
+      setTime(
+        (): HangulTime =>
+          createHangulTime({
+            hour: hour as HangulTime['hour'],
+            minute: minute as HangulTime['minute'],
+          })
+      );
+    }
   }, [hr, min]);
 
   return (
     <>
+      <Clock hour={parseInt(hr)} minute={parseInt(min)} />
       <h1>{time.koreanTime}</h1>
       <input
         type="text"
