@@ -1,1 +1,2 @@
-export { createHangulTime, type Time, type HangulTime, type Hour, type Minute } from './time';
+import HangulTime, { type Hour, type Minute } from './HangulTime';
+export { HangulTime, type Hour, type Minute };

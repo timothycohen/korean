@@ -15,9 +15,9 @@ export default function Clock({ hr, min }: { hr: string; min: string }): JSX.Ele
   return (
     <UnstyledButton type="button" onClick={() => setView(view === 'digital' ? 'analog' : 'digital')}>
       {view === 'analog' ? (
-        <AnalogClock size="400" hour={parseInt(hr)} minute={parseInt(min)} />
+        <AnalogClock size="200" hour={parseInt(hr)} minute={parseInt(min)} />
       ) : (
-        <DigitalClock size="400" hour={hr} minute={min} />
+        <DigitalClock size="200" hour={hr} minute={min} />
       )}
     </UnstyledButton>
   );
