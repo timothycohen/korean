@@ -27,7 +27,9 @@ export default function RangeSlider({ goal, setGoal }: RangeSliderProps) {
           width: '90%',
           margin: 'auto',
         }}
-        aria-label={goal.type === 'native' ? 'Native number range' : 'Sino-Korean order of magnitude range'}
+        getAriaLabel={() =>
+          goal.type === 'native' ? 'Native number range' : 'Sino-Korean order of magnitude range'
+        }
         step={1}
         min={goal.absMin}
         max={goal.absMax}

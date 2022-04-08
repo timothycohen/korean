@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
-import styled from '@mui/system/styled';
 import VisibilityOff from '@mui/icons-material/VisibilityOffTwoTone';
 import Visibility from '@mui/icons-material/VisibilityTwoTone';
-import Box from '@mui/system/Box';
-import { HangulNumber, SinoNumber, NativeNumber, format, unFormat } from 'lib/number';
-import { Input as InputStyled } from 'lib/components/styled';
+import { SinoNumber, NativeNumber, format, unFormat } from 'lib/number';
+import { Input as InputStyled, InputVisibilityBtn } from 'lib/components/styled';
 
 // todo no back to back duplicates. handle 0
 // while (userInputNum === goal.number.toString()) {
@@ -23,30 +21,15 @@ interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<string>>;
   direction: 'userNumGoalHan' | 'userHanGoalNum';
   goal: NativeNumber | SinoNumber;
-  setGoal: React.Dispatch<React.SetStateAction<NativeNumber | SinoNumber>>;
   showParsedInput: boolean;
   setShowParsedInput: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-const StyledVisibilityButton = styled('button')({
-  position: 'relative',
-  justifySelf: 'right',
-  top: '-2.4rem',
-  right: '.5rem',
-  color: 'gray.4',
-  cursor: 'pointer',
-  background: 'none',
-  border: 'none',
-  padding: '0',
-  height: '2rem',
-});
 
 export default function Input({
   input,
   setInput,
   direction,
   goal,
-  setGoal,
   showParsedInput,
   setShowParsedInput,
 }: InputProps): JSX.Element {
@@ -54,30 +37,14 @@ export default function Input({
     setInput('');
   }, [setInput, direction]);
 
-  useEffect((): void => {
-    const handleWin = () => {
-      const newGoal = HangulNumber.create(goal.type, goal.option);
-      newGoal.range = goal.range;
-      setGoal(newGoal);
-      setInput('');
-    };
-
-    if (
-      (direction === 'userHanGoalNum' && input === goal.hangul) ||
-      (direction === 'userNumGoalHan' && input !== '' && parseInt(unFormat(input)) === goal.number)
-    ) {
-      handleWin();
-    }
-  }, [direction, goal.hangul, goal.number, goal.option, goal.range, goal.type, input, setGoal, setInput]);
-
   const UserHanGoalNum = (
     <InputStyled
-      id="userHanGoalNum"
       lang="en"
       type="text"
       autoFocus={true}
       /* rerender the input to prevent 한글 autocomplete carrying over from the last word */
       /* this also presents the aria information again to screen readers */
+      /* additionally prevents invalid input from the previous direction's input */
       key={goal.number}
       aria-label={`Enter hangul. Goal ${goal.number}`}
       value={input}
@@ -90,7 +57,7 @@ export default function Input({
   );
 
   const VisibilityButton = (
-    <StyledVisibilityButton
+    <InputVisibilityBtn
       type="button"
       onClick={(): void => (showParsedInput ? setShowParsedInput(false) : setShowParsedInput(true))}
       title={showParsedInput ? 'hide hangul input' : 'show hangul input'}
@@ -100,15 +67,14 @@ export default function Input({
       ) : (
         <VisibilityOff sx={{ fontSize: '2rem' }} />
       )}
-    </StyledVisibilityButton>
+    </InputVisibilityBtn>
   );
 
   const UserNumGoalHan = (
-    <Box sx={{ display: 'grid', width: '100%' }}>
+    <div style={{ display: 'grid', width: '100%' }}>
       <InputStyled
         lang="ko"
-        id="userNumGoalHan"
-        type="text"
+        type="number"
         autoFocus={true}
         key={goal.number}
         aria-label={`Enter number. Goal ${goal.hangul}`}
@@ -123,7 +89,7 @@ export default function Input({
         }}
       />
       {VisibilityButton}
-    </Box>
+    </div>
   );
 
   return direction === 'userHanGoalNum' ? UserHanGoalNum : UserNumGoalHan;
