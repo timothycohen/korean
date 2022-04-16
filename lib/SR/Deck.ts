@@ -1,7 +1,7 @@
 import Card from './Card';
 import DeckSettings from './DeckSettings';
 
-// todo sort by .ssr.due
+// todo sort by .sr.due
 export default class Deck<T> {
   cards: Card<T>[];
   settings: DeckSettings;

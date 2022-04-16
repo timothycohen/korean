@@ -8,10 +8,10 @@ describe('Card', (): void => {
     expect(card.data).toBe(num);
   });
 
-  it('should have a default SSR', (): void => {
+  it('should have a default SR', (): void => {
     const num = HangulNumber.create('native', 'counter');
     const card = new Card(num);
-    card.ssr.mark('good');
-    expect(card.ssr.markHistory[0].grade).toBe('good');
+    card.sr.mark('good');
+    expect(card.sr.markHistory[0].grade).toBe('good');
   });
 });

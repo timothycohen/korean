@@ -1,41 +1,41 @@
-import SSR from './SSR';
+import SR from './SR';
 
-describe('SSR', (): void => {
+describe('SR', (): void => {
   describe('create', (): void => {
     it('should create a card', (): void => {
-      const card = new SSR();
+      const card = new SR();
       expect(card).toBeDefined();
     });
     it('should create a card with optional settings', (): void => {
-      const card = new SSR({
+      const card = new SR({
         maximumInterval: 999,
       });
       expect(card).toBeDefined();
     });
     it('should originally be in the learning state', (): void => {
-      const card = new SSR();
+      const card = new SR();
       expect(card.status).toBe('learning');
     });
     it('should have a creation date', () => {
-      const card = new SSR();
+      const card = new SR();
       expect(card.createdAt.getMinutes()).toEqual(new Date().getMinutes());
     });
   });
 
   describe('mark', (): void => {
     it('should update the stepsIndex when grading', (): void => {
-      const card = new SSR();
+      const card = new SR();
       card.mark('good');
       expect(card.stepsIndex).toBe(1);
     });
     it('should immediately graduate a new card when marking easy', (): void => {
-      const card = new SSR();
+      const card = new SR();
       expect(card.status).toBe('learning');
       card.mark('easy');
       expect(card.status).toBe('reviewing');
     });
     it('should not change the easeFactor of a learning card', (): void => {
-      const card = new SSR();
+      const card = new SR();
       const OGEase = card.easeFactor;
       card.mark('again');
       expect(card.easeFactor).toBe(OGEase);
@@ -45,20 +45,20 @@ describe('SSR', (): void => {
       expect(card.easeFactor).toBe(OGEase);
     });
     it('should only change the easeFactor of a reviewing card when marking easy', (): void => {
-      const card = new SSR();
+      const card = new SR();
       card.mark('easy');
       expect(card.status).toBe('reviewing');
       const OGEase = card.easeFactor;
       card.mark('easy');
       expect(card.easeFactor).toBeGreaterThan(OGEase);
 
-      const card2 = new SSR();
+      const card2 = new SR();
       card2.mark('easy');
       const OGEase2 = card2.easeFactor;
       card2.mark('again');
       expect(card2.easeFactor).toBe(OGEase2);
 
-      const card3 = new SSR();
+      const card3 = new SR();
       card3.mark('easy');
       const OGEase3 = card3.easeFactor;
       card3.mark('good');
@@ -66,7 +66,7 @@ describe('SSR', (): void => {
     });
 
     it('should only change the easeFactor of a relearning card when marking again', (): void => {
-      const card = new SSR();
+      const card = new SR();
       card.mark('easy');
       card.mark('easy');
       card.mark('easy');
@@ -76,7 +76,7 @@ describe('SSR', (): void => {
       card.mark('again');
       expect(card.easeFactor).toBeLessThan(OGEase);
 
-      const card2 = new SSR();
+      const card2 = new SR();
       card2.mark('easy');
       card2.mark('easy');
       card2.mark('easy');
@@ -86,7 +86,7 @@ describe('SSR', (): void => {
       expect(card2.easeFactor).toBe(OGEase2);
     });
     it('should update history on each action', (): void => {
-      const card = new SSR();
+      const card = new SR();
       expect(card.markHistory.length).toBe(0);
       card.mark('good');
       expect(card.markHistory.length).toBe(1);
@@ -97,7 +97,7 @@ describe('SSR', (): void => {
   });
   describe('immutability', (): void => {
     it('should not allow modification of the history', (): void => {
-      const card = new SSR();
+      const card = new SR();
       const OGHistory = card.markHistory;
       expect(OGHistory.length).toBe(0);
       card.mark('good');

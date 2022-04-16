@@ -4,7 +4,7 @@
  */
 
 import { getFudge, roundToTwo, addMinutes } from './utils';
-import SSRSettings from './SSRSettings';
+import SRSettings from './SRSettings';
 
 /* #################### TYPES #################### */
 // The card.status is 'learning' when the card is new and hasn't been seen enough times to graduate to 'reviewing'
@@ -19,7 +19,7 @@ type RelearningGrade = 'again' | 'good';
 
 type MarkHistory = { date: Date; prevStatus: Status; updatedStatus: Status; grade: ReviewingGrade };
 
-export default class SSR {
+export default class SR {
   #status: Status;
   // stepsIndex is how far along the card is in the learning or relearning phase before it graduates to 'reviewing'
   #stepsIndex: number;
@@ -30,16 +30,16 @@ export default class SSR {
   #due: Date;
   #createdAt: Date;
   private readonly _markHistory: MarkHistory[];
-  #settings: SSRSettings;
+  #settings: SRSettings;
 
-  constructor(settings?: Partial<SSRSettings>) {
+  constructor(settings?: Partial<SRSettings>) {
     this.#status = 'learning';
     this.#stepsIndex = 0;
     this.#interval = 0;
     this.#due = new Date();
     this.#createdAt = new Date();
     this._markHistory = [];
-    this.#settings = settings ? new SSRSettings(settings) : SSRSettings.standard;
+    this.#settings = settings ? new SRSettings(settings) : SRSettings.standard;
     this.#easeFactor = this.#settings.startingEaseFactor;
   }
 

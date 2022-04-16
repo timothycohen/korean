@@ -1,16 +1,16 @@
-import SSRSettings from './SSRSettings';
+import SRSettings from './SRSettings';
 
-describe('ssrSettings', (): void => {
+describe('srSettings', (): void => {
   test('.create() makes unique objects', (): void => {
-    const a = new SSRSettings();
-    const b = new SSRSettings();
+    const a = new SRSettings();
+    const b = new SRSettings();
     expect(a).not.toBe(b);
   });
 
   test('.create() makes writable objects', (): void => {
-    const a = new SSRSettings();
-    const b = new SSRSettings();
-    const c = new SSRSettings({ easyBonus: 5 });
+    const a = new SRSettings();
+    const b = new SRSettings();
+    const c = new SRSettings({ easyBonus: 5 });
     a.easyBonus = 5;
     expect(a.easyBonus).toBe(5);
     expect(a.easyBonus).toBe(c.easyBonus);
@@ -18,8 +18,8 @@ describe('ssrSettings', (): void => {
   });
 
   test('.default() provides a (compile time) readonly singleton', (): void => {
-    const d = SSRSettings.standard;
-    const e = SSRSettings.standard;
+    const d = SRSettings.standard;
+    const e = SRSettings.standard;
     expect(d).toBe(e);
     // Cannot assign to 'againPenalty' because it is a read-only property.ts(2540)
     // d.againPenalty = 999;

@@ -1,6 +1,6 @@
 import { daysToMinutes } from './utils';
 
-export default class SSRSettings {
+export default class SRSettings {
   // "Learning" constants
   // the number of steps and minutes until graduating from the learning phase
   learningSteps: number[]; // minute
@@ -34,7 +34,7 @@ export default class SSRSettings {
   minimumInterval: number;
   minimumEaseFactor: number;
 
-  static get standard(): Readonly<SSRSettings> {
+  static get standard(): Readonly<SRSettings> {
     return singleton;
   }
 
@@ -54,7 +54,7 @@ export default class SSRSettings {
     minimumInterval,
     minimumEaseFactor,
     relearningSteps,
-  }: Partial<SSRSettings> = {}) {
+  }: Partial<SRSettings> = {}) {
     this.learningSteps = learningSteps ?? [1, 10];
     this.graduatingInterval = graduatingInterval ?? daysToMinutes(1);
     this.easyInterval = easyInterval ?? daysToMinutes(4);
@@ -73,4 +73,4 @@ export default class SSRSettings {
   }
 }
 
-const singleton: Readonly<SSRSettings> = new SSRSettings();
+const singleton: Readonly<SRSettings> = new SRSettings();
