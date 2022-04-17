@@ -43,12 +43,19 @@ export default NextAuth({
   theme: {
     colorScheme: 'auto',
   },
-  // callbacks: {
-  //   async jwt({ token }): Promise<JWT> {
-  //     token.userRole = 'admin';
-  //     return token;
-  //   },
-  // },
+  callbacks: {
+    // add the user.id to the session
+    async jwt({ token, user }) {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
+    },
+    async session({ session, user }) {
+      session.id = user.id;
+      return Promise.resolve(session);
+    },
+  },
   pages: {
     signIn: '/auth/signin',
     // signOut: '/auth/signout',
