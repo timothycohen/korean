@@ -69,20 +69,29 @@ export default class Counter {
 
   // would be nicer to overload this...
   constructor({
+    id,
     counter,
-    counterName,
+    counterKo,
     disambiguation,
   }: {
+    id?: string;
     counter?: CounterObject;
-    counterName?: string;
-    disambiguation?: number;
+    counterKo?: string;
+    disambiguation?: {
+      counterEn?: string;
+      numberType?: 'native' | 'sino';
+    };
   }) {
-    if (counterName) {
-      this.#counter = this.#calculateCounter(counterName, disambiguation);
+    if (id) {
+      const counterResult = counters.find(c => c.id === id);
+      if (!counterResult) throw new Error(`counterID ${id} not found.`);
+      this.#counter = counterResult;
+    } else if (counterKo) {
+      this.#counter = this.#calculateCounter(counterKo, disambiguation);
     } else if (counter) {
       this.#counter = counter;
     } else {
-      throw new Error('counter or counterName is required');
+      throw new Error('id, counter, or counterKo is required');
     }
 
     // get a random example to be used with that counter
@@ -108,17 +117,25 @@ export default class Counter {
     this.#number = num;
   }
 
-  #calculateCounter(counterName: string, disambiguation?: number): CounterObject {
-    // get the counter
-    const counterResults = counters[counterName];
-    let potCounter: CounterObject;
-    if (Array.isArray(counterResults)) {
-      if (disambiguation === undefined) throw new Error(`disambiguation for ${counterName} is required`);
-      potCounter = counterResults[disambiguation];
-    } else {
-      potCounter = counterResults;
+  #calculateCounter(
+    counterKo: string,
+    disambiguation?: {
+      counterEn?: string;
+      numberType?: 'native' | 'sino';
     }
-    if (!potCounter) throw new Error(`counterName "${counterName}${disambiguation ?? ''}" not found.`);
+  ): CounterObject {
+    // get the counter
+    const counterResults = counters.filter(c => c.counterKo === counterKo);
+    if (counterResults.length === 1) return counterResults[0];
+    if (counterResults.length === 0) throw new Error(`Counter "${counterKo}" not found.`);
+    const { counterEn, numberType } = disambiguation ?? {};
+    if (!counterEn && !numberType)
+      throw new Error(`Counter "${counterKo}" has multiple entries. Disambiguation required.`);
+    const potCounter =
+      counterResults.find(c => c.counterEn === counterEn) ??
+      counterResults.find(c => c.numberType === numberType);
+    if (!potCounter)
+      throw new Error(`counterKo "${counterKo}${JSON.stringify(disambiguation) ?? ''}" not found.`);
     return potCounter;
   }
 
@@ -149,5 +166,17 @@ export default class Counter {
       this.#number,
       this.countableEn ? pluralize(this.countableEn, this.#number.number) : undefined
     );
+  }
+  toObject() {
+    return {
+      countableEn: this.countableEn,
+      countableKo: this.countableKo,
+      counterEn: this.counterEn,
+      counterKo: this.counterKo,
+      desc: this.desc,
+      exampleEn: this.exampleEn,
+      exampleKo: this.exampleKo,
+      numberType: this.numberType,
+    };
   }
 }

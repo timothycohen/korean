@@ -11,6 +11,7 @@ export interface CounterExample {
 }
 
 export interface CounterObject {
+  id: string;
   counterKo: string;
   counterEn: string;
   numberType: 'native' | 'sino';
@@ -18,8 +19,9 @@ export interface CounterObject {
   examples: CounterExample[];
 }
 
-const generalCounters: Record<string, CounterObject | CounterObject[]> = {
-  개: {
+const generalCounters: CounterObject[] = [
+  {
+    id: 'e05284db-3b61-47db-a6bc-32862a3a440f',
     counterKo: '개',
     counterEn: 'thing',
     numberType: 'native',
@@ -35,7 +37,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  마리: {
+  {
+    id: 'fbbd28f6-54a3-4eb1-81e7-a22ccd54d7ca',
     counterKo: '마리',
     counterEn: 'animal',
     numberType: 'native',
@@ -51,7 +54,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  권: {
+  {
+    id: '8c2589da-c6f8-4b3f-8721-d74a6907b0fb',
     counterKo: '권',
     counterEn: 'volumes',
     numberType: 'native',
@@ -67,7 +71,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  명: {
+  {
+    id: '887010d3-5e10-4711-9454-69c3042197e0',
     counterKo: '명',
     counterEn: 'person',
     numberType: 'native',
@@ -82,7 +87,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  사람: {
+  {
+    id: 'b02316cc-d36d-4818-80ae-e66136b39824',
     counterKo: '사람',
     counterEn: 'person',
     numberType: 'native',
@@ -97,7 +103,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  조각: {
+  {
+    id: 'cc464015-bb5e-43a1-bbdd-c890dfad56b5',
     counterKo: '조각',
     counterEn: 'slice',
     numberType: 'native',
@@ -113,7 +120,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  장: {
+  {
+    id: 'd6b43697-56d9-48bc-93f8-4bb4b8746fb0',
     counterKo: '장',
     counterEn: 'sheet',
     numberType: 'native',
@@ -129,7 +137,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  잔: {
+  {
+    id: '62469abb-cb40-42f1-a2f3-6454e7cae217',
     counterKo: '잔',
     counterEn: 'cup',
     numberType: 'native',
@@ -145,7 +154,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  병: {
+  {
+    id: '890553fa-4a18-421e-b51a-d32180978d8b',
     counterKo: '병',
     counterEn: 'bottle',
     numberType: 'native',
@@ -161,7 +171,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  대: {
+  {
+    id: '2dd05c32-d13d-4b2f-9b92-e6b9c9494443',
     counterKo: '대',
     counterEn: 'car / machine',
     numberType: 'native',
@@ -177,7 +188,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  그릇: {
+  {
+    id: '03b01f58-080b-4d02-8a07-b98fa8483ab3',
     counterKo: '그릇',
     counterEn: 'bowl',
     numberType: 'native',
@@ -193,7 +205,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  채: {
+  {
+    id: 'e19dffd7-1839-4990-8d57-ff3dfb98b3ef',
     counterKo: '채',
     counterEn: 'building',
     numberType: 'native',
@@ -209,7 +222,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  그루: {
+  {
+    id: 'f9fa52f6-7b64-4ada-a86b-50b95c920c96',
     counterKo: '그루',
     counterEn: 'tree',
     numberType: 'native',
@@ -225,7 +239,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  벌: {
+  {
+    id: 'bb6f9262-41ff-45cd-bac8-1232f060199f',
     counterKo: '벌',
     counterEn: 'piece of clothing',
     numberType: 'native',
@@ -241,7 +256,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  켤레: {
+  {
+    id: 'b629b42d-92aa-4294-bf60-1041029051e5',
     counterKo: '켤레',
     counterEn: 'pair of shoes',
     numberType: 'native',
@@ -258,7 +274,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
     ],
   },
 
-  가지: {
+  {
+    id: 'ba736acd-19c4-480e-b405-3432708a059c',
     counterKo: '가지',
     counterEn: 'kind',
     numberType: 'native',
@@ -274,7 +291,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  군데: {
+  {
+    id: 'e05fa6fd-626f-4138-bf9d-0897905c56f8',
     counterKo: '군데',
     counterEn: 'place',
     numberType: 'native',
@@ -293,7 +311,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  번: {
+  {
+    id: 'ceb01d18-5299-476b-8dd2-d0bfc3cdf2f7',
     counterKo: '번',
     counterEn: 'time',
     numberType: 'native',
@@ -308,7 +327,8 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  층: {
+  {
+    id: 'bdba91ce-39d4-4545-b082-06e6ed68cc3c',
     counterKo: '층',
     counterEn: 'floor',
     numberType: 'sino',
@@ -323,42 +343,43 @@ const generalCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-};
+];
 
-const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
-  분: [
-    {
-      counterKo: '분',
-      counterEn: 'person',
-      numberType: 'native',
-      desc: 'A polite counter used for people.',
-      examples: [
-        {
-          createExampleKo: (counterKo, number): string =>
-            `저녁 식사에 총 ${number.hangul} ${counterKo} 맞으세요?`,
-          createExampleEn: (counterEn, number): string =>
-            `Is it for a total of ${number.formattedNumber} ${counterEn} for dinner?`,
-          range: [1, 36],
-        },
-      ],
-    },
-    {
-      counterKo: '분',
-      counterEn: 'minute',
-      numberType: 'sino',
-      desc: 'A counter for minutes.',
-      examples: [
-        {
-          createExampleKo: (counterKo, number): string =>
-            `${number.formattedNumber} ${counterKo}만 이따 전화할게.`,
-          createExampleEn: (counterEn, number): string =>
-            `I'll call you back in just ${number.formattedNumber} ${counterEn}.`,
-          range: [1, 1],
-        },
-      ],
-    },
-  ],
-  시: {
+const dateAndTimeCounters: CounterObject[] = [
+  {
+    id: 'be28314c-48f2-4df3-9078-bc402bf5b80a',
+    counterKo: '분',
+    counterEn: 'person',
+    numberType: 'native',
+    desc: 'A polite counter used for people.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number): string =>
+          `저녁 식사에 총 ${number.hangul} ${counterKo} 맞으세요?`,
+        createExampleEn: (counterEn, number): string =>
+          `Is it for a total of ${number.formattedNumber} ${counterEn} for dinner?`,
+        range: [1, 36],
+      },
+    ],
+  },
+  {
+    id: 'e256409a-5fa4-4d26-8aac-57d106bb04a0',
+    counterKo: '분',
+    counterEn: 'minute',
+    numberType: 'sino',
+    desc: 'A counter for minutes.',
+    examples: [
+      {
+        createExampleKo: (counterKo, number): string =>
+          `${number.formattedNumber} ${counterKo}만 이따 전화할게.`,
+        createExampleEn: (counterEn, number): string =>
+          `I'll call you back in just ${number.formattedNumber} ${counterEn}.`,
+        range: [1, 1],
+      },
+    ],
+  },
+  {
+    id: 'f802fcd8-5991-46cd-b213-e392bff4d0cf',
     counterKo: '시',
     counterEn: 'hour (time)',
     numberType: 'native',
@@ -374,7 +395,8 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  시간: {
+  {
+    id: 'be42c508-a454-4c15-9ebf-76730c6300ba',
     counterKo: '시간',
     counterEn: 'hour',
     numberType: 'native',
@@ -389,7 +411,8 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  일: {
+  {
+    id: 'e3c8bc41-2af2-482d-9d94-35f8bd624de4',
     counterKo: '일',
     counterEn: 'day',
     numberType: 'sino',
@@ -410,7 +433,8 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  주: {
+  {
+    id: '70603e9c-1db6-4914-9067-2bff6e096cfe',
     counterKo: '주',
     counterEn: 'week',
     numberType: 'sino',
@@ -425,7 +449,8 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  월: {
+  {
+    id: '27dcc74c-2379-4e7f-b353-fbc85b7d9ea8',
     counterKo: '월',
     counterEn: 'month',
     numberType: 'sino',
@@ -438,7 +463,8 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  개월: {
+  {
+    id: 'e9b49b64-ee3f-467e-ac42-99dacebaf735',
     counterKo: '개월',
     counterEn: 'month',
     numberType: 'sino',
@@ -453,7 +479,8 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  달: {
+  {
+    id: 'b0c31f70-cd40-4375-85ec-58539bceb688',
     counterKo: '달',
     counterEn: 'month',
     numberType: 'native',
@@ -468,7 +495,8 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  년: {
+  {
+    id: '3afe20e1-f75b-4255-ac63-7df0b2c63ca3',
     counterKo: '년',
     counterEn: 'year',
     numberType: 'sino',
@@ -483,7 +511,8 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  초: {
+  {
+    id: 'f12a593e-a4aa-4e18-90d2-a3dc1940ef9c',
     counterKo: '초',
     counterEn: 'second',
     numberType: 'sino',
@@ -500,7 +529,7 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
       },
     ],
   },
-  // 해: {
+  // {
   //   counterKo: '해',
   //   numberType: 'native',
   //   counterEn: 'year',
@@ -513,10 +542,11 @@ const dateAndTimeCounters: Record<string, CounterObject | CounterObject[]> = {
   //     },
   //   ],
   // },
-};
+];
 
-const measureWordIsAlwaysTheNounCounters: Record<string, CounterObject | CounterObject[]> = {
-  미터: {
+const measureWordIsAlwaysTheNounCounters: CounterObject[] = [
+  {
+    id: '1c5e817a-f0ec-405f-a65e-fc1c54cf8417',
     counterKo: '미터',
     counterEn: 'meter',
     numberType: 'sino',
@@ -531,7 +561,8 @@ const measureWordIsAlwaysTheNounCounters: Record<string, CounterObject | Counter
       },
     ],
   },
-  킬로그램: {
+  {
+    id: '6f099443-31d1-4a27-ba2e-9ccdde9b3f6c',
     counterKo: '킬로그램',
     counterEn: 'kilogram',
     numberType: 'sino',
@@ -546,7 +577,8 @@ const measureWordIsAlwaysTheNounCounters: Record<string, CounterObject | Counter
       },
     ],
   },
-  살: {
+  {
+    id: '54176afc-5728-4aa9-8706-2b9f36ff29cf',
     counterKo: '살',
     counterEn: 'year',
     numberType: 'native',
@@ -559,10 +591,10 @@ const measureWordIsAlwaysTheNounCounters: Record<string, CounterObject | Counter
       },
     ],
   },
-};
+];
 
-export const allCounters = {
+export const allCounters = [
   ...generalCounters,
   ...dateAndTimeCounters,
   ...measureWordIsAlwaysTheNounCounters,
-};
+];
