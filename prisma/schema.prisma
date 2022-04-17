@@ -7,23 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model SR {
-  id          String   @id @default(cuid())
+model SpacedRepetition {
+  id          String @id @default(cuid())
   status      String
   stepsIndex  Int
   interval    Int
-  due         DateTime
-  createdAt   DateTime
-  easeFactor  Int
+  // Date objects aren't allowed in JSON, so save as ISOstring
+  due         String
+  createdAt   String
+  easeFactor  Float
   markHistory String
-  Card        Card[]
-}
-
-model Card {
-  id   String @id @default(cuid())
-  data String
-  SR   SR     @relation(fields: [SRId], references: [id])
-  SRId String
+  user        User   @relation(fields: [userId], references: [id])
+  userId      String
+  dataId      String
 }
 
 // Next Auth
@@ -55,13 +51,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id               String             @id @default(cuid())
+  name             String?
+  email            String?            @unique
+  emailVerified    DateTime?
+  image            String?
+  accounts         Account[]
+  sessions         Session[]
+  spacedRepetition SpacedRepetition[]
 }
 
 model VerificationToken {

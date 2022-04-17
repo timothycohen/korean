@@ -1,24 +1,17 @@
 -- CreateTable
-CREATE TABLE "SR" (
+CREATE TABLE "SpacedRepetition" (
     "id" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "stepsIndex" INTEGER NOT NULL,
     "interval" INTEGER NOT NULL,
-    "due" TIMESTAMP(3) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL,
-    "easeFactor" INTEGER NOT NULL,
+    "due" TEXT NOT NULL,
+    "createdAt" TEXT NOT NULL,
+    "easeFactor" DOUBLE PRECISION NOT NULL,
     "markHistory" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "dataId" TEXT NOT NULL,
 
-    CONSTRAINT "SR_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Card" (
-    "id" TEXT NOT NULL,
-    "data" TEXT NOT NULL,
-    "SRId" TEXT NOT NULL,
-
-    CONSTRAINT "Card_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "SpacedRepetition_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -83,7 +76,7 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
 -- AddForeignKey
-ALTER TABLE "Card" ADD CONSTRAINT "Card_SRId_fkey" FOREIGN KEY ("SRId") REFERENCES "SR"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "SpacedRepetition" ADD CONSTRAINT "SpacedRepetition_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

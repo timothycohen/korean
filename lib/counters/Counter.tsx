@@ -60,6 +60,17 @@ TODO:
   - include random nouns that aren't related to the noun / measure word / number
 */
 
+export type CounterSerializable = {
+  counterKo: string;
+  counterEn: string;
+  desc: string;
+  numberType: string;
+  countableKo: string | undefined;
+  countableEn: string | undefined;
+  exampleKo: string;
+  exampleEn: string;
+};
+
 export default class Counter {
   #counter: CounterObject;
   #counterExample: CounterExample;
@@ -167,7 +178,7 @@ export default class Counter {
       this.countableEn ? pluralize(this.countableEn, this.#number.number) : undefined
     );
   }
-  toObject() {
+  toObject(): CounterSerializable {
     return {
       countableEn: this.countableEn,
       countableKo: this.countableKo,
