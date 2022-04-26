@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import SignInOutBtn from 'lib/components/auth/SignInOutBtn';
 import styled from '@mui/system/styled';
 import Image from 'next/image';
 
@@ -57,19 +56,19 @@ export default function Home(): JSX.Element {
           <Link href="/colors" passHref>
             <LinkPreview>
               <span>Colors</span>
-              <Image src="/images/colors.png" width={500} height={375} alt="" />
+              <Image src="/images/colors.png" width={500} height={379} alt="" />
             </LinkPreview>
           </Link>
           <Link href="/numbers" passHref>
             <LinkPreview>
               <span>Numbers</span>
-              <Image src="/images/numbers.png" width={500} height={375} alt="" />
+              <Image src="/images/numbers.png" width={500} height={379} alt="" />
             </LinkPreview>
           </Link>
           <Link href="/time" passHref>
             <LinkPreview>
               <span>Time</span>
-              <Image src="/images/time.png" width={500} height={375} alt="" />
+              <Image src="/images/time.png" width={500} height={379} alt="" />
             </LinkPreview>
           </Link>
         </FinishedContainer>
@@ -81,7 +80,6 @@ export default function Home(): JSX.Element {
         <Container>
           <h2>Protected Routes</h2>
           <Link href="/test/protected">Client Rendered</Link>
-          <SignInOutBtn />
         </Container>
       </main>
     </Page>
