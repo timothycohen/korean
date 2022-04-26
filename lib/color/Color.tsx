@@ -5,7 +5,7 @@ export interface ColorMap {
 }
 
 // prettier-ignore
-const colorsArray: ColorMap[] = [
+export const colorsArray: ColorMap[] = [
   {hex: '#FFFFFF', Korean: '하얀색',			English: 'white'},
   {hex: '#000000', Korean: '까만색',			English: 'black'},
   {hex: '#F30502', Korean: '빨간색',			English: 'red'},

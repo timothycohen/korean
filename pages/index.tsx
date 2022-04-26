@@ -81,6 +81,10 @@ export default function Home(): JSX.Element {
           <h2>Protected Routes</h2>
           <Link href="/test/protected">Client Rendered</Link>
         </Container>
+        <Container>
+          <h2>Testing</h2>
+          <Link href="/test/notes">Markdown notes</Link>
+        </Container>
       </main>
     </Page>
   );
