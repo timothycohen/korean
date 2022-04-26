@@ -1,9 +1,10 @@
-import Button from '@mui/material/Button';
+import { useState } from 'react';
 import { type SpacedRepetition } from '@prisma/client';
 import { Counter } from 'lib/counters';
 import { Card, type ReviewingGrade } from 'lib/SR';
-import { useState } from 'react';
 import { getNextDueBody } from '@/pages/api/sr/getNextDue';
+import Buttons from './Buttons';
+import { WavePage, Input } from 'lib/components/styled';
 
 // initial sr is server rendered. afterwards, client sends http requests
 export default function Cards({ sr }: { sr?: SpacedRepetition }): JSX.Element | null {
@@ -60,25 +61,15 @@ export default function Cards({ sr }: { sr?: SpacedRepetition }): JSX.Element | 
     return sr;
   };
 
+  const { exampleEn, counterKo, countableEn, exampleKo, desc, counterEn, countableKo, numberType } =
+    card.data;
+  const markOptions = card.sr.markOptions;
+
   return (
-    <div>
-      {card.sr.markOptions.map(grade => {
-        return (
-          <Button
-            key={grade}
-            type="button"
-            variant="contained"
-            color="primary"
-            onClick={(): void => {
-              mark(grade as ReviewingGrade);
-            }}
-          >
-            {grade}
-          </Button>
-        );
-      })}
-      <p>{JSON.stringify(card.data.toObject())}</p>
-      <p>{JSON.stringify(card.sr.toObject())}</p>
-    </div>
+    <WavePage>
+      <h1>{exampleEn}</h1>
+      <Buttons markOptions={markOptions} onClick={(grade: ReviewingGrade): Promise<void> => mark(grade)} />
+      <Input />
+    </WavePage>
   );
 }
