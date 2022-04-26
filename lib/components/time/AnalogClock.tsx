@@ -4,7 +4,7 @@ import styled from '@mui/system/styled';
 type StyledProps = {
   theme?: CustomTheme;
   deg: number;
-  calcTransform: (deg: number) => string;
+  transformdeg: string;
 };
 
 // the width starts where its center should be. push everything over by 50% width per axis
@@ -14,7 +14,7 @@ const calcTop = (deg: number, width: number): string =>
 const calcLeft = (deg: number, width: number): string =>
   `calc(50% + calc(${width / 2}% * ${Math.sin(rad(deg))}))`;
 
-const MinuteMark = styled('div')(({ theme, deg, calcTransform }: StyledProps) => ({
+const MinuteMark = styled('div')(({ theme, deg, transformdeg }: StyledProps) => ({
   position: 'absolute',
   top: calcTop(deg, 0.85),
   left: calcLeft(deg, 0.85),
@@ -22,11 +22,11 @@ const MinuteMark = styled('div')(({ theme, deg, calcTransform }: StyledProps) =>
   height: `4%`,
   background: `linear-gradient(0deg, ${theme?.palette.primary.main} 70%, transparent 70%)`,
   transformOrigin: 'top left',
-  transform: calcTransform(deg),
+  transform: transformdeg,
   zIndex: 1,
 }));
 
-const HourMark = styled('div')(({ theme, deg, calcTransform }: StyledProps) => ({
+const HourMark = styled('div')(({ theme, deg, transformdeg }: StyledProps) => ({
   position: 'absolute',
   top: calcTop(deg, 2),
   left: calcLeft(deg, 2),
@@ -35,11 +35,11 @@ const HourMark = styled('div')(({ theme, deg, calcTransform }: StyledProps) => (
   backgroundColor: theme?.palette.primary.main,
   background: `linear-gradient(0deg, ${theme?.palette.primary.main} 80%, transparent 80%)`,
   transformOrigin: 'top left',
-  transform: calcTransform(deg),
+  transform: transformdeg,
   zIndex: 2,
 }));
 
-const MinuteHand = styled('div')(({ theme, deg, calcTransform }: StyledProps) => ({
+const MinuteHand = styled('div')(({ theme, deg, transformdeg }: StyledProps) => ({
   position: 'absolute',
   top: calcTop(deg, 1.5),
   left: calcLeft(deg, 1.5),
@@ -48,11 +48,11 @@ const MinuteHand = styled('div')(({ theme, deg, calcTransform }: StyledProps) =>
   backgroundColor: theme?.palette.primary.main,
   background: `linear-gradient(transparent 40%, ${theme?.palette.primary.main} 40%, ${theme?.palette.primary.main} 90%, transparent 90%)`,
   transformOrigin: 'top left',
-  transform: calcTransform(deg),
+  transform: transformdeg,
   zIndex: 3,
 }));
 
-const HourHand = styled('div')(({ theme, deg, calcTransform }: StyledProps) => ({
+const HourHand = styled('div')(({ theme, deg, transformdeg }: StyledProps) => ({
   position: 'absolute',
   top: calcTop(deg, 2.5),
   left: calcLeft(deg, 2.5),
@@ -61,7 +61,7 @@ const HourHand = styled('div')(({ theme, deg, calcTransform }: StyledProps) => (
   backgroundColor: theme?.palette.primary.main,
   background: `linear-gradient(transparent 45%, ${theme?.palette.primary.main} 45%, ${theme?.palette.primary.main} 90%, transparent 90%)`,
   transformOrigin: 'top left',
-  transform: calcTransform(deg),
+  transform: transformdeg,
   zIndex: 4,
 }));
 
@@ -99,11 +99,11 @@ export default function Clock({
       {[...Array(60)]
         .map((_, i): number => i * 6)
         .map((deg): JSX.Element => {
-          if (deg % 30 === 0) return <HourMark key={deg} deg={deg} calcTransform={calcTransform} />;
-          return <MinuteMark key={deg} deg={deg} calcTransform={calcTransform} />;
+          if (deg % 30 === 0) return <HourMark key={deg} deg={deg} transformdeg={calcTransform(deg)} />;
+          return <MinuteMark key={deg} deg={deg} transformdeg={calcTransform(deg)} />;
         })}
-      <HourHand deg={hourDeg} calcTransform={calcTransform} />
-      <MinuteHand deg={minDeg} calcTransform={calcTransform} />
+      <HourHand deg={hourDeg} transformdeg={calcTransform(hourDeg)} />
+      <MinuteHand deg={minDeg} transformdeg={calcTransform(minDeg)} />
     </div>
   );
 }
