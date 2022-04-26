@@ -1,9 +1,11 @@
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { HangulToColor, ColorToHangul } from 'lib/components/color';
 import { DirectionBtn } from 'lib/components/styled';
-import { Color } from 'lib/color';
 import styled from '@emotion/styled';
+
+import { type Color } from '@/pages/api/color/getColor';
+const path = '/api/color/getColor';
 
 const DirectionButtonContainer = styled('div')({
   position: 'absolute',
@@ -11,37 +13,65 @@ const DirectionButtonContainer = styled('div')({
   top: 'calc(1rem + 25px)',
 });
 
-export default function ColorsPage(): JSX.Element | null {
+export async function getServerSideProps(): Promise<{
+  props: {
+    colorProp: Color;
+    nextColorProp: Color;
+  };
+}> {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}${path}`);
+  const { color, nextColor } = (await res.json()) as {
+    color: { color: Color };
+    nextColor: { color: Color };
+  };
+
+  return {
+    props: {
+      colorProp: color.color,
+      nextColorProp: nextColor.color,
+    },
+  };
+}
+
+const getNewColor = async (oldColorHex: String): Promise<Color> => {
+  const res = await fetch(path, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ oldColorHex }),
+  });
+
+  const {
+    color: { color },
+  } = (await res.json()) as { color: { color: Color } };
+
+  return color;
+};
+
+export default function ColorsPage({
+  colorProp,
+  nextColorProp,
+}: {
+  colorProp: Color;
+  nextColorProp: Color;
+  ColorProp: Color;
+}): JSX.Element {
   // toggles
   const [direction, setDirection] = useState<'colorToHangul' | 'hangulToColor'>('hangulToColor');
   const [showKey, setShowKey] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  // set initial server state
-  const [color, setColor] = useState<Color | null>(null);
-  const [nextColor, setNextColor] = useState<Color | null>(null);
+  // set initial client state from server side props
+  const [color, setColor] = useState<Color>(colorProp);
+  const [nextColor, setNextColor] = useState<Color>(nextColorProp);
 
-  // update initial client state
-  useEffect((): void => {
-    let color = new Color();
-    while (color.English === 'white') {
-      color = new Color();
-    }
-    setColor(color);
-    setNextColor(new Color());
-  }, [setColor]);
-
-  // state on server will be null until useEffect
-  if (!color || !nextColor) return null;
-
-  const updateColor = (): void => {
-    const oldNextColor = nextColor;
-    let newColor = oldNextColor;
-    while (newColor.hex === oldNextColor.hex) {
-      newColor = new Color();
-    }
-    setColor(oldNextColor);
-    setNextColor(newColor);
+  // hit the api for each new color
+  const updateColor = async (): Promise<void> => {
+    getNewColor(nextColor.hex).then(newColor => {
+      setColor(nextColor);
+      setNextColor(newColor);
+    });
   };
 
   const props = {
