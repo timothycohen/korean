@@ -1,6 +1,8 @@
-import styled from '@emotion/styled';
+import { CustomTheme } from '@/styles/theme/lightTheme';
+import styled from '@mui/system/styled';
 
 type StyledProps = {
+  theme?: CustomTheme;
   deg: number;
   calcTransform: (deg: number) => string;
 };
@@ -18,7 +20,7 @@ const MinuteMark = styled('div')(({ theme, deg, calcTransform }: StyledProps) =>
   left: calcLeft(deg, 0.85),
   width: `.85%`,
   height: `4%`,
-  background: `linear-gradient(0deg, ${theme.palette.primary.main} 70%, transparent 70%)`,
+  background: `linear-gradient(0deg, ${theme?.palette.primary.main} 70%, transparent 70%)`,
   transformOrigin: 'top left',
   transform: calcTransform(deg),
   zIndex: 1,
@@ -30,8 +32,8 @@ const HourMark = styled('div')(({ theme, deg, calcTransform }: StyledProps) => (
   left: calcLeft(deg, 2),
   width: `2%`,
   height: `7%`,
-  backgroundColor: theme.palette.primary.main,
-  background: `linear-gradient(0deg, ${theme.palette.primary.main} 80%, transparent 80%)`,
+  backgroundColor: theme?.palette.primary.main,
+  background: `linear-gradient(0deg, ${theme?.palette.primary.main} 80%, transparent 80%)`,
   transformOrigin: 'top left',
   transform: calcTransform(deg),
   zIndex: 2,
@@ -43,8 +45,8 @@ const MinuteHand = styled('div')(({ theme, deg, calcTransform }: StyledProps) =>
   left: calcLeft(deg, 1.5),
   width: `1.5%`,
   height: `100%`,
-  backgroundColor: theme.palette.primary.main,
-  background: `linear-gradient(transparent 40%, ${theme.palette.primary.main} 40%, ${theme.palette.primary.main} 90%, transparent 90%)`,
+  backgroundColor: theme?.palette.primary.main,
+  background: `linear-gradient(transparent 40%, ${theme?.palette.primary.main} 40%, ${theme?.palette.primary.main} 90%, transparent 90%)`,
   transformOrigin: 'top left',
   transform: calcTransform(deg),
   zIndex: 3,
@@ -56,8 +58,8 @@ const HourHand = styled('div')(({ theme, deg, calcTransform }: StyledProps) => (
   left: calcLeft(deg, 2.5),
   width: `2.5%`,
   height: `90%`,
-  backgroundColor: theme.palette.primary.main,
-  background: `linear-gradient(transparent 45%, ${theme.palette.primary.main} 45%, ${theme.palette.primary.main} 90%, transparent 90%)`,
+  backgroundColor: theme?.palette.primary.main,
+  background: `linear-gradient(transparent 45%, ${theme?.palette.primary.main} 45%, ${theme?.palette.primary.main} 90%, transparent 90%)`,
   transformOrigin: 'top left',
   transform: calcTransform(deg),
   zIndex: 4,
@@ -68,7 +70,7 @@ const Circle = styled('div')(({ theme }) => ({
   width: '100%',
   height: '100%',
   borderRadius: '100%',
-  border: `3px solid ${theme.palette.primary.main}`,
+  border: `3px solid ${theme?.palette.primary.main}`,
   zIndex: 5,
 }));
 

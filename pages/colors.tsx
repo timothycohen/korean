@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { HangulToColor, ColorToHangul } from 'lib/components/color';
 import { DirectionBtn } from 'lib/components/styled';
-import styled from '@emotion/styled';
+import styled from '@mui/system/styled';
 
 import { type Color } from '@/pages/api/color/getColor';
 const path = '/api/color/getColor';

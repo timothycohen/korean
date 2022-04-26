@@ -1,13 +1,14 @@
-import styled from '@emotion/styled';
+import { CustomTheme } from '@/styles/theme/lightTheme';
+import styled from '@mui/system/styled';
 
-const DigitalClockStyled = styled('div')(({ theme, size }) => ({
+const DigitalClockStyled = styled('div')(({ theme, size }: { theme?: CustomTheme; size: string }) => ({
   display: 'grid',
   placeItems: 'center',
   height: `${size}px`,
   width: `${size}px`,
   fontFamily: 'Digital',
-  color: theme.palette.primary.main,
-  fontSize: size / 5,
+  color: theme?.palette.primary.main,
+  fontSize: parseInt(size) / 5,
 }));
 
 export default function DigitalClock({

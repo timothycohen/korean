@@ -1,6 +1,6 @@
 import AnalogClock from './AnalogClock';
 import DigitalClock from './DigitalClock';
-import styled from '@emotion/styled';
+import styled from '@mui/system/styled';
 import { useState } from 'react';
 
 const UnstyledButton = styled('button')({

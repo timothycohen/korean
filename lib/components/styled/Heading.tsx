@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from '@mui/system/styled';
 
 const Heading = styled('h1')(({ theme }) => ({
   fontSize: '2rem',

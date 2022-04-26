@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import styled from '@emotion/styled';
+import styled from '@mui/system/styled';
 import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';

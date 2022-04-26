@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from '@mui/system/styled';
 
 const ParsedUserInput = styled('h2')(({ theme }) => ({
   fontSize: 'clamp(2rem, 1.25rem + 3.3333vw, 3rem)',
