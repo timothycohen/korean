@@ -1,19 +1,17 @@
-## Tools to learn Korean
+# Tools to learn Korean 🇰🇷
 
-### Numbers
-- [ ] fix input pulling keyboard focus
-- [ ] Make UI fill more space
+Work in progress.
 
-### Colors
-- [ ] check a11y
+## Currently includes:
 
-### Counters
+&nbsp;   🌈    **한글 ↔️ Color**
 
-### Spaced Repetition Cards
+&nbsp;   #️⃣    **Numbers. Sino, Native, and more!**
 
-### Todos
-style main page
-add nav
-/ should focus on the input box
-colors unit testing
-playwright e2e testing
+&nbsp;   ⌛    **Time**
+
+### Plans:
+
+- spaced repetition system with counters
+- notes on each of the topics to accompany the tools
+- whatever else strikes me as useful!

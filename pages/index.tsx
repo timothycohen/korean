@@ -5,6 +5,10 @@ import Image from 'next/image';
 
 const Page = styled('div')(({ theme }) => ({}));
 
+const Title = styled('h1')({
+  padding: '1.5rem',
+});
+
 const Container = styled('div')({
   display: 'grid',
   placeContent: 'flex-start',
@@ -51,7 +55,7 @@ export default function Home(): JSX.Element {
       </Head>
 
       <main>
-        <h1>TCo&apos;s Korean Apps</h1>
+        <Title>TCo&apos;s Korean Apps</Title>
         <FinishedContainer>
           <Link href="/colors" passHref>
             <LinkPreview>
@@ -72,19 +76,6 @@ export default function Home(): JSX.Element {
             </LinkPreview>
           </Link>
         </FinishedContainer>
-        <Container>
-          <h2>Sandbox</h2>
-          <Link href="/cards">Cards</Link>
-          <Link href="/counters">Counters</Link>
-        </Container>
-        <Container>
-          <h2>Protected Routes</h2>
-          <Link href="/test/protected">Client Rendered</Link>
-        </Container>
-        <Container>
-          <h2>Testing</h2>
-          <Link href="/test/notes">Markdown notes</Link>
-        </Container>
       </main>
     </Page>
   );
