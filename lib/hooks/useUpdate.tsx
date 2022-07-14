@@ -6,6 +6,7 @@ const useUpdate = (func: () => void, deps: any[]) => {
   useEffect(() => {
     if (didMount.current) func();
     else didMount.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [func, ...deps]);
 };
 
