@@ -1,0 +1,25 @@
+#!/bin/bash
+
+GREEN='\033[0;32m'
+NO_COLOR='\033[0m'
+
+HEADER='#!/bin/bash\n\nset -e\n\n'                             # add once to each .git/hooks/hook so it exits if any of the source hooks fail
+GITHOOKS_FOLDER="$(cd "$(dirname "$0")" && pwd)"               # source folder for the git hooks
+GIT_HOOKS_FOLDER="$(cd $GITHOOKS_FOLDER/../.git/hooks && pwd)" # .git/hooks folder where git will execute from
+REL_PATH='"$(dirname -- "$0")"/../../.githooks'                # to call the source file from inside .git/hooks/hook
+
+init_hooks() {
+  for GITHOOK in "$@"; do
+    if [ -z "$GIT_HOOK" ]; then
+      local GIT_HOOK=$1
+      printf "${HEADER}" >"$GIT_HOOKS_FOLDER/$GIT_HOOK"
+      chmod 755 "$GIT_HOOKS_FOLDER/$GIT_HOOK"
+    else
+      echo "$REL_PATH/$GITHOOK" >>"$GIT_HOOKS_FOLDER/$GIT_HOOK"
+      printf "${GREEN}✓${NO_COLOR} initialized ${GIT_HOOK} hook: ${GITHOOK}\n"
+    fi
+  done
+}
+
+# todo find all hooks in .githooks folder and run this automatically
+init_hooks pre-commit pre-commit/no_non_ASCII pre-commit/format pre-commit/lint
