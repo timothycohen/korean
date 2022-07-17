@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Run prettier and eslint only on staged files
+
+# Allow both formatting and linting to complete even if the other fails
+exit_code=0
+
+# Diff filters: Added (A), Copied (C), Modified (M), Renamed (R)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+[ -z "$STAGED_FILES" ] && exit "$exit_code"
+
+# Move to root
+cd "$(dirname "$0")/../../"
+
+# Because this runs on all git diffed files, its necessary to filter for supported files
+FILES_TO_FORMAT=$(echo $STAGED_FILES | xargs -n 1 | grep -E '\.(svelte|js|ts|jsx|tsx|json|css|less|scss|html|vue|graphql|md|yaml|flow|handlebars|hbs|ember)$')
+FILES_TO_LINT=$(echo $STAGED_FILES | xargs -n 1 | grep -E '\.(svelte|js|ts|jsx|tsx|json)$')
+
+# Format
+printf '\n==========\nformatting\n==========\n'
+npx prettier --list-different --write --plugin-search-dir=. ${FILES_TO_FORMAT}
+exit_code=$(($exit_code + $?))
+
+# Lint
+printf '\n=======\nlinting\n=======\n'
+npx eslint --fix --max-warnings 0 ${FILES_TO_LINT}
+exit_code=$(($exit_code + $?))
+
+# Add any changed files back to staging
+echo "$STAGED_FILES" | xargs git add
+
+exit "$exit_code"

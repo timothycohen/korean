@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Move to root
+cd "$(dirname "$0")/../../"
+
+printf '\n===========\ne2e testing\n===========\n'
+npx playwright test
+exit $?
