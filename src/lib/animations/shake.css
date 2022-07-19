@@ -1,0 +1,21 @@
+@keyframes shake {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0%);
+  }
+  25% {
+    transform: translateX(3%);
+  }
+  75% {
+    transform: translateX(-3%);
+  }
+}
+
+.shake {
+  animation-name: shake;
+  animation-play-state: running;
+  animation-duration: 150ms;
+  animation-iteration-count: infinite;
+  transform-origin: center center;
+}

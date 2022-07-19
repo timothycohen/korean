@@ -18,16 +18,16 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
 
 ### pre-pushed: github branch protection rules
 
-- disallow pushing to main directly
+- disallow pushing to main directly (require PR)
 
-### pre-pull-request: github actions
+### ~~pre-pull-request: github actions~~
 
-- prompt for pull request template
-- prompt changelog template
+- ~~prompt for pull request template~~
+- ~~prompt changelog template~~
 
-### pre-issue: github actions
+### ~~pre-issue: github actions~~
 
-- prompt with issue template
+- ~~prompt with issue template~~
 
 ## 3. :white_check_mark: backend
 
@@ -79,7 +79,7 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
   - :white_check_mark: add the oauth client and secrets from the providers into the .env
   - :white_check_mark: add the callback uri from supabase to the provider
 
-### :white_check_mark: Initialize the supabase client
+### Initialize the supabase client
 
 - [ ] Create a basic login/logout/reset password with protected data on it to verify it's working
 
@@ -90,7 +90,7 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
 - [ ] Set up handle and getSession
   - The svelte store should not save the user's access token. That should only be available server side. Therefore, I'll probably split that off in a handle hook and then pop the rest of the data in a svelte store
 
-## 7. colors
+## :white_check_mark: 7. colors
 
 ## 8. numbers
 

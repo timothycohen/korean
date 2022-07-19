@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AppPreviewLink from '$components/AppPreviewLink.svelte';
+  import AppPreviewLink from '$common/components/AppPreviewLink.svelte';
   import { colors, time, numbers } from '$assets/images';
 
   const apps = [

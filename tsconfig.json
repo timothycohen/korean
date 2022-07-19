@@ -10,24 +10,24 @@
     "sourceMap": true,
     "strict": true,
     "paths": {
+      "$animations": ["src/lib/animations"],
+      "$animations/*": ["src/lib/animations/*"],
       "$api": ["src/routes/api"],
       "$api/*": ["src/routes/api/*"],
       "$assets": ["src/assets"],
       "$assets/*": ["src/assets/*"],
       "$backend": ["src/backend"],
       "$backend/*": ["src/backend/*"],
-      "$components": ["src/lib/components"],
-      "$components/*": ["src/lib/components/*"],
+      "$color": ["src/lib/color"],
+      "$color/*": ["src/lib/color/*"],
+      "$common": ["src/lib/common"],
+      "$common/*": ["src/lib/common/*"],
       "$db": ["src/db"],
       "$db/*": ["src/db/*"],
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
       "$routes": ["src/routes"],
-      "$routes/*": ["src/routes/*"],
-      "$stores": ["src/lib/stores"],
-      "$stores/*": ["src/lib/stores/*"],
-      "$transitions": ["static/transitions"],
-      "$transitions/*": ["static/transitions/*"]
+      "$routes/*": ["src/routes/*"]
     },
     "types": ["vitest/globals"]
   }

@@ -3,12 +3,12 @@ import { type PlaywrightTestConfig, devices } from '@playwright/test';
 const config: PlaywrightTestConfig = {
   webServer: {
     command: 'pnpm run build && pnpm run preview',
-    port: 3000,
+    port: 5173,
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
   },
   use: {
-    baseURL: 'http://localhost:3000/',
+    baseURL: 'http://localhost:5173/',
     trace: 'on-first-retry',
   },
   forbidOnly: !!process.env.CI,
