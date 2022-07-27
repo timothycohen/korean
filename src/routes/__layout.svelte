@@ -1,6 +1,6 @@
 <script lang="ts">
-  import '/static/global.css';
-  import '/static/tailwind.css';
+  import '$assets/global.css';
+  import '$assets/tailwind.css';
   import '$assets/fonts/hostedFonts.css';
 </script>
 
