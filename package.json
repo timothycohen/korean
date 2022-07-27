@@ -24,6 +24,7 @@
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@types/cookie": "^0.5.1",
+    "@types/google.accounts": "^0.0.2",
     "@types/node": "^18.0.6",
     "@types/pluralize": "^0.0.29",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
@@ -54,8 +55,12 @@
     "npm": "^8.5.0"
   },
   "dependencies": {
+    "@lucia-sveltekit/adapter-supabase": "^0.2.5",
     "@supabase/supabase-js": "^1.35.4",
     "cookie": "^0.5.0",
-    "daisyui": "^2.19.0"
+    "daisyui": "^2.19.0",
+    "dotenv": "^16.0.1",
+    "google-auth-library": "^8.1.1",
+    "lucia-sveltekit": "^0.3.2"
   }
 }

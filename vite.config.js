@@ -9,6 +9,7 @@ const config = {
       $animations: path.resolve('src/lib/animations'),
       $api: path.resolve('src/routes/api'),
       $assets: path.resolve('src/assets'),
+      $auth: path.resolve('src/auth'),
       $backend: path.resolve('src/backend'),
       $color: path.resolve('src/lib/color'),
       $common: path.resolve('src/lib/common'),

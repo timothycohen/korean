@@ -16,6 +16,8 @@
       "$api/*": ["src/routes/api/*"],
       "$assets": ["src/assets"],
       "$assets/*": ["src/assets/*"],
+      "$auth": ["src/auth"],
+      "$auth/*": ["src/auth/*"],
       "$backend": ["src/backend"],
       "$backend/*": ["src/backend/*"],
       "$color": ["src/lib/color"],
@@ -29,6 +31,6 @@
       "$routes": ["src/routes"],
       "$routes/*": ["src/routes/*"]
     },
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "google.accounts"]
   }
 }
