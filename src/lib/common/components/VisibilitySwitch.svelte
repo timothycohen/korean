@@ -11,7 +11,7 @@
   <label for={name}>
     {label}
   </label>
-  <input type="checkbox" {name} class="toggle toggle-{size}" bind:checked />
+  <input type="checkbox" {name} class="toggle toggle-{size} toggle-primary" bind:checked />
 </div>
 
 <style>
@@ -31,5 +31,6 @@
   label {
     grid-area: label;
     text-transform: capitalize;
+    color: var(--primary2);
   }
 </style>

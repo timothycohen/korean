@@ -8,26 +8,23 @@
 </script>
 
 <Button on:click>
-  <div>
+  <div class="container">
     <span class="hangul">{labelLeft}</span>
-    <div class="{direction} icon"><Icon name="right" stroke="currentColor" color="currentColor" height="75%" /></div>
-    <span class="english">{labelRight}</span>
+    <div class="{direction} icon">
+      <Icon name="right" stroke="currentColor" color="currentColor" height="75%" />
+    </div>
+    <span class="english" style="font-size: {(7.5 / labelRight.length) * 0.7}rem;">{labelRight}</span>
   </div>
 </Button>
 
 <style>
-  div {
+  .container {
     display: grid;
-    grid-auto-flow: column;
-    padding: 4px 12px;
-    justify-items: center;
+    grid-template-columns: 2.5rem 1.5rem 1fr;
+    padding: 0 0.75rem;
     align-items: center;
-    width: 100%;
-    height: 100%;
   }
   .icon {
-    padding: 0;
-    margin: 0;
     transition: transform 400ms ease-in-out;
     transform-origin: center;
   }
@@ -37,11 +34,9 @@
     font-weight: 700;
   }
   .english {
-    text-transform: uppercase;
     font-family: BioRhyme;
     font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.75;
+    text-transform: uppercase;
   }
   .left {
     transform: rotate(180deg);

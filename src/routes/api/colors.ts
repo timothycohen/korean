@@ -1,4 +1,5 @@
 import { Color } from '$backend/color';
+import type { RequestHandler } from '@sveltejs/kit';
 
 export const getColors = (count: number) => {
   // don't start with white to prevent confusion
@@ -21,10 +22,10 @@ export const getColors = (count: number) => {
   return colors;
 };
 
-export async function GET({ url }: { url: URL }) {
+export const GET: RequestHandler = ({ url }) => {
   const count = Math.max(1, Math.min(100, Number.parseInt(url.searchParams.get('count') ?? '100', 10)));
   return {
     status: 200,
-    body: getColors(count),
+    body: JSON.stringify(getColors(count)),
   };
-}
+};

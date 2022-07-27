@@ -16,3 +16,11 @@ declare namespace App {
   // interface Platform {}
   // interface Stuff {}
 }
+
+// copy formatting from node_modules/svelte-check/dist/src/svelte-jsx.d.ts
+declare namespace svelte.JSX {
+  // eslint-disable-next-line
+  interface DOMAttributes<T extends EventTarget> {
+    onoutclick?: (e: CustomEvent<'outclick'>) => void;
+  }
+}

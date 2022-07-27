@@ -52,4 +52,6 @@ select {
   --gray4: #414141;
   --gray5: #2e2e2e;
   --gray6: #000000;
+
+  --shimmer: brightness(75%) blur(2px);
 }
