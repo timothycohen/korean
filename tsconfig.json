@@ -26,6 +26,8 @@
       "$db/*": ["src/db/*"],
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
+      "$number": ["src/lib/number"],
+      "$number/*": ["src/lib/number/*"],
       "$routes": ["src/routes"],
       "$routes/*": ["src/routes/*"]
     },

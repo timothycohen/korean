@@ -1,4 +1,4 @@
-import { SinoNumber, NativeNumber } from '$backend/number';
+import { SinoNumber, NativeNumber } from '$number/logic';
 import { isHangul } from '$backend/utils';
 
 // military time is used the same way it is in the States (train/bus schedules, etc.), but even when it is not used, it's usually spoken in 12 hour form.
