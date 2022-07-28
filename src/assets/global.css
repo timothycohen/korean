@@ -1,0 +1,57 @@
+* {
+  font-family: 'BioRhyme', 'SpaceMono', 'Digital', 'Arial', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"',
+    'Roboto', '"Helvetica Neue"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"';
+}
+
+html,
+body {
+  box-sizing: border-box;
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+:root {
+  /* Color palette: https://paletton.com/#uid=73V1-0k9OsO2vM+5N-uerodiMjV */
+  --complement1: #cdcfdd;
+  --complement2: #9ea1bb;
+  --complement3: #74799e;
+  --complement4: #515785;
+  --complement5: #353c6d;
+
+  --secondary1: #f6e3e7;
+  --secondary2: #edc2cc;
+  --secondary3: #d392a1;
+  --secondary4: #b26174;
+  --secondary5: #923c50;
+  --primary1: #fff9eb;
+  --primary2: #fff2d1;
+  --primary3: #e6d29f;
+  --primary4: #c1a96a;
+  --primary5: #9f8541;
+
+  --steel1: #e5e7eb;
+  --steel2: #d1d5db;
+  --steel3: #6b7280;
+
+  --sec1: #e5f1de;
+  --sec2: #cae4ba;
+  --sec3: #a2c98b;
+  --sec4: #79a95c;
+  --sec5: #578b39;
+  --gray1: #ffffff;
+  --gray2: #f5f5f5;
+  --gray3: #c9c9c9;
+  --gray4: #414141;
+  --gray5: #2e2e2e;
+  --gray6: #000000;
+
+  --shimmer: brightness(75%) blur(2px);
+}

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Move to root
+cd "$(dirname "$0")/../../"
+
+printf '\n============\nunit testing\n============\n'
+npx vitest run
+exit $?

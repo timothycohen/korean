@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ ! -w ".git" ]; then
+  echo "Unable to write to .git folder. Does it exist with correct permissions?"
+  exit 1
+fi
+
 GREEN='\033[0;32m'
 NO_COLOR='\033[0m'
 
@@ -22,4 +27,5 @@ init_hooks() {
 }
 
 # todo find all hooks in .githooks folder and run this automatically
-init_hooks pre-commit pre-commit/no_non_ASCII pre-commit/format pre-commit/lint
+init_hooks pre-commit pre-commit/no_non_ASCII pre-commit/format_lint pre-commit/check
+init_hooks pre-push pre-push/reinstall pre-push/unit pre-push/e2e

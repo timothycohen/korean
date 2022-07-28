@@ -1,0 +1,18 @@
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+.breathe {
+  animation-name: breathe;
+  animation-play-state: running;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  transform-origin: center center;
+  animation-timing-function: jump-both;
+}
