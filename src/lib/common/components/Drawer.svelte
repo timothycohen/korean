@@ -1,18 +1,19 @@
 <script lang="ts">
   import { slide } from 'svelte/transition';
-  import type { Writable } from 'svelte/store';
   import { clickOutside } from '$common/actions';
+  import type { drawerStore } from '$common/stores';
 
-  export let drawerIsOpen: Writable<boolean>;
+  export let drawer: ReturnType<typeof drawerStore>;
+  export let selectorsImmuneToClickOutside: string[] = [];
 </script>
 
-{#if $drawerIsOpen}
+{#if $drawer}
   <div
     transition:slide={{ duration: 300 }}
     class="bottom_drawer"
-    use:clickOutside
-    on:outclick={() => {
-      $drawerIsOpen = false;
+    use:clickOutside={selectorsImmuneToClickOutside.map(s => document.querySelector(s))}
+    on:outclick|stopPropagation={() => {
+      drawer.close();
     }}
   >
     <slot />
@@ -25,9 +26,13 @@
     background-color: var(--secondary5);
     color: var(--secondary1);
     bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
+    left: 0;
     width: 100%;
-    height: 25rem;
+    height: 65%;
+  }
+  @media only screen and (min-width: 650px) {
+    .bottom_drawer {
+      height: 25rem;
+    }
   }
 </style>

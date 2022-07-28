@@ -56,3 +56,39 @@ export const debounceStore = <T>(duration: number) => {
     trigger,
   };
 };
+
+export const drawerStore = (focusableOnOpen?: string, focusableOnClose?: string) => {
+  const store = writable<boolean>(false);
+  const open = () => {
+    store.set(true);
+    setTimeout(() => {
+      if (focusableOnOpen) {
+        const focusTrap = document.querySelector(focusableOnOpen) as HTMLInputElement | undefined;
+        focusTrap?.focus();
+      }
+    }, 0);
+    return true;
+  };
+
+  const close = () => {
+    store.set(false);
+    if (focusableOnClose) {
+      const focusTrap = document.querySelector(focusableOnClose) as HTMLInputElement | undefined;
+      focusTrap?.focus();
+    }
+    return false;
+  };
+
+  const toggle = () => {
+    store.update(s => {
+      return s ? close() : open();
+    });
+  };
+
+  return {
+    ...store,
+    open,
+    close,
+    toggle,
+  };
+};
