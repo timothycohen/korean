@@ -21,6 +21,6 @@ declare namespace App {
 declare namespace svelte.JSX {
   // eslint-disable-next-line
   interface DOMAttributes<T extends EventTarget> {
-    onoutclick?: (e: CustomEvent<'outclick'>) => void;
+    onoutclick?: (e: CustomEvent<'outclick'>, immuneNodes: Array<HTMLElement | null> | undefined) => void;
   }
 }
