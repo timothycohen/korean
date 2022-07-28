@@ -7,7 +7,7 @@
   export let name = label;
 </script>
 
-<div class="wrapper" style="--areas: {areas};">
+<div class="visibilitySwitchWrapper" style="--areas: {areas};">
   <label for={name}>
     {label}
   </label>
@@ -15,7 +15,7 @@
 </div>
 
 <style>
-  .wrapper {
+  .visibilitySwitchWrapper {
     display: grid;
     grid-auto-flow: column;
     align-items: center;

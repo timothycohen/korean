@@ -47,7 +47,8 @@
 
 <style>
   .clock {
-    position: absolute;
+    position: relative;
+    border-radius: 50%;
   }
   .circle {
     position: absolute;
