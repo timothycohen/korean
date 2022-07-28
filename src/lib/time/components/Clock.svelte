@@ -10,17 +10,24 @@
 </script>
 
 <button on:click={view.toggle}>
-  {#if $view === 'analog'}
-    <AnalogClock {size} {hour} {minute} />
-  {:else}
-    <DigitalClock {size} {hour} {minute} />
-  {/if}
+  {#key `${hour}${minute}`}
+    {#if $view === 'analog'}
+      <AnalogClock {size} {hour} {minute} />
+    {:else}
+      <DigitalClock {size} {hour} {minute} />
+    {/if}
+  {/key}
 </button>
 
 <style>
   button {
     outline: none;
     border: none;
-    background-color: transparanet;
+    background-color: transparent;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  button:hover {
+    background-color: hsla(43.4, 42%, 75%, 0.1);
   }
 </style>

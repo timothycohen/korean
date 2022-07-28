@@ -25,55 +25,53 @@
   <link rel="icon" href="/favicon.svg" />
 </svelte:head>
 
-<div>
-  <WavePage shimmer={$drawer}>
-    <header>
-      <h1>Korean Numbers</h1>
+<WavePage shimmer={$drawer}>
+  <header>
+    <h1>Korean Numbers</h1>
 
-      <button class="settingsBtn" on:click={drawer.toggle}> Settings </button>
-    </header>
+    <button class="settingsBtn" on:click={drawer.toggle}> Settings </button>
+  </header>
 
-    <main style={`filter: ${$drawer ? 'var(--shimmer)' : ''}`}>
-      <Display />
-      <!-- ariaLabel={$direction === 'userHanGoalNum' ? 'change to number input' : 'change to hangul input'} -->
+  <main style={`filter: ${$drawer ? 'var(--shimmer)' : ''}`}>
+    <Display />
+    <!-- ariaLabel={$direction === 'userHanGoalNum' ? 'change to number input' : 'change to hangul input'} -->
 
-      <Input />
-      <div class="togglesContainer">
-        <VisibilitySwitch bind:checked={$showGoalAnswer} label="answer" labelPosition="right" size="lg" />
-        <p class="hint">{$hint ?? ' '}</p>
-        <DirectionBtn
-          on:click={direction.toggle}
-          direction={$direction === 'userHanGoalNum' ? 'left' : 'right'}
-          labelLeft="한글"
-          labelRight="123"
-        />
-      </div>
-    </main>
+    <Input />
+    <div class="togglesContainer">
+      <VisibilitySwitch bind:checked={$showGoalAnswer} label="answer" labelPosition="right" size="lg" />
+      <p class="hint">{$hint ?? ' '}</p>
+      <DirectionBtn
+        on:click={direction.toggle}
+        direction={$direction === 'userHanGoalNum' ? 'left' : 'right'}
+        labelLeft="한글"
+        labelRight="123"
+      />
+    </div>
+  </main>
 
-    <Drawer {drawer} selectorsImmuneToClickOutside={['.settingsBtn']}>
-      <div class="drawer-topbar">
-        <h1>Settings</h1>
-        <button on:click={() => drawer.close()}>Close</button>
-      </div>
+  <Drawer {drawer} selectorsImmuneToClickOutside={['.settingsBtn']}>
+    <div class="drawer-topbar">
+      <h1>Settings</h1>
+      <button on:click={() => drawer.close()}>Close</button>
+    </div>
 
-      <div class="select-positioner">
-        <HangulNumberTypeSelect />
-      </div>
-      <RangeSlider />
+    <div class="select-positioner">
+      <HangulNumberTypeSelect />
+    </div>
+    <RangeSlider />
 
-      <div class="drawer-toggles">
-        <VisibilitySwitch label="answer" labelPosition="right" bind:checked={$showGoalAnswer} />
-        <DirectionBtn
-          on:click={direction.toggle}
-          direction={$direction === 'userHanGoalNum' ? 'left' : 'right'}
-          labelLeft="한글"
-          labelRight="123"
-        />
-        <VisibilitySwitch label="Input as Hangul" labelPosition="right" bind:checked={$showParsedInput} />
-      </div>
-    </Drawer>
-  </WavePage>
-</div>
+    <div class="drawer-toggles">
+      <VisibilitySwitch label="answer" labelPosition="right" bind:checked={$showGoalAnswer} />
+      <DirectionBtn
+        on:click={direction.toggle}
+        direction={$direction === 'userHanGoalNum' ? 'left' : 'right'}
+        labelLeft="한글"
+        labelRight="123"
+      />
+      <VisibilitySwitch label="Input as Hangul" labelPosition="right" bind:checked={$showParsedInput} />
+    </div>
+  </Drawer>
+</WavePage>
 
 <style>
   header {
