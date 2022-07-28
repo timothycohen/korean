@@ -56,6 +56,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^1.35.4",
     "cookie": "^0.5.0",
-    "daisyui": "^2.20.0"
+    "daisyui": "^2.20.0",
+    "svelte-range-slider-pips": "^2.0.3"
   }
 }
