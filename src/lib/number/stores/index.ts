@@ -1,5 +1,5 @@
 import { derived, writable } from 'svelte/store';
-import { flagStore, drawerStore, debounceStore } from '$common/stores';
+import { flagStore, drawerStore, debounceStore, toggleStore } from '$common/stores';
 import { HangulNumber, type HangulNumberOptions } from '$number/logic';
 
 export const showParsedInput = flagStore(false);
@@ -9,22 +9,10 @@ export const userInput = writable('');
 export const previousInput = writable('');
 export const hint = debounceStore(1000);
 
-export const direction = (() => {
-  const store = writable<'userHanGoalNum' | 'userNumGoalHan'>('userNumGoalHan');
-
-  const toggle = () =>
-    store.update(s => {
-      s = s === 'userHanGoalNum' ? 'userNumGoalHan' : 'userHanGoalNum';
-      userInput.set('');
-      previousInput.set('');
-      return s;
-    });
-
-  return {
-    ...store,
-    toggle,
-  };
-})();
+export const direction = toggleStore('userNumGoalHan', 'userHanGoalNum', () => {
+  userInput.set('');
+  previousInput.set('');
+});
 
 export const goal = (() => {
   const num = HangulNumber.create('sino', 'cardinal').setRandom();

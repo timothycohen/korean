@@ -31,11 +31,19 @@ export const flagCounterStore = (on: boolean, initial: number, jump: number) => 
   };
 };
 
-export const toggleStore = <T>(one: T, two: T) => {
+export const toggleStore = <T>(one: T, two: T, toggleCB?: () => void) => {
   const store = writable<T>(one);
+
+  const toggle = () => {
+    store.update(d => {
+      d = d === one ? two : one;
+      if (toggleCB) toggleCB();
+      return d;
+    });
+  };
   return {
     ...store,
-    toggle: () => store.update(d => (d === one ? two : one)),
+    toggle,
   };
 };
 
