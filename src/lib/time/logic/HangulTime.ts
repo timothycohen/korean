@@ -1,5 +1,4 @@
 import { SinoNumber, NativeNumber } from '$number/logic';
-import { isHangul } from '$backend/utils';
 
 // military time is used the same way it is in the States (train/bus schedules, etc.), but even when it is not used, it's usually spoken in 12 hour form.
 // 오전 (ojeon)	AM
@@ -9,13 +8,17 @@ export default class HangulTime {
   hour: Hour;
   minute: Minute;
   hangul: string;
-  HHMM: string;
-  constructor({ hour, minute }: { hour?: Hour; minute?: Minute }) {
-    this.hour = hour ?? ((Math.floor(Math.random() * 12) + 1) as Hour);
-    this.minute = minute ?? (Math.floor(Math.random() * 60) as Minute);
+  HHMM: HHMM;
+  constructor({ hour, minute }: { hour?: Hour; minute?: Minute } = {}) {
+    this.hour = hour ?? HangulTime.randomHour();
+    this.minute = minute ?? HangulTime.randomMinute();
     this.hangul = HangulTime.toHangul(this.hour, this.minute);
     this.HHMM = HangulTime.toHHMM(this.hour, this.minute);
   }
+
+  static randomHour = () => (Math.floor(Math.random() * 12) + 1) as Hour;
+
+  static randomMinute = () => Math.floor(Math.random() * 60) as Minute;
 
   static toHangul = (hour: Hour, minute: Minute): string => {
     const koreanHour = new NativeNumber('counter').fromNumber(hour);
@@ -27,13 +30,20 @@ export default class HangulTime {
     }
   };
 
-  static toHHMM = (hour: Hour, minute: Minute): string => {
+  static toHHMM = (hour: Hour, minute: Minute): HHMM => {
     const formattedHour = hour < 10 ? `0${hour}` : hour;
     const formattedMinute = minute < 10 ? `0${minute}` : minute;
     return `${formattedHour}:${formattedMinute}`;
   };
 
-  static isValidHangul = (str: string): boolean => isHangul(str);
+  static isValidHangul = (str: string): boolean => {
+    if (str === '') return true;
+    if (str.match(/[!@#$%^&*(),.?":{}|<>]+/)) return false;
+    if (str.match(/[A-Z]+/)) return false;
+    if (str.match(/[a-z]+/)) return false;
+    if (str.match(/\d+/)) return false;
+    return true;
+  };
 
   static isValidHHMM = (time: string, option: 'possible' | 'complete' = 'possible'): boolean => {
     let valid: RegExp[];
@@ -67,15 +77,29 @@ export default class HangulTime {
     return answer;
   };
 
-  isMatch = (userTime: string): boolean => {
+  static checkIsMatch = (userTime: string, knownHHMM: HHMM): boolean => {
     if (!HangulTime.isValidHHMM(userTime, 'complete')) return false;
     const userHr = Number(userTime.split(':')[0]) as Hour;
     const userMin = Number(userTime.split(':')[1]) as Minute;
-    return HangulTime.toHHMM(userHr, userMin) === this.HHMM;
+    return HangulTime.toHHMM(userHr, userMin) === knownHHMM;
   };
+
+  static checkTwoMatch = (maybe_HHMM1: string, maybe_HHMM2: string) => {
+    if (!HangulTime.isValidHHMM(maybe_HHMM1, 'complete')) return false;
+    if (!HangulTime.isValidHHMM(maybe_HHMM2, 'complete')) return false;
+    const userHr1 = Number(maybe_HHMM1.split(':')[0]) as Hour;
+    const userMin1 = Number(maybe_HHMM1.split(':')[1]) as Minute;
+    const userHr2 = Number(maybe_HHMM2.split(':')[0]) as Hour;
+    const userMin2 = Number(maybe_HHMM2.split(':')[1]) as Minute;
+    return HangulTime.toHHMM(userHr1, userMin1) === HangulTime.toHHMM(userHr2, userMin2);
+  };
+
+  isMatch = (userTime: string): boolean => HangulTime.checkIsMatch(userTime, this.HHMM);
 }
 
 // just console logged a for loop. clean this up upon proposals #43505 #15480
+
+export type HHMM = string;
 
 export type Hour = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
