@@ -29,7 +29,9 @@
       "$number": ["src/lib/number"],
       "$number/*": ["src/lib/number/*"],
       "$routes": ["src/routes"],
-      "$routes/*": ["src/routes/*"]
+      "$routes/*": ["src/routes/*"],
+      "$time": ["src/lib/time"],
+      "$time/*": ["src/lib/time/*"]
     },
     "types": ["vitest/globals"]
   }
