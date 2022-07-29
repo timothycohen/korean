@@ -38,7 +38,7 @@
 <div class="blackContainer selectionContainer">
   {#each colorMap as color, i (color)}
     <span
-      class={$shakeAnimationIndex === i ? 'shake' : ''}
+      class={`shakable${$shakeAnimationIndex === i ? ' shake' : ''}`}
       in:CFreceive={{ key: color }}
       out:CFsend|local={{ key: color }}
       animate:flip={{ duration: 200 }}
@@ -67,14 +67,16 @@
   {/each}
 
   {#key getFirstVisibleColor(colorMap)}
-    <Button
-      bgColor={getFirstVisibleColor(colorMap)}
-      bgHover={getFirstVisibleColor(colorMap)}
-      on:click={shuffle}
-      aria-label="shuffle colors"
-    >
-      <Icon name="shuffle" vbX="16" vbY="16" width="45%" stroke="none" />
-    </Button>
+    <span class="shuffleBtn">
+      <Button
+        bgColor={getFirstVisibleColor(colorMap)}
+        bgHover={getFirstVisibleColor(colorMap)}
+        on:click={shuffle}
+        aria-label="shuffle colors"
+      >
+        <Icon name="shuffle" vbX="16" vbY="16" width="45%" stroke="none" />
+      </Button>
+    </span>
   {/key}
 </div>
 
