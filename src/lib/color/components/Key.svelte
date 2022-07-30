@@ -13,20 +13,21 @@
         tabIndex={showKey ? 0 : -1}
         role="img"
         lang="ko"
-        aria-label={`${c.English} is ${c.Korean}`}>{c.Korean}</span
+        aria-label={`${c.English} is ${c.Korean}`}
       >
+        {c.Korean}
+      </span>
     {/each}
   </div>
 {/if}
 
 <style>
   .keyContainer {
-    width: 80%;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     justify-content: center;
     align-self: start;
   }
@@ -35,5 +36,12 @@
     font-family: GowunDodum;
     border-radius: 4px;
     font-weight: 700;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .keyContainer {
+      font-size: 2rem;
+      width: 80%;
+    }
   }
 </style>

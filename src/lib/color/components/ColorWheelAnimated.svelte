@@ -13,7 +13,7 @@
 
 {#key $colors.color.hex}
   <div class="animationWrapper" in:fadeSpin={fadeSpinIn}>
-    <ColorWheel pickedHex={$colors.color.hex} allColorHexes={$allColors.map(c => c.hex)}>
+    <ColorWheel allColorHexes={$allColors.map(c => c.hex)}>
       <StreakCounter />
     </ColorWheel>
   </div>

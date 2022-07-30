@@ -13,6 +13,4 @@
   <KoreanContainer {color} {bg} text={$colors.color.Korean}>
     <slot />
   </KoreanContainer>
-{:else}
-  <div class="blackContainer koreanContainer fade fadeDownAndIn" />
 {/if}

@@ -35,7 +35,7 @@
   };
 </script>
 
-<div class="blackContainer selectionContainer">
+<div class="blackContainer selectionContainer" style="background-color: rgba(0, 0, 0, 0.05);">
   {#each colorMap as color, i (color)}
     <span
       class={`shakable${$shakeAnimationIndex === i ? ' shake' : ''}`}
@@ -82,15 +82,15 @@
 
 <style>
   .selectionContainer {
-    width: 90%;
+    width: 95%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    row-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    gap: 1rem;
     padding: 1rem;
   }
 
   .selectionContainer :global(button) {
-    font-size: 2.5rem;
+    font-size: 1.4rem;
     font-weight: bolder;
     font-family: GowunDodum;
     word-break: keep-all;
@@ -106,5 +106,15 @@
     border: 1px solid var(--primary2);
     outline: 2px solid var(--primary2);
     transition: none;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .selectionContainer {
+      grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+      width: 90%;
+    }
+    .selectionContainer :global(button) {
+      font-size: 2.5rem;
+    }
   }
 </style>
