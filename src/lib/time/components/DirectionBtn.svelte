@@ -3,7 +3,7 @@
   import { direction } from '$time/stores';
 </script>
 
-<Button on:click={direction.toggle} direction={$direction === 'userHHMMGoalHangul' ? 'left' : 'right'} labelLeft="한글">
+<Button on:click={direction.toggle} direction={$direction === 'seeHHMMTypeKo' ? 'left' : 'right'} labelLeft="한글">
   <svg class="iconRight" style="width: 45%" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
     <path
       d="M12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm4.25 12.15L11 13V7h1.5v5.25l4.5 2.67-.75 1.23z"

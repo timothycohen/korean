@@ -92,9 +92,9 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
 
 ## :white_check_mark: 7. colors
 
-## 8. numbers
+## :white_check_mark: 8. numbers
 
-## 9. time
+## :white_check_mark: 9. time
 
 ## 10. Continuous delivery
 

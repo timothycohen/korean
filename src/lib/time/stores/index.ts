@@ -8,7 +8,7 @@ export const hint = debounceStore(1000);
 export const showParsedInput = flagStore(true);
 export const showGoalAnswer = flagStore(false);
 
-export const direction = toggleStore('userHHMMGoalHangul', 'userHanGoalHHMM', () => {
+export const direction = toggleStore('seeHHMMTypeKo', 'seeKoTypeHHMM', () => {
   userInput.set('');
   previousInput.set('');
 });
@@ -24,7 +24,7 @@ export const goal = (() => {
 })();
 
 export const parsedInput = derived([userInput, direction], ([$userInput, $direction]) => {
-  if ($direction === 'userHHMMGoalHangul') return '';
+  if ($direction !== 'seeKoTypeHHMM') return '';
   if ($userInput.length === 0) return '...';
   try {
     const [h, m] = $userInput.split(':').map(s => Number.parseInt(s, 10)) as [Hour, Minute];

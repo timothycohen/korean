@@ -4,7 +4,7 @@
 </script>
 
 <div class="detailsWrapper">
-  {#if $direction === 'userHHMMGoalHangul'}
+  {#if $direction === 'seeHHMMTypeKo'}
     <span class="clockWrapper"><Clock size={180} hour={$goal.hour} minute={$goal.minute} /></span>
     <h1 class="answer-hangul">{$showGoalAnswer ? $goal.hangul : ''}</h1>
   {:else}

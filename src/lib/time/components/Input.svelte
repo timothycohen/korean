@@ -1,7 +1,7 @@
 <script lang="ts">
   import { userInput, direction, showParsedInput, previousInput, hint, goal } from '$time/stores';
   import VisibilityIcon from '$common/components/VisibilityIcon.svelte';
-  import { HangulTime } from '../logic';
+  import { HangulTime } from '$time/logic';
 
   type E = Event & {
     currentTarget: EventTarget & HTMLInputElement;
@@ -39,38 +39,27 @@
 </script>
 
 {#key $goal.HHMM}
-  {#if $direction === 'userHHMMGoalHangul'}
-    <!-- required because key is needed to clear the hangul input cache to prevent autocomplete -->
-    <!-- svelte-ignore a11y-autofocus -->
-    <input
-      class={$direction}
-      type="text"
-      lang="en"
-      aria-label={`Enter hangul. Goal ${$goal.HHMM}`}
-      bind:value={$userInput}
-      on:input={formatHangul}
-      autocomplete="off"
-      autofocus={true}
-      id="focus-trap-close"
-    />
-    <div class="visibility-icon-wrapper" />
-  {:else}
-    <!-- svelte-ignore a11y-autofocus -->
-    <input
-      class={$direction}
-      type="text"
-      lang="ko"
-      aria-label="Enter number. Goal {$goal.hangul}"
-      bind:value={$userInput}
-      on:input={formatHHMM}
-      autocomplete="off"
-      autofocus={true}
-      id="focus-trap-close"
-    />
-    <div class="visibility-icon-wrapper">
+  <!-- autofocus required because key is needed to clear the hangul input cache -->
+  <!-- svelte-ignore a11y-autofocus -->
+  <!-- lang is backwards so that the aria-label reads the goal properly -->
+  <input
+    class={$direction === 'seeKoTypeHHMM' ? 'en' : 'ko'}
+    type="text"
+    lang={$direction === 'seeKoTypeHHMM' ? 'ko' : 'en'}
+    aria-label={$direction === 'seeKoTypeHHMM'
+      ? `Enter number. Goal ${$goal.hangul}`
+      : `Enter hangul. Goal ${$goal.HHMM}`}
+    bind:value={$userInput}
+    on:input={e => ($direction === 'seeKoTypeHHMM' ? formatHHMM(e) : formatHangul(e))}
+    autocomplete="off"
+    autofocus={true}
+    id="focus-trap-close"
+  />
+  <div class="visibility-icon-wrapper">
+    {#if $direction === 'seeKoTypeHHMM'}
       <VisibilityIcon visible={$showParsedInput} on:click={showParsedInput.toggle} />
-    </div>
-  {/if}
+    {/if}
+  </div>
 {/key}
 
 <style>
@@ -93,10 +82,10 @@
   input::-webkit-inner-spin-button {
     display: none;
   }
-  .userHHMMGoalHangul {
+  .ko {
     font-family: 'GowunDodum';
   }
-  .userHanGoalHHMM {
+  .en {
     font-family: 'BioRhyme';
   }
   .visibility-icon-wrapper {

@@ -28,7 +28,9 @@
       <span class="answerSwitch">
         <VisibilitySwitch bind:checked={$showGoalAnswer} label="answer" labelPosition="right" size="lg" />
       </span>
+
       <p class="hint">{$hint ?? ' '}</p>
+
       <span class="directionBtn">
         <DirectionBtn />
       </span>
