@@ -36,48 +36,46 @@
     font-family: BioRhyme;
     font-weight: 300;
   }
-  .goal {
-    width: 100%;
-    color: var(--gray5);
-    font-weight: 700;
-  }
   .answer {
     color: var(--gray5);
     display: grid;
   }
-  .parsedInput {
-    width: 100%;
-    color: var(--gray4);
-  }
-
-  .goal.ko {
-    font-size: clamp(1.5rem, 1.25rem + 3.3333vw, 2.5rem);
-    min-height: 170px;
-    display: grid;
-    align-items: flex-end;
+  .answer.ko {
+    font-size: 2rem;
+    align-items: center;
+    min-height: 150px;
   }
   .answer.en {
     font-size: clamp(1.5rem, 5vw, 2rem);
     align-items: flex-end;
     min-height: 50px;
   }
-  .parsedInput.ko {
-    font-size: clamp(1rem, 1.25rem + 3.3333vw, 1.5rem);
-    min-height: 80px;
+  .goal {
+    width: 100%;
+    color: var(--gray5);
+    font-weight: 700;
+  }
+  .goal.ko {
+    font-size: clamp(1.5rem, 1.25rem + 3.3333vw, 2.5rem);
+    min-height: 170px;
     display: grid;
     align-items: flex-end;
   }
-
   .goal.en {
     font-size: clamp(1.5rem, 1.25rem + 3.3333vw, 2.5rem);
     min-height: 150px;
     display: grid;
     align-items: flex-end;
   }
-  .answer.ko {
-    font-size: 2rem;
-    align-items: center;
-    min-height: 150px;
+  .parsedInput {
+    width: 100%;
+    color: var(--gray4);
+  }
+  .parsedInput.ko {
+    font-size: clamp(1rem, 1.25rem + 3.3333vw, 1.5rem);
+    min-height: 80px;
+    display: grid;
+    align-items: flex-end;
   }
 
   @media only screen and (min-width: 600px) {

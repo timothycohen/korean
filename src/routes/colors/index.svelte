@@ -19,7 +19,7 @@
 
 <svelte:head>
   <title>Colors</title>
-  <link rel="icon" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.png" />
 </svelte:head>
 
 <div class="page" style="--bg: {$showAnswer || $direction === 'colorToHangul' ? $colorsStore.color.hex : '#000000'};">
@@ -75,7 +75,6 @@
 
   .view.colorToHangul {
     justify-items: center;
-    min-height: calc(100vh - 100px);
     display: grid;
     grid-template-rows: 96px 164px auto;
   }

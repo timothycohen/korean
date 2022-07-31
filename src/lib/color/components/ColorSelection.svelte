@@ -39,6 +39,7 @@
   {#each colorMap as color, i (color)}
     <span
       class={`shakable${$shakeAnimationIndex === i ? ' shake' : ''}`}
+      data-key={`${color.hex}:${i}`}
       in:CFreceive={{ key: color }}
       out:CFsend|local={{ key: color }}
       animate:flip={{ duration: 200 }}

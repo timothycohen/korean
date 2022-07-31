@@ -16,7 +16,12 @@ test.describe('colors', () => {
     test('clicking the direction button changes views', async ({ page }) => {
       await page.goto('/colors').then(async () => await page.waitForTimeout(50));
       await page.locator('text=한글').click();
-      await page.waitForSelector('#koreanColor', { timeout: 500 });
+      await page.waitForSelector('#koreanColor', { timeout: 2000 });
+    });
+
+    test('title', async ({ page }) => {
+      await page.goto('/colors').then(async () => await page.waitForTimeout(50));
+      expect(await page.title()).toBe('Colors');
     });
   });
 
@@ -63,7 +68,7 @@ test.describe('colors', () => {
       expect(goalElC2).toBe(pageBGC2);
     });
 
-    test('clicking the wrong answer plays a fail animation', async ({ page }) => {
+    test('clicking the wrong answer plays a fail animation on that button', async ({ page }) => {
       await page.goto('/colors');
       const goalText = await page.textContent('.koreanContainer h1');
       let targetBtnText = '하얀색';
@@ -72,7 +77,7 @@ test.describe('colors', () => {
 
       expect(Object.values(await btnEl.evaluate(el => el.classList)).includes('shake')).toBe(false);
       await btnEl.click();
-      expect(Object.values(await btnEl.evaluate(el => el.classList)).includes('shake')).toBe(true);
+      expect((await (await page.waitForSelector('.shakable.shake')).textContent())?.trim()).toBe(targetBtnText);
       await page.waitForTimeout(300);
       expect(Object.values(await btnEl.evaluate(el => el.classList)).includes('shake')).toBe(false);
     });
@@ -106,7 +111,7 @@ test.describe('colors', () => {
     const setup = async (page: Page) => {
       await page.goto('/colors').then(async () => await page.waitForTimeout(50));
       await page.locator('text=한글').click();
-      await page.waitForSelector('#koreanColor', { timeout: 500 });
+      await page.waitForSelector('#koreanColor', { timeout: 2000 });
     };
 
     test('clicking the key toggle shows key', async ({ page }) => {

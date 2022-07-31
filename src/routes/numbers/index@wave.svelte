@@ -13,7 +13,7 @@
 
 <svelte:head>
   <title>Numbers | {$goal.type.replace(/^./, str => str.toUpperCase())}</title>
-  <link rel="icon" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.png" />
 </svelte:head>
 
 <WavePage shimmer={$drawer}>
