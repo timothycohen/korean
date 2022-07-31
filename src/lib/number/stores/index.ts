@@ -9,7 +9,7 @@ export const userInput = writable('');
 export const previousInput = writable('');
 export const hint = debounceStore(1000);
 
-export const direction = toggleStore('userNumGoalHan', 'userHanGoalNum', () => {
+export const direction = toggleStore('seeNumTypeKo', 'seeKoTypeNum', () => {
   userInput.set('');
   previousInput.set('');
 });
@@ -33,7 +33,7 @@ export const goal = (() => {
 })();
 
 export const parsedInput = derived([userInput, goal, direction], ([$userInput, $goal, $direction]) => {
-  if ($direction === 'userHanGoalNum') return '';
+  if ($direction !== 'seeKoTypeNum') return '';
 
   const cleanedInput = $userInput.replaceAll('.', '').replaceAll(',', '');
   if (cleanedInput.length === 0) return '...';

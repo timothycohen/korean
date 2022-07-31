@@ -1,29 +1,88 @@
 <script lang="ts">
   import { goal, direction, parsedInput, showGoalAnswer, showParsedInput } from '$number/stores';
-  import Goal from '$lib/number/components/Goal.svelte';
-  import GoalAnswer from '$lib/number/components/GoalAnswer.svelte';
-  import ParsedUserInput from '$common/components/ParsedUserInput.svelte';
 </script>
 
-<Goal
-  numOrHan={$direction === 'userNumGoalHan' ? 'han' : 'num'}
-  koreanAriaLabel={`Goal ${$goal.hangul}`}
-  englishAriaLabel={`Goal ${$goal.number}`}
->
-  {$direction === 'userNumGoalHan' ? $goal.hangul : $goal.formattedNumber}
-</Goal>
-<GoalAnswer
-  numOrHan={$direction === 'userNumGoalHan' ? 'num' : 'han'}
-  koreanAriaLabel={`Answer ${$goal.hangul}`}
-  englishAriaLabel={`Answer ${$goal.number}`}
-  tabindex={showGoalAnswer ? 0 : -1}
->
-  {$showGoalAnswer ? ($direction === 'userNumGoalHan' ? $goal.formattedNumber : $goal.hangul) : ' '}
-</GoalAnswer>
-<ParsedUserInput
-  tabindex={showParsedInput && $direction === 'userNumGoalHan' ? 0 : -1}
-  ariaLabel={`Your input ${parsedInput}`}
-  show={$showParsedInput}
->
-  {$parsedInput}
-</ParsedUserInput>
+<div class="detailsWrapper">
+  {#if $direction === 'seeNumTypeKo'}
+    <h1 class="goal en" lang="en" tabindex="0" aria-label="Goal {$goal.number}">{$goal.number}</h1>
+
+    <h2 class="answer ko" lang="ko" tabindex={$showGoalAnswer ? 0 : -1} aria-label={`Answer ${$goal.hangul}`}>
+      {$showGoalAnswer ? $goal.hangul : ' '}
+    </h2>
+  {:else}
+    <h1 class="goal ko" lang="ko" tabindex="0" aria-label="Goal {$goal.hangul}">{$goal.hangul}</h1>
+
+    <h2 class="answer en" lang="en" tabindex={$showGoalAnswer ? 0 : -1} aria-label={`Answer ${$goal.number}`}>
+      {$showGoalAnswer ? $goal.number : ' '}
+    </h2>
+
+    <h2 class="parsedInput ko" lang="ko" aria-label="Your input {parsedInput}" tabindex={$showParsedInput ? 0 : -1}>
+      {$showParsedInput ? $parsedInput : ' '}
+    </h2>
+  {/if}
+</div>
+
+<style>
+  .detailsWrapper {
+    height: 300px;
+    display: grid;
+    align-content: flex-end;
+  }
+  .ko {
+    font-family: GowunDodum;
+    font-weight: 400;
+  }
+  .en {
+    font-family: BioRhyme;
+    font-weight: 300;
+  }
+  .goal {
+    width: 100%;
+    color: var(--gray5);
+    font-weight: 700;
+  }
+  .answer {
+    color: var(--gray5);
+    display: grid;
+  }
+  .parsedInput {
+    width: 100%;
+    color: var(--gray4);
+  }
+
+  .goal.ko {
+    font-size: clamp(1.5rem, 1.25rem + 3.3333vw, 2.5rem);
+    min-height: 170px;
+    display: grid;
+    align-items: flex-end;
+  }
+  .answer.en {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    align-items: flex-end;
+    min-height: 50px;
+  }
+  .parsedInput.ko {
+    font-size: clamp(1rem, 1.25rem + 3.3333vw, 1.5rem);
+    min-height: 80px;
+    display: grid;
+    align-items: flex-end;
+  }
+
+  .goal.en {
+    font-size: clamp(1.5rem, 1.25rem + 3.3333vw, 2.5rem);
+    min-height: 150px;
+    display: grid;
+    align-items: flex-end;
+  }
+  .answer.ko {
+    font-size: 2rem;
+    align-items: center;
+    min-height: 150px;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .detailsWrapper {
+      height: 320px;
+    }
+  }
+</style>

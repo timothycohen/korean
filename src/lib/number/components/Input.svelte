@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { goal, userInput, direction, showParsedInput, drawer, previousInput, hint } from '$number/stores';
+  import { direction, drawer, goal, hint, previousInput, showParsedInput, userInput } from '$number/stores';
   import VisibilityIcon from '$common/components/VisibilityIcon.svelte';
 
   type E = Event & {
@@ -47,72 +47,25 @@
 </script>
 
 {#key $goal.number}
-  {#if $direction === 'userHanGoalNum'}
-    <!-- required because key is needed to clear the hangul input cache to prevent autocomplete -->
-    <!-- svelte-ignore a11y-autofocus -->
-    <input
-      class={$direction}
-      type="text"
-      lang="en"
-      aria-label={`Enter hangul. Goal ${$goal.number}`}
-      bind:value={$userInput}
-      on:input={formatHangul}
-      autocomplete="off"
-      autofocus={!$drawer}
-      id="focus-trap-close"
-    />
-    <div class="visibility-icon-wrapper" />
-  {:else}
-    <!-- svelte-ignore a11y-autofocus -->
-    <input
-      class={$direction}
-      type="text"
-      lang="ko"
-      aria-label="Enter number. Goal {$goal.hangul}"
-      bind:value={$userInput}
-      on:input={formatNumber}
-      autocomplete="off"
-      autofocus={!$drawer}
-      id="focus-trap-close"
-    />
-    <div class="visibility-icon-wrapper">
+  <!-- autofocus required because key is needed to clear the hangul input cache -->
+  <!-- svelte-ignore a11y-autofocus -->
+  <!-- lang is backwards so that the aria-label reads the goal properly -->
+  <input
+    class={`wave-page-input ${$direction === 'seeKoTypeNum' ? 'en' : 'ko'}`}
+    type="text"
+    lang={$direction === 'seeKoTypeNum' ? 'ko' : 'en'}
+    aria-label={$direction === 'seeKoTypeNum'
+      ? `Enter number. Goal ${$goal.hangul}`
+      : `Enter hangul. Goal ${$goal.number}`}
+    bind:value={$userInput}
+    on:input={e => ($direction === 'seeKoTypeNum' ? formatNumber(e) : formatHangul(e))}
+    autocomplete="off"
+    autofocus={!$drawer}
+    id="focus-trap-close"
+  />
+  <div class="visibility-icon-wrapper">
+    {#if $direction === 'seeKoTypeNum'}
       <VisibilityIcon visible={$showParsedInput} on:click={showParsedInput.toggle} />
-    </div>
-  {/if}
+    {/if}
+  </div>
 {/key}
-
-<style>
-  input {
-    width: 100%;
-    height: 3rem;
-    font-size: clamp(1rem, 5.25vw, 2.5rem);
-    padding: 0 3rem;
-    text-align: center;
-    border: 2px solid var(--primary2);
-    border-radius: 4px;
-    color: black;
-  }
-  input:focus-visible {
-    border: 2px solid transparent;
-    outline: 2px solid var(--primary4);
-  }
-  input::-webkit-clear-button,
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    display: none;
-  }
-  .userNumGoalHan {
-    font-family: 'BioRhyme';
-  }
-  .userHanGoalNum {
-    font-family: 'GowunDodum';
-  }
-  .visibility-icon-wrapper {
-    position: relative;
-    justify-self: right;
-    top: -2.4rem;
-    right: 0.5rem;
-    height: 2rem;
-    width: 2rem;
-  }
-</style>

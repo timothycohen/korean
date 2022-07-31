@@ -10,7 +10,7 @@
   {:else}
     <h1 class="goal">{$goal.hangul}</h1>
     <h2 class="answer-hhmm">{$showGoalAnswer ? $goal.HHMM : ' '}</h2>
-    <h2 class="parsedInput">{$showParsedInput ? $parsedInput : ' '}</h2>
+    <h2 class="parsedInput ko">{$showParsedInput ? $parsedInput : ' '}</h2>
   {/if}
 </div>
 
@@ -38,8 +38,10 @@
     font-size: clamp(2rem, 1.25rem + 3.3333vw, 3rem);
     width: 100%;
     color: var(--gray4);
-    font-family: GowunDodum;
     min-height: 4.5rem;
+  }
+  .ko {
+    font-family: GowunDodum;
     font-weight: 400;
   }
   .clockWrapper {

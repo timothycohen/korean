@@ -35,18 +35,20 @@
     font-size: 1.6rem;
     font-weight: 300;
     text-align: center;
-    height: 150px;
+    height: 100px;
   }
 
   @media only screen and (min-width: 500px) {
     h1 {
       font-size: 2.3rem;
+      height: 125px;
     }
   }
 
   @media only screen and (min-width: 650px) {
     h1 {
       font-size: 3rem;
+      height: 150px;
     }
   }
 </style>

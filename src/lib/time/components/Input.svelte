@@ -43,7 +43,7 @@
   <!-- svelte-ignore a11y-autofocus -->
   <!-- lang is backwards so that the aria-label reads the goal properly -->
   <input
-    class={$direction === 'seeKoTypeHHMM' ? 'en' : 'ko'}
+    class={`wave-page-input ${$direction === 'seeKoTypeHHMM' ? 'en' : 'ko'}`}
     type="text"
     lang={$direction === 'seeKoTypeHHMM' ? 'ko' : 'en'}
     aria-label={$direction === 'seeKoTypeHHMM'
@@ -61,39 +61,3 @@
     {/if}
   </div>
 {/key}
-
-<style>
-  input {
-    width: 100%;
-    height: 3rem;
-    font-size: clamp(1rem, 5.25vw, 2.5rem);
-    padding: 0 3rem;
-    text-align: center;
-    border: 2px solid var(--primary2);
-    border-radius: 4px;
-    color: black;
-  }
-  input:focus-visible {
-    border: 2px solid transparent;
-    outline: 2px solid var(--primary4);
-  }
-  input::-webkit-clear-button,
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    display: none;
-  }
-  .ko {
-    font-family: 'GowunDodum';
-  }
-  .en {
-    font-family: 'BioRhyme';
-  }
-  .visibility-icon-wrapper {
-    position: relative;
-    justify-self: right;
-    top: -2.4rem;
-    right: 0.5rem;
-    height: 2rem;
-    width: 2rem;
-  }
-</style>
