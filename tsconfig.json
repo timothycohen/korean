@@ -31,7 +31,9 @@
       "$routes": ["src/routes"],
       "$routes/*": ["src/routes/*"],
       "$time": ["src/lib/time"],
-      "$time/*": ["src/lib/time/*"]
+      "$time/*": ["src/lib/time/*"],
+      "$tools": ["src/lib/tools"],
+      "$tools/*": ["src/lib/tools/*"]
     },
     "types": ["vitest/globals"]
   }

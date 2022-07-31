@@ -4,10 +4,10 @@
   export let minute = 16;
 
   const hr = hour === 0 ? '--' : hour < 10 ? `0${hour}` : hour;
-  const min = minute === 0 ? '--' : minute < 10 ? `0${minute}` : minute;
+  const min = minute === 0 ? '00' : minute < 10 ? `0${minute}` : minute;
 </script>
 
-<div class="digitalClock" style="height: {size}px; width: {size}px; font-size: {size / 5}px">
+<div class="digitalClock" style="height: {size}px; width: {size}px; font-size: {size / 4.5}px">
   {hr}:{min}
 </div>
 

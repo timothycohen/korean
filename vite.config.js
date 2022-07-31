@@ -17,6 +17,7 @@ const config = {
       $number: path.resolve('src/lib/number'),
       $routes: path.resolve('src/routes'),
       $time: path.resolve('src/lib/time'),
+      $tools: path.resolve('src/lib/tools'),
     },
   },
   server: {

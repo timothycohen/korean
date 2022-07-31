@@ -1,33 +1,48 @@
 <script lang="ts">
-  const createWaveSVG = (color: string): string => {
-    return `<svg alt="" width="100%" height="100%" viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg">
+  export let shimmer = false;
+
+  // use WavePageBuilder to create a suitable wave
+  export let dSmall =
+    'M 0,350 C 245,500 800,330 1080,275 C 1250,228 1340,250 1440,280 C 1440,0 1440,0 1440,0 C 0,0 1440,0 0,0';
+
+  export let dBig =
+    'M 0,200 C 245,300 500,260 900,210 C 1150,175 1340,175 1440,225 C 1440,0 1440,0 1440,0 C 0,0 1440,0 0,0';
+
+  const createWaveSVG = (d: string, color: string): string => {
+    return `<svg alt="" width="100%" height="100%" viewBox="0 0 1440 1440" xmlns="http://www.w3.org/2000/svg">
   <path
-    d="M 0,400 C 0,400 0,200 0,200 C 88.75,226.39285714285714 177.5,252.78571428571428 293,253 C 408.5,253.21428571428572 550.7499999999999,227.25000000000003 702,207 C 853.2500000000001,186.74999999999997 1013.5,172.21428571428572 1138,172 C 1262.5,171.78571428571428 1351.25,185.89285714285714 1440,200 C 1440,200 1440,400 1440,400 Z"
+    d="${d}"
     stroke="none"
     strokeWidth="0"
     fill='${color}'
-    transform="rotate(-180 720 200)"
-  ></path>
-</svg>`;
+  />
+  </svg>`;
   };
 
-  const createURL = (color: string): string => {
-    return `url("data:image/svg+xml;utf8,${encodeURIComponent(createWaveSVG(color))}")`;
+  const createURL = (d: string, color: string): string => {
+    return `url("data:image/svg+xml;utf8,${encodeURIComponent(createWaveSVG(d, color))}")`;
   };
-
-  export let shimmer = false;
 </script>
 
-<div class="wavePage" style="--bg-image: {createURL('#353c6d')}; --filter: {shimmer ? 'var(--shimmer)' : ''};">
+<div
+  class="wavePage"
+  style="
+  --bg-image-small: {createURL(dSmall, '#353c6d')};
+  --bg-image-big: {createURL(dBig, '#353c6d')};
+  --filter: {shimmer ? 'var(--shimmer)' : ''};"
+>
   <slot />
 </div>
 
 <style>
   .wavePage {
-    min-height: 100vh;
+    min-height: 100%;
+    width: 100%;
     padding: 1rem;
     border: 0.5rem solid var(--primary2);
+    position: relative;
   }
+
   .wavePage::before {
     content: '';
     position: absolute;
@@ -35,7 +50,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-image: var(--bg-image);
+    background-image: var(--bg-image-small);
     background-color: var(--complement2);
     background-position: top;
     background-repeat: no-repeat;
@@ -43,5 +58,11 @@
     z-index: -1;
     transition: 300ms;
     filter: var(--filter);
+  }
+
+  @media only screen and (min-width: 600px) {
+    .wavePage::before {
+      background-image: var(--bg-image-big);
+    }
   }
 </style>
