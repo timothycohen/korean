@@ -26,6 +26,7 @@ export const colors = (() => {
 
   const next = async () => {
     index++;
+    streakCounter.increment();
 
     if (index === timeToGetMore) {
       const leftOverColors = colors.slice(timeToGetMore + 1, max);

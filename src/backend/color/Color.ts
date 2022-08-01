@@ -6,7 +6,6 @@ export interface ColorMap {
 
 // prettier-ignore
 export const colorsArray: ColorMap[] = [
-  {hex: '#FFFFFF', Korean: '하얀색',			English: 'white'},
   {hex: '#000000', Korean: '까만색',			English: 'black'},
   {hex: '#F30502', Korean: '빨간색',			English: 'red'},
   {hex: '#F0742A', Korean: '주황색',			English: 'orange'},
@@ -22,6 +21,7 @@ export const colorsArray: ColorMap[] = [
   {hex: '#984907', Korean: '갈색',				English: 'brown'},
   {hex: '#FDEADB', Korean: '베이지색',		English: 'beige'},
   {hex: '#A6A6A6', Korean: '회색',				English: 'gray'},
+  {hex: '#FFFFFF', Korean: '하얀색',			English: 'white'},
 ]
 
 export default class Color {
