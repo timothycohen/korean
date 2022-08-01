@@ -23,7 +23,7 @@
 
 <svelte:head>
   <title>Korean Apps</title>
-  <link rel="icon" href="/favicon.png" />
+  <link rel="icon" href="/favicon-home.svg" />
 </svelte:head>
 
 <!-- Capture screenshot: chrome dev tools ⌘ ⇧ P -->

@@ -9,7 +9,7 @@
 
 <svelte:head>
   <title>Time</title>
-  <link rel="icon" href="/favicon.png" />
+  <link rel="icon" href="/favicon-time.png" />
 </svelte:head>
 
 <WavePage>
