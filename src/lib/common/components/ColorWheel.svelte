@@ -5,7 +5,7 @@
   const createColorWheelSVG = (pickedHex = 'none', allColorHexes: string[]): string => {
     const degrees = 360 / (allColorHexes.length - 1);
 
-    let svg = `<svg alt="" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    let svg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <path id="color" d="M 42.2,78.9 Q 50,50 53.88,64.48 L 57.7,80 Q 50,68 42,78.9Z" />
   </defs>

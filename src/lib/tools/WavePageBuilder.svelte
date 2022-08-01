@@ -53,7 +53,7 @@
   const { fullPath, allTargets } = createBezierPathAndTargets(start, points);
 
   const createWaveSVG = (color: string): string => {
-    return `<svg alt="" width="100%" height="100%" viewBox="0 0 1440 1440" xmlns="http://www.w3.org/2000/svg">
+    return `<svg width="100%" height="100%" viewBox="0 0 1440 1440" xmlns="http://www.w3.org/2000/svg">
   <path
     d="${fullPath}"
     stroke="none"

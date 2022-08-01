@@ -9,7 +9,7 @@
     'M 0,200 C 245,300 500,260 900,210 C 1150,175 1340,175 1440,225 C 1440,0 1440,0 1440,0 C 0,0 1440,0 0,0';
 
   const createWaveSVG = (d: string, color: string): string => {
-    return `<svg alt="" width="100%" height="100%" viewBox="0 0 1440 1440" xmlns="http://www.w3.org/2000/svg">
+    return `<svg width="100%" height="100%" viewBox="0 0 1440 1440" xmlns="http://www.w3.org/2000/svg">
   <path
     d="${d}"
     stroke="none"
