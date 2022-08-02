@@ -62,3 +62,55 @@
     <VisibilitySwitch label="Input as Hangul" labelPosition="right" bind:checked={$showParsedInput} />
   </div>
 </Drawer>
+
+<style>
+  .settingsBtn {
+    font-family: SpaceMono;
+    text-transform: lowercase;
+    background-color: var(--gray5);
+    border: 4px solid var(--primary2);
+    border-radius: 0px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: var(--primary2);
+    height: 4rem;
+  }
+  .select-positioner {
+    padding-top: 1rem;
+    text-align: center;
+  }
+  .drawer-topbar {
+    padding: 0.5rem 1rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    grid-auto-flow: column;
+    align-items: baseline;
+    margin: 0 1rem;
+    padding: 1rem 1.5rem 0.5rem 1.5rem;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+  }
+  .drawer-topbar h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary1);
+  }
+  .drawer-topbar button {
+    font-size: 1rem;
+    color: var(--secondary1);
+    text-transform: uppercase;
+  }
+  .drawer-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    place-content: space-around;
+  }
+  @media only screen and (min-width: 800px) {
+    .drawer-toggles {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 1rem;
+    }
+  }
+</style>

@@ -90,7 +90,8 @@
     padding: 1rem;
   }
 
-  .selectionContainer :global(button) {
+  .selectionContainer :global(.shakable button),
+  .selectionContainer :global(.shuffleBtn button) {
     font-size: 1.4rem;
     font-weight: bolder;
     font-family: GowunDodum;
@@ -103,7 +104,8 @@
     user-select: none;
   }
 
-  .selectionContainer :global(button:hover) {
+  .selectionContainer :global(.shakable button:hover),
+  .selectionContainer :global(.shuffleBtn button:hover) {
     border: 1px solid var(--primary2);
     outline: 2px solid var(--primary2);
     transition: none;
@@ -114,7 +116,7 @@
       grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
       width: 90%;
     }
-    .selectionContainer :global(button) {
+    .selectionContainer :global(.shakable button) {
       font-size: 2.5rem;
     }
   }

@@ -1,9 +1,9 @@
-<main>
+<main class="layout-colors">
   <slot />
 </main>
 
 <style>
-  main :global(.blackContainer) {
+  main.layout-colors :global(.blackContainer) {
     background-color: black;
     border-radius: 4px;
     margin: 0 auto;
