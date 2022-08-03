@@ -27,6 +27,8 @@
   }
   .layout-wave :global(.answerSwitch) {
     grid-area: answer;
+    display: grid;
+    justify-content: center;
   }
   .layout-wave :global(.directionBtn) {
     grid-area: direction;
