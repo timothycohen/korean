@@ -28,5 +28,6 @@ const config: PlaywrightTestConfig = {
     },
   ],
   testMatch: ['**/*.spec.{js,ts}'],
+  workers: 5,
 };
 export default config;
