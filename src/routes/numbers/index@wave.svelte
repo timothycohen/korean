@@ -44,7 +44,7 @@
   </main>
 </WavePage>
 
-<Drawer {drawer} selectorsImmuneToClickOutside={['.settingsBtn']}>
+<Drawer {drawer} selectorsImmuneToClickOutside={['.settingsBtn']} height="max(450px, 55%)">
   <div class="drawer-topbar">
     <h1>Settings</h1>
     <button on:click={() => drawer.close()}>Close</button>

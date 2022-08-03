@@ -33,7 +33,7 @@
 
 <style>
   .bottom_drawer {
-    position: absolute;
+    position: fixed;
     background-color: var(--secondary5);
     color: var(--secondary1);
     bottom: 0;
