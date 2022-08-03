@@ -9,13 +9,13 @@
   export let y: number;
   export let sizeIn: number;
   export let size: number;
-  export let speed: number;
+  export let duration: number;
   export let rippleBlur: number;
   export let opacityIn: number;
   export let rippleFill: string;
 
-  const rippleSize = tweened(sizeIn, { duration: speed });
-  const rippleOpacity = tweened(opacityIn, { duration: speed + speed * 2.5, easing: backOut });
+  const rippleSize = tweened(sizeIn, { duration });
+  const rippleOpacity = tweened(opacityIn, { duration: duration + duration * 2.5, easing: backOut });
 
   onMount(() => {
     rippleOpacity.set(0);

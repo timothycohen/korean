@@ -58,7 +58,7 @@
 
   <div class="drawer-toggles">
     <VisibilitySwitch label="answer" labelPosition="right" bind:checked={$showGoalAnswer} />
-    <DirectionBtn />
+    <DirectionBtn --height="100%" />
     <VisibilitySwitch label="Input as Hangul" labelPosition="right" bind:checked={$showParsedInput} />
   </div>
 </Drawer>

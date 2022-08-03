@@ -5,38 +5,49 @@
   export let direction: 'left' | 'right' = 'left';
   export let labelLeft = '';
   export let labelRight = '';
+
+  let containerGTC = labelRight ? 'auto 1.2rem auto' : 'auto 1.2rem 1.5rem';
 </script>
 
 <Button on:click>
-  <div class="container">
-    <span class="hangul">{labelLeft}</span>
-    <div class="{direction} icon">
-      <Icon name="right" stroke="currentColor" color="currentColor" height="75%" />
+  <div class="container" style="grid-template-columns: {containerGTC};">
+    <span class="grid-left">{labelLeft}</span>
+
+    <div class="{direction} grid-center">
+      <Icon name="right" stroke="currentColor" color="currentColor" />
     </div>
-    <span class="english" style="font-size: {(7.5 / labelRight.length) * 0.7}rem;">{labelRight}</span>
+
+    <span class="grid-right">
+      <slot>
+        {labelRight}
+      </slot>
+    </span>
   </div>
 </Button>
 
 <style>
   .container {
     display: grid;
-    grid-template-columns: 2.5rem 1.5rem 1fr;
-    padding: 0 0.75rem;
     align-items: center;
+    gap: 0.3rem;
   }
-  .icon {
-    transition: transform 400ms ease-in-out;
-    transform-origin: center;
-  }
-  .hangul {
+  .grid-left {
     font-family: 'GowunDodum';
     font-size: 1.2rem;
     font-weight: 700;
   }
-  .english {
+  .grid-center {
+    transition: transform 400ms ease-in-out;
+    transform-origin: center;
+  }
+  .grid-right {
     font-family: BioRhyme;
     font-weight: 500;
     text-transform: uppercase;
+    font-size: 1rem;
+    display: grid;
+    width: 100%;
+    place-items: center;
   }
   .left {
     transform: rotate(180deg);

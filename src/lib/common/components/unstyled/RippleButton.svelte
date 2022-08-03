@@ -8,14 +8,12 @@
   // hot potato to ripple components
   export let ripple = true;
   export let rippleBlur = 2,
-    speed = 500,
+    duration = 500,
     sizeIn = 20,
-    opacityIn = 0.2;
-
-  // important ripple styles that I want to show on intellisense
-  export let rippleFill: string;
-  export let rippleOpacity: string;
-  export let rippleFocus: string;
+    rippleFill = 'currentColor',
+    rippleOpacity = 0.1,
+    rippleFillFocus = 'currentColor',
+    rippleOpacityFocus = 0.2;
 
   // pull the size info from the container
   let rippleBtn: HTMLButtonElement;
@@ -51,14 +49,13 @@
       if (!touch) addRipple();
       touch = false;
     }
-    ripples.debounce(speed + speed * 2);
+    ripples.debounce(duration + duration * 2);
   }
 </script>
 
 <button
   {...$$restProps}
   class="btn-ripple"
-  style="--rippleFill: {rippleFill}; --rippleOpacity: {rippleOpacity}; --rippleFocus: {rippleFocus};"
   on:click
   bind:this={rippleBtn}
   on:touchstart={e => handleInteraction(e.touches[0], 'touch')}
@@ -72,19 +69,28 @@
           x={ripple.relativeX}
           y={ripple.relativeY}
           size={ripple.size}
-          {speed}
+          {duration}
           {sizeIn}
-          {opacityIn}
+          opacityIn={rippleOpacity}
           {rippleBlur}
         />
       {/each}
     {/if}
-    <circle class="show-on-focus breathe" cx={c.containerW / 2} cy={c.containerH / 2} r={c.containerW / 2.4} />
+    <circle
+      class="show-on-focus breathe"
+      style="--ripple-fill-f: {rippleFillFocus}; --ripple-opacity-f: {rippleOpacityFocus};"
+      cx={c.containerW / 2}
+      cy={c.containerH / 2}
+      r={c.containerW / 2.4}
+    />
   </svg>
   <slot />
 </button>
 
 <style>
+  button {
+    position: relative;
+  }
   svg {
     height: 100%;
     pointer-events: none;
@@ -95,9 +101,9 @@
     width: 100%;
   }
   .show-on-focus {
-    fill: var(--rippleFocus);
+    fill: var(--ripple-fill-f);
     display: none;
-    opacity: var(--rippleOpacity);
+    opacity: var(--ripple-opacity-f);
   }
   .btn-ripple:focus {
     outline: none;

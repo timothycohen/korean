@@ -47,12 +47,12 @@
       <Button
         ripple={false}
         COMMENT="crossfade & ripples are mutually exclusive here: https://github.com/sveltejs/svelte/issues/3685"
-        color={color.hex}
         aria-label={`${color.English} is ${color.Korean}`}
         lang="ko"
-        rippleFocus={$showKey ? color.hex : ''}
-        bgColor={calcBG(color)}
-        bgHover={calcBG(color)}
+        rippleFillFocus={!$showKey ? (color.English === 'black' ? 'white' : '') : color.hex}
+        --color={color.hex}
+        --background-color={calcBG(color)}
+        --background-color-h={calcBG(color)}
         on:click={() => {
           if (color.hex === $colors.color.hex) {
             colors.next();
@@ -69,13 +69,8 @@
 
   {#key getFirstVisibleColor(colorMap)}
     <span class="shuffleBtn">
-      <Button
-        bgColor={getFirstVisibleColor(colorMap)}
-        bgHover={getFirstVisibleColor(colorMap)}
-        on:click={shuffle}
-        aria-label="shuffle colors"
-      >
-        <Icon name="shuffle" vbX="16" vbY="16" width="45%" stroke="none" />
+      <Button --background-color={getFirstVisibleColor(colorMap)} on:click={shuffle} aria-label="shuffle colors">
+        <Icon name="shuffle" vbX="16" vbY="16" width="33%" stroke="none" />
       </Button>
     </span>
   {/key}
@@ -85,19 +80,18 @@
   .selectionContainer {
     width: 95%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
     gap: 1rem;
     padding: 1rem;
   }
-
   .selectionContainer :global(.shakable button),
   .selectionContainer :global(.shuffleBtn button) {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: bolder;
     font-family: GowunDodum;
     word-break: keep-all;
-    height: 5rem;
-    border-radius: 4px;
+    width: 100%;
+    height: 100%;
     border: 1px solid rgba(255, 242, 209, 0.5);
     outline: 1px solid transparent;
     transition: border, outline 300ms;
@@ -113,7 +107,7 @@
 
   @media only screen and (min-width: 600px) {
     .selectionContainer {
-      grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
       width: 90%;
     }
     .selectionContainer :global(.shakable button) {
