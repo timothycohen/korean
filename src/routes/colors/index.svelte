@@ -53,6 +53,7 @@
   .page {
     background-color: var(--bg);
     min-height: 100vh;
+    overflow: hidden;
   }
 
   .topBar {
