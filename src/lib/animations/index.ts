@@ -1,2 +1,2 @@
 export { CFsend, CFreceive } from './crossFade';
-export { fadeSpin } from './fadeSpin';
+export { fadeSpin, defaultFadeSpin } from './fadeSpin';

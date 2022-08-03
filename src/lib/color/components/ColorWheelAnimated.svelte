@@ -1,18 +1,12 @@
 <script lang="ts">
-  import { fadeSpin } from '$animations';
+  import { fadeSpin, defaultFadeSpin } from '$animations';
   import ColorWheel from '$common/components/ColorWheel.svelte';
   import StreakCounter from '$color/components/StreakCounter.svelte';
   import { colors, allColors, showAnswer } from '$color/stores';
-
-  const fadeSpinIn = {
-    start: { opacity: 0.01, scale: 0.8, rotate: -360 },
-    end: { opacity: 1, scale: 1, rotate: 0 },
-    duration: 250,
-  };
 </script>
 
 {#key $colors.color.hex}
-  <div class="animationWrapper" in:fadeSpin={fadeSpinIn}>
+  <div class="animationWrapper" in:fadeSpin={defaultFadeSpin}>
     <ColorWheel
       allColorHexes={$allColors.map(c => c.hex)}
       picked={{ hex: $colors.color.hex, removeFromOuter: $showAnswer }}
