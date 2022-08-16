@@ -13,7 +13,7 @@ const config = {
       $color: path.resolve('src/lib/color'),
       $common: path.resolve('src/lib/common'),
       $db: path.resolve('src/db'),
-      $lib: path.resolve('src/lib'),
+      // $lib: path.resolve('src/lib'), // handled automatically
       $number: path.resolve('src/lib/number'),
       $routes: path.resolve('src/routes'),
       $time: path.resolve('src/lib/time'),
