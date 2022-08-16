@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Move to root
+cd "$(dirname "$0")/../../"
+
+# Check all files because that's the only option svelte-check supports
+printf '\n========================\nchecking svelte compiler\n========================\n'
+npx svelte-check --fail-on-warnings --tsconfig ./tsconfig.json
+exit "$?"

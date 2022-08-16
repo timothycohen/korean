@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Move to root
+cd "$(dirname "$0")/../../"
+
+check_forbidden_word() {
+  local grepped_word=$(grep $1 e2e/*)
+  if [[ ! -z "$grepped_word" ]]; then
+    printf "\n=========== FORBIDDEN $1 tests ===========\n"
+    printf "$grepped_word\n"
+    return 1
+  fi
+  return 0
+}
+
+guard_forbidden_words() {
+  local exit_code=0
+  for var in "$@"; do
+    check_forbidden_word $var
+    exit_code=$(($exit_code + $?))
+  done
+  if [ "$exit_code" -gt 0 ]; then
+    exit "$exit_code"
+  fi
+}
+
+guard_forbidden_words .only .skip
+
+npx playwright test --forbid-only
+exit $?
