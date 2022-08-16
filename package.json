@@ -22,9 +22,6 @@
     "@playwright/test": "^1.25.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
-    "@types/cookie": "^0.5.1",
-    "@types/node": "^18.7.6",
-    "@types/pluralize": "^0.0.29",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
     "autoprefixer": "^10.4.8",
@@ -32,8 +29,6 @@
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte3": "^4.0.0",
-    "nodemailer": "^6.7.8",
-    "pluralize": "^8.0.0",
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",
     "prettier-plugin-svelte": "^2.7.0",
@@ -43,7 +38,6 @@
     "tailwindcss": "^3.1.8",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4",
-    "utility-types": "^3.10.0",
     "vite": "^3.0.8",
     "vitest": "^0.22.0"
   },
@@ -53,8 +47,6 @@
     "npm": "^8.5.0"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^1.35.6",
-    "cookie": "^0.5.0",
     "daisyui": "^2.24.0",
     "svelte-range-slider-pips": "^2.0.3"
   }
