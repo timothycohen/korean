@@ -47,17 +47,12 @@ export const toggleStore = <T>(one: T, two: T, toggleCB?: () => void) => {
   };
 };
 
-export const debounceStore = <T>(duration: number) => {
+export const tempStore = <T>(duration: number) => {
   const { subscribe, set } = writable<T | null>(null);
 
-  let timer: ReturnType<typeof setTimeout>;
-
   const trigger = (val: T) => {
-    clearInterval(timer);
     set(val);
-    setTimeout(() => {
-      set(null);
-    }, duration);
+    setTimeout(() => set(null), duration);
   };
   return {
     subscribe,
