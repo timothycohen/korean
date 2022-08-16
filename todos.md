@@ -2,7 +2,9 @@
 
 SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
 
-## 2. continuous integration
+## 2. :white_check_mark: continuous integration
+
+- enable githooks with `.githooks/init`
 
 ### :white_check_mark: pre-commit: githooks
 
@@ -16,26 +18,51 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
 - unit test
 - e2e test
 
-### pre-pushed: github branch protection rules
+### :white_check_mark: pre-pushed: github branch protection rules
 
 - disallow pushing to main directly (require PR)
-
-### ~~pre-pull-request: github actions~~
-
-- ~~prompt for pull request template~~
-- ~~prompt changelog template~~
-
-### ~~pre-issue: github actions~~
-
-- ~~prompt with issue template~~
 
 ## 3. :white_check_mark: backend
 
 ## 4. :white_check_mark: static & assets
 
-## 5. :white_check_mark: index page
+## 5. :white_check_mark: home page
 
-## 6. db & auth
+## 6. :white_check_mark: colors
+
+## 7. :white_check_mark: numbers
+
+## 8. :white_check_mark: time
+
+## 9. :white_check_mark: continuous delivery
+
+### :white_check_mark: post-pull-request: github actions
+
+- Vercel for GitHub automatically deploys PRs.
+- ci.yaml Code Check runs format, lint, svelte check, and unit tests
+- ci.yaml E2E runs e2e testing
+- codeql.yaml does CodeQL static application security testing
+
+### :white_check_mark: pre-merge: github branch protection rules
+
+- require all status checks to have passed
+
+## 10. :white_check_mark: continuous deployment
+
+### :white_check_mark: post-merged
+
+- Vercel for GitHub automatically deploys changes to main.
+
+### :white_check_mark: cron jobs
+
+- dependabot alerts show dependency security vulnerabilities
+- allow dependabot to open PR's automatically to resolve dependency security vulnerabilities
+- dependabot.yaml checks dependency versions weekly and opens PR's to update them
+- codeql.yaml runs weekly
+
+---
+
+## 11. db & auth
 
 ### Set up supabase
 
@@ -90,13 +117,22 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
 - [ ] Set up handle and getSession
   - The svelte store should not save the user's access token. That should only be available server side. Therefore, I'll probably split that off in a handle hook and then pop the rest of the data in a svelte store
 
-## :white_check_mark: 7. colors
+## 12+ New features! Counters, SSR, etc.
 
-## :white_check_mark: 8. numbers
+# Whenever
 
-## :white_check_mark: 9. time
+## CI
 
-## 10. Continuous delivery
+### pre-pull-request: github actions
+
+- prompt for pull request template
+- prompt changelog template
+
+### pre-issue: github actions
+
+- prompt with issue template
+
+## Continuous Delivery (if manually setting up with docker images instead of Vercel)
 
 ### post-pull-request: github actions
 
@@ -109,15 +145,9 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
   - Attach image tags to pull request
 - Static application security testing (SAST) CodeQL
 
-### pre-merge: github branch protection rules
+## Continuous Deployment Part 3
 
-- require all status checks to have passed
-
-## 11. continuous deployment
-
-### post-merged
-
-- update semver
+- update semver on PR to main
 - if new major version, send email
 - push image to DockerHub registry
 - update manifest
@@ -125,11 +155,3 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
 ### post-image push
 
 - Deploy new image to production server
-
-### on Sundays
-
-- dependency update
-- security testing
-  - on critical: send email
-
-## 12+ New features! Counters, SSR, etc.
