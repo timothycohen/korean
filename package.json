@@ -21,7 +21,7 @@
   "devDependencies": {
     "@playwright/test": "^1.25.0",
     "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "1.0.0-next.405",
+    "@sveltejs/kit": "next",
     "@types/cookie": "^0.5.1",
     "@types/node": "^18.7.6",
     "@types/pluralize": "^0.0.29",

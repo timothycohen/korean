@@ -1,7 +1,7 @@
-import { Color } from '$backend/color';
+import { Color, type ColorMap } from '$backend/color';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const getColors = (count: number) => {
+export const getColors = (count: number): ColorMap[] => {
   // don't start with white to prevent confusion
   let newColor = new Color().color;
   while (newColor.English === 'white') {
@@ -24,8 +24,5 @@ export const getColors = (count: number) => {
 
 export const GET: RequestHandler = ({ url }) => {
   const count = Math.max(1, Math.min(100, Number.parseInt(url.searchParams.get('count') ?? '100', 10)));
-  return {
-    status: 200,
-    body: JSON.stringify(getColors(count)),
-  };
+  return new Response(JSON.stringify(getColors(count)));
 };

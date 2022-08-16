@@ -8,11 +8,12 @@
   import KoreanContainerToHangul from '$color/components/KoreanContainerToHangul.svelte';
   import Key from '$color/components/Key.svelte';
   import Input from '$color/components/Input.svelte';
+  import type { PageData } from './$types';
 
   // automagically fetched from page endpoint. Hot potato data into stores instead of prop drilling
-  export let colors, allColors;
-  colorsStore.init(colors);
-  allColorsStore.set(allColors);
+  export let data: PageData;
+  colorsStore.init(data.colors);
+  allColorsStore.set(data.allColors);
 
   $: showWheel = true;
 </script>
