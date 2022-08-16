@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  Code Check:
+  code_check:
     runs-on: ubuntu-latest
     env:
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
@@ -23,7 +23,7 @@ jobs:
       - run: pnpm run check
       - run: pnpm run test:unit
 
-  E2E:
+  e2e:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
