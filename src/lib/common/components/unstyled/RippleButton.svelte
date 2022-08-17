@@ -49,7 +49,7 @@
       if (!touch) addRipple();
       touch = false;
     }
-    ripples.debounce(duration + duration * 2);
+    ripples.clearIn(duration + duration * 2);
   }
 </script>
 

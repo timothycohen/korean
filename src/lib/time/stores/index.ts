@@ -1,10 +1,10 @@
-import { flagStore, toggleStore, debounceStore } from '$common/stores';
+import { flagStore, toggleStore, tempStore } from '$common/stores';
 import { writable, derived } from 'svelte/store';
 import { HangulTime, type Hour, type Minute } from '$time/logic';
 
 export const userInput = writable('');
 export const previousInput = writable('');
-export const hint = debounceStore(1000);
+export const hint = tempStore(1000);
 export const showParsedInput = flagStore(true);
 export const showGoalAnswer = flagStore(false);
 
