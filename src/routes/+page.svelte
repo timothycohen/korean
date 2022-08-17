@@ -46,15 +46,15 @@
             alt=""
             on:contextmenu|preventDefault
             in:fadeSpin={fadeSpinConfig}
-            out:fade={{ duration: 150 }}
+            out:fade|local={{ duration: 150 }}
           />
         </span>
       {:else if apps[appIndex].name === 'Numbers'}
         <span
           class="feature-numbers"
           on:click={nextApp}
-          in:fade={{ delay: 150, duration: 300 }}
-          out:fade={{ duration: 150 }}
+          in:fade|local={{ delay: 150, duration: 300 }}
+          out:fade|local={{ duration: 150 }}
         >
           <Counter />
         </span>
@@ -62,8 +62,8 @@
         <span
           class="feature-time"
           on:click={nextApp}
-          in:fade={{ delay: 150, duration: 300 }}
-          out:fade={{ duration: 150 }}
+          in:fade|local={{ delay: 150, duration: 300 }}
+          out:fade|local={{ duration: 150 }}
         >
           {#key minute}
             <AnalogClock size={150} {hour} {minute} />
