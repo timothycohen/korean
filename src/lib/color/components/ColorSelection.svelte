@@ -1,7 +1,7 @@
 <script lang="ts">
   import { colors, allColors, showAnimations } from '$color/stores';
   import { showKey } from '$color/stores';
-  import { debounceStore } from '$common/stores';
+  import { tempStore } from '$common/stores';
   import '$animations/shake.css';
   import { CFsend, CFreceive } from '$animations';
   import { flip } from 'svelte/animate';
@@ -9,7 +9,7 @@
   import Icon from '$common/components/Icon.svelte';
 
   let colorMap = [...$allColors];
-  const shakeAnimationIndex = debounceStore(300);
+  const shakeAnimationIndex = tempStore(300);
 
   const shuffle = () => {
     for (let i = colorMap.length - 1; i > 0; i--) {

@@ -1,12 +1,12 @@
 <script lang="ts">
   import VisibilitySwitch from '$common/components/VisibilitySwitch.svelte';
   import { colors, streakCounter, showKey, showAnswer, showAnimations } from '$color/stores';
-  import { debounceStore } from '$common/stores';
+  import { tempStore } from '$common/stores';
 
   let userInput = '';
   let inputEl: HTMLInputElement;
 
-  let justWon = debounceStore(200, () => {
+  let justWon = tempStore(200, () => {
     setTimeout(() => {
       // explicitly #key the input and call .focus()
       // otherwise userInput = '' doesn't clear the cache and 색 autocompletes on first keydown
