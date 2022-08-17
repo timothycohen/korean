@@ -1,26 +1,16 @@
-/// <reference types="@sveltejs/kit" />
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
+// https://kit.svelte.dev/docs/types#app
 declare namespace App {
-  interface UserSession {
-    user: import('@supabase/supabase-js').User;
-    accessToken?: string;
-  }
-
-  interface Locals extends UserSession {
-    error: import('@supabase/supabase-js').ApiError;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface Session extends UserSession {}
+  // interface Locals {}
   // interface Platform {}
-  // interface Stuff {}
+  // interface PrivateEnv {}
+  // interface PublicEnv {}
 }
 
-// copy formatting from node_modules/svelte-check/dist/src/svelte-jsx.d.ts
+// formatting at node_modules/svelte-check/dist/src/svelte-jsx.d.ts
 declare namespace svelte.JSX {
-  // eslint-disable-next-line
-  interface DOMAttributes<T extends EventTarget> {
-    onoutclick?: (e: CustomEvent<'outclick'>, immuneNodes: Array<HTMLElement | null> | undefined) => void;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface DOMAttributes {
+    // example of stricter typing on e.detail ==> onoutclick?: (e: CustomEvent<{ immuneNodes?: Array<HTMLElement | null> }>) => void;
+    onoutclick?: (e: CustomEvent) => void;
   }
 }
