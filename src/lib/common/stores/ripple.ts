@@ -61,7 +61,7 @@ export const rippleStore = () => {
   };
 
   let timer: ReturnType<typeof setTimeout>;
-  const debounce = (timeout: number) => {
+  const clearIn = (timeout: number) => {
     clearTimeout(timer);
     timer = setTimeout(clear, timeout);
   };
@@ -71,6 +71,6 @@ export const rippleStore = () => {
     add,
     addCenter,
     clear,
-    debounce,
+    clearIn,
   };
 };

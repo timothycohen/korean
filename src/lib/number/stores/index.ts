@@ -1,5 +1,5 @@
 import { derived, writable } from 'svelte/store';
-import { flagStore, drawerStore, debounceStore, toggleStore } from '$common/stores';
+import { flagStore, drawerStore, tempStore, toggleStore } from '$common/stores';
 import { HangulNumber, type HangulNumberOptions } from '$number/logic';
 
 export const showParsedInput = flagStore(false);
@@ -7,7 +7,7 @@ export const showGoalAnswer = flagStore(false);
 export const drawer = drawerStore('#focus-trap-open', '#focus-trap-close');
 export const userInput = writable('');
 export const previousInput = writable('');
-export const hint = debounceStore(1000);
+export const hint = tempStore(1000);
 
 export const direction = toggleStore('seeNumTypeKo', 'seeKoTypeNum', () => {
   userInput.set('');
