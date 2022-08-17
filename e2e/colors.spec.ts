@@ -161,7 +161,7 @@ test.describe('colors', () => {
 
       for (let i = 0; i < 5; i++) {
         await input.type((await page.textContent('.koreanContainer'))?.trim() ?? '');
-        await page.waitForTimeout(100);
+        await page.waitForTimeout(220);
       }
       expect(await input.inputValue()).toBe('');
     });
