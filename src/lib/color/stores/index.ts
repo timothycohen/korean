@@ -7,6 +7,7 @@ export const showAnswer = flagStore(false);
 export const streakCounter = flagCounterStore(false, 0, 1);
 export const direction = toggleStore<'colorToHangul' | 'hangulToColor'>('hangulToColor', 'colorToHangul');
 export const allColors = writable<ColorMap[]>([]);
+export const showAnimations = flagStore(true);
 
 type Colors = { color: ColorMap; nextColor: ColorMap };
 

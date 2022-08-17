@@ -79,6 +79,8 @@
   .colorWheel {
     height: 100%;
     width: 100%;
+    opacity: var(--opacity);
+    transform: var(--transform);
   }
   .overlay {
     height: 100%;

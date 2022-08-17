@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { colors, allColors } from '$color/stores';
+  import { colors, allColors, showAnimations } from '$color/stores';
   import { showKey } from '$color/stores';
   import { debounceStore } from '$common/stores';
   import '$animations/shake.css';
@@ -56,7 +56,7 @@
         on:click={() => {
           if (color.hex === $colors.color.hex) {
             colors.next();
-            shuffle();
+            if ($showAnimations) shuffle();
           } else {
             shakeAnimationIndex.trigger(i);
           }
