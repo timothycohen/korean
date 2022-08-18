@@ -47,12 +47,19 @@ export const toggleStore = <T>(one: T, two: T, toggleCB?: () => void) => {
   };
 };
 
-export const tempStore = <T>(duration: number) => {
+export const tempStore = <T>(duration: number, storeCallback?: () => void) => {
   const { subscribe, set } = writable<T | null>(null);
 
-  const trigger = (val: T) => {
+  let timer: ReturnType<typeof setTimeout>;
+
+  const trigger = (val: T, cb?: () => void) => {
+    clearInterval(timer);
     set(val);
-    setTimeout(() => set(null), duration);
+    setTimeout(() => {
+      set(null);
+      if (storeCallback) storeCallback();
+      if (cb) cb();
+    }, duration);
   };
   return {
     subscribe,

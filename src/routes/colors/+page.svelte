@@ -1,6 +1,6 @@
 <script lang="ts">
   import DirectionBtn from '$common/components/ButtonLanguageDirection.svelte';
-  import { direction, showAnswer } from '$color/stores';
+  import { direction, showAnswer, showAnimations, allColors } from '$color/stores';
   import { colors as colorsStore, allColors as allColorsStore } from '$color/stores';
   import ColorWheelAnimated from '$color/components/ColorWheelAnimated.svelte';
   import KoreanContainerToColor from '$color/components/KoreanContainerToColor.svelte';
@@ -9,13 +9,12 @@
   import Key from '$color/components/Key.svelte';
   import Input from '$color/components/Input.svelte';
   import type { PageData } from './$types';
+  import ColorWheel from '$common/components/ColorWheel.svelte';
 
   // automagically fetched from page endpoint. Hot potato data into stores instead of prop drilling
   export let data: PageData;
   colorsStore.init(data.colors);
   allColorsStore.set(data.allColors);
-
-  $: showWheel = true;
 </script>
 
 <svelte:head>
@@ -31,9 +30,11 @@
       labelLeft="한글"
       labelRight="Color"
     />
-    <div class="colorWheelContainer" on:click={() => (showWheel = !showWheel)}>
-      {#if showWheel}
+    <div class="colorWheelContainer" on:click={showAnimations.toggle} title="toggle animations">
+      {#if $showAnimations}
         <ColorWheelAnimated />
+      {:else}
+        <ColorWheel allColorHexes={$allColors.map(c => c.hex)} --opacity="50%" --transform="scale(75%)" />
       {/if}
     </div>
   </div>
@@ -41,8 +42,8 @@
   <div class="view {$direction}">
     {#if $direction === 'colorToHangul'}
       <span><KoreanContainerToHangul /></span>
-      <span><Input /></span>
-      <span><Key /></span>
+      <Input />
+      <Key />
     {:else}
       <KoreanContainerToColor />
       <ColorSelection />
@@ -76,9 +77,12 @@
   }
 
   .view.colorToHangul {
-    justify-items: center;
-    display: grid;
     grid-template-rows: 96px 164px auto;
+  }
+
+  .view.colorToHangul span:nth-child(1) {
+    display: grid;
+    justify-items: center;
   }
 
   @media only screen and (min-width: 600px) {

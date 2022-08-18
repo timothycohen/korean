@@ -151,5 +151,19 @@ test.describe('colors', () => {
       const goalText2 = await page.textContent('.koreanContainer');
       expect(goalText1).not.toBe(goalText2);
     });
+
+    test('no phantom input', async ({ page }) => {
+      // setting the input to '' doesn't always clear the cache
+      // for example, typing 보라색 followed by 까만색 will show 색까만색
+      await setup(page);
+      await page.locator('input[name="answer"]').setChecked(true);
+      const input = page.locator('#koreanColor');
+
+      for (let i = 0; i < 5; i++) {
+        await input.type((await page.textContent('.koreanContainer'))?.trim() ?? '');
+        await page.waitForTimeout(220);
+      }
+      expect(await input.inputValue()).toBe('');
+    });
   });
 });
