@@ -9,7 +9,8 @@ const config: PlaywrightTestConfig = {
   },
   use: {
     baseURL: 'http://localhost:5173/',
-    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    trace: 'retain-on-failure',
   },
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
