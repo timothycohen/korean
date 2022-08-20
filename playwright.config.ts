@@ -29,7 +29,7 @@ const config: PlaywrightTestConfig = {
     },
   ],
   testMatch: ['**/*.spec.{js,ts}'],
-  workers: 5,
-  timeout: 10000,
+  workers: 4,
+  timeout: 30000,
 };
 export default config;
