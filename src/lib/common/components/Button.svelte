@@ -29,10 +29,7 @@
 
 <style>
   /* target extra css through button.btn-ripple; svg.ripples; circle.ripple; circle.show-on-focus */
-
   span :global(.btn-ripple) {
-    -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
     border: var(--border, none);
     font-weight: var(--font-weight, 500);
@@ -50,35 +47,30 @@
     transition: var(--transition, 200ms all ease-out);
     background-color: var(--background-color, var(--primary2));
     overflow: var(--overflow, hidden);
-    font-family: var(--font-family, BioRhyme, GowunDodum, sans-serif);
+    font-family: var(--font-family, var(--font-en, sans-serif));
     user-select: var(--user-select, none);
     box-shadow: var(
       --box-shadow,
-      0px 2px 4px -1px rgb(0 0 0 / 20%),
-      0px 4px 5px 0px rgb(0 0 0 / 14%),
-      0px 1px 10px 0px rgb(0 0 0 / 12%)
+      0 2px 4px -1px rgb(0 0 0 / 20%),
+      0 4px 5px 0 rgb(0 0 0 / 14%),
+      0 1px 10px 0 rgb(0 0 0 / 12%)
     );
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
   span :global(.btn-ripple:hover) {
     outline: var(--outline-h, none);
     background-color: var(--background-color-h, var(--background-color, var(--primary2)));
     filter: var(--filter-h, brightness(80%));
-    box-shadow: var(--box-shadow-h), 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-      0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--box-shadow-h), 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%),
+      0 1px 10px 0 rgb(0 0 0 / 12%);
   }
   span :global(.btn-ripple:focus) {
     outline: var(--outline-f, none);
     background-color: var(--background-color-f, var(--background-color-h, var(--background-color, var(--primary2))));
     filter: brightness(80%);
-    box-shadow: var(--box-shadow-h), 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-      0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--box-shadow-h), 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%),
+      0 1px 10px 0 rgb(0 0 0 / 12%);
   }
   span :global(.btn-ripple:active) {
     outline: var(--outline-a, none);
@@ -86,9 +78,9 @@
     filter: var(--filter-a, brightness(70%));
     box-shadow: var(
       --box-shadow-a,
-      0px 5px 5px -3px rgba(0, 0, 0, 0.2),
-      0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-      0px 3px 14px 2px rgba(0, 0, 0, 0.12)
+      0 5px 5px -3px rgb(0 0 0 / 20%),
+      0 8px 10px 1px rgb(0 0 0 / 14%),
+      0 3px 14px 2px rgb(0 0 0 / 12%)
     );
   }
 </style>

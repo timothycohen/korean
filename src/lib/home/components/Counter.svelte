@@ -15,7 +15,7 @@
 
   const calcAnimation = () => {
     let scale = 25;
-    const calcStyle = (s: number, e: number) => `--startY: ${s * scale}%; --endY: ${e * scale}%;`;
+    const calcStyle = (s: number, e: number) => `--start-y: ${s * scale}%; --end-y: ${e * scale}%;`;
     if (direction < 0 && count === 1) return calcStyle(-1, -1);
     if (direction < 0) return calcStyle(-1, 1);
     if (direction > 0 && count === 9) return calcStyle(1, 1);
@@ -52,12 +52,12 @@
     white-space: nowrap;
   }
   .ko {
-    font-family: 'GowunDodum';
+    font-family: var(--font-ko);
     font-weight: 400;
     font-size: clamp(1.75rem, min(7vw, 7vh), 6rem);
   }
   .en {
-    font-family: 'BioRhyme';
+    font-family: var(--font-en);
     font-weight: 500;
     font-size: clamp(1.3rem, min(5vw, 5vh), 5rem);
   }
@@ -73,16 +73,16 @@
   @keyframes fade {
     0% {
       opacity: 0.01;
-      transform: translateY(var(--startY)) scale(0.75);
+      transform: translateY(var(--start-y)) scale(0.75);
     }
     25%,
     75% {
       opacity: 1;
-      transform: translateY(0px) scale(1);
+      transform: translateY(0) scale(1);
     }
     100% {
       opacity: 0.01;
-      transform: translateY(var(--endY)) scale(0.75);
+      transform: translateY(var(--end-y)) scale(0.75);
     }
   }
 

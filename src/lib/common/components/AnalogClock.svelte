@@ -24,23 +24,23 @@
   {#each [...Array(60)].map((_, i) => i * 6) as tick}
     {#if tick % 30 === 0}
       <div
-        class="hrMark"
+        class="hr-mark"
         style="top: {calcTop(tick, 2)}; left: {calcLeft(tick, 2)}; transform: {calcTransform(tick)}"
       />
     {:else}
       <div
-        class="minMark"
+        class="min-mark"
         style="top: {calcTop(tick, 0.85)}; left: {calcLeft(tick, 0.85)}; transform: {calcTransform(tick)}"
       />
     {/if}
   {/each}
 
   <div
-    class="hrHand"
+    class="hr-hand"
     style="top: {calcTop(hrHandDeg, 2.5)}; left: {calcLeft(hrHandDeg, 2.5)}; transform: {calcTransform(hrHandDeg)};"
   />
   <div
-    class="minuteHand"
+    class="min-hand"
     style="top: {calcTop(minHangDeg, 1.5)}; left: {calcLeft(minHangDeg, 1.5)}; transform: {calcTransform(minHangDeg)};"
   />
 </div>
@@ -58,7 +58,7 @@
     border: 3px solid var(--primary2);
     z-index: 5;
   }
-  .minMark {
+  .min-mark {
     position: absolute;
     width: 0.85%;
     height: 4%;
@@ -66,29 +66,26 @@
     transform-origin: top left;
     z-index: 1;
   }
-  .hrMark {
+  .hr-mark {
     position: absolute;
     width: 2%;
     height: 7%;
-    background-color: var(--primary2);
     background: linear-gradient(0deg, var(--primary2) 80%, transparent 80%);
     transform-origin: top left;
     z-index: 2;
   }
-  .minuteHand {
+  .min-hand {
     position: absolute;
     width: 1.5%;
     height: 100%;
-    background-color: var(--primary2);
     background: linear-gradient(transparent 40%, var(--primary2) 40%, var(--primary2) 90%, transparent 90%);
     transform-origin: top left;
     z-index: 3;
   }
-  .hrHand {
+  .hr-hand {
     position: absolute;
     width: 2.5%;
     height: 90%;
-    background-color: var(--primary2);
     background: linear-gradient(transparent 45%, var(--primary2) 45%, var(--primary2) 90%, transparent 90%);
     transform-origin: top left;
     z-index: 4;

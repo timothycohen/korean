@@ -20,18 +20,18 @@
   <main>
     <Display />
 
-    <div class="inputWrapper">
+    <div class="input-wrapper">
       <Input />
     </div>
 
-    <div class="togglesContainer">
-      <span class="answerSwitch">
+    <div class="toggles-container">
+      <span class="answer-switch">
         <VisibilitySwitch bind:checked={$showGoalAnswer} label="answer" labelPosition="right" size="lg" />
       </span>
 
       <p class="hint">{$hint ?? ' '}</p>
 
-      <span class="directionBtn">
+      <span class="direction-btn">
         <DirectionBtn />
       </span>
     </div>

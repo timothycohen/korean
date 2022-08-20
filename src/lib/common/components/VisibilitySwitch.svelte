@@ -7,7 +7,7 @@
   export let name = label;
 </script>
 
-<div class="visibilitySwitchWrapper" style="--areas: {areas};">
+<div class="visibility-switch-wrapper" style="--areas: {areas};">
   <label for={name}>
     {label}
   </label>
@@ -15,7 +15,7 @@
 </div>
 
 <style>
-  .visibilitySwitchWrapper {
+  .visibility-switch-wrapper {
     display: grid;
     grid-auto-flow: column;
     align-items: center;
@@ -23,7 +23,7 @@
     gap: 0.5rem;
     padding: 0.5rem;
     font-size: 1.3rem;
-    grid-template-areas: var(--areas);
+    grid-template: var(--areas);
   }
   input {
     grid-area: checkbox;

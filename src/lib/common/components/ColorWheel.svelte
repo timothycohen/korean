@@ -70,13 +70,13 @@
   };
 </script>
 
-<div class="colorWheel">
+<div class="color-wheel">
   {@html createColorWheelSVG(allColorHexes, guardConfig(picked), colorPath)}
   <div class="overlay"><slot /></div>
 </div>
 
 <style>
-  .colorWheel {
+  .color-wheel {
     height: 100%;
     width: 100%;
     opacity: var(--opacity);

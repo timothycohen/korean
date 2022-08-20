@@ -4,25 +4,25 @@
 </script>
 
 {#if $allColors && $showKey}
-  <div class="blackContainer keyContainer fade fadeUpAndIn">
+  <div class="black-container key-container fade fade-up-and-in">
     {#each $allColors as c}
       <span
-        style="color: {c.hex}; background-color: {c.Korean === '까만색' || c.Korean === '남색' || c.Korean === '보라색'
+        style="color: {c.hex}; background-color: {c.korean === '까만색' || c.korean === '남색' || c.korean === '보라색'
           ? 'white'
           : 'transparent'};"
         tabIndex={showKey ? 0 : -1}
         role="img"
         lang="ko"
-        aria-label={`${c.English} is ${c.Korean}`}
+        aria-label={`${c.english} is ${c.korean}`}
       >
-        {c.Korean}
+        {c.korean}
       </span>
     {/each}
   </div>
 {/if}
 
 <style>
-  .keyContainer {
+  .key-container {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -31,15 +31,14 @@
     justify-content: center;
     align-self: start;
   }
-
   span {
-    font-family: GowunDodum;
+    font-family: var(--font-ko);
     border-radius: 4px;
     font-weight: 700;
   }
 
   @media only screen and (min-width: 600px) {
-    .keyContainer {
+    .key-container {
       font-size: 2rem;
       width: 80%;
     }

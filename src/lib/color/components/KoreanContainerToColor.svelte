@@ -5,13 +5,13 @@
 
   $: color = $showAnswer ? $colors.color.hex : 'var(--primary2)';
   $: bg = $showAnswer
-    ? $colors.color.Korean === '까만색' || $colors.color.Korean === '남색' || $colors.color.Korean === '보라색'
+    ? $colors.color.korean === '까만색' || $colors.color.korean === '남색' || $colors.color.korean === '보라색'
       ? 'white'
       : 'black'
     : '#000000';
 </script>
 
-<KoreanContainer {color} {bg} text={$colors.color.Korean}>
+<KoreanContainer {color} {bg} text={$colors.color.korean}>
   <div class="container">
     <VisibilitySwitch bind:checked={$showKey} label="key" labelPosition="right" size="lg" />
     <VisibilitySwitch bind:checked={$showAnswer} label="answer" labelPosition="right" size="lg" />

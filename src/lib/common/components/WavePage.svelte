@@ -25,7 +25,7 @@
 </script>
 
 <div
-  class="wavePage"
+  class="wave-page"
   style="
   --bg-image-small: {createURL(dSmall, '#353c6d')};
   --bg-image-big: {createURL(dBig, '#353c6d')};
@@ -35,15 +35,14 @@
 </div>
 
 <style>
-  .wavePage {
+  .wave-page {
     min-height: 100%;
     width: 100%;
     padding: 1rem;
     border: 0.5rem solid var(--primary2);
     position: relative;
   }
-
-  .wavePage::before {
+  .wave-page::before {
     content: '';
     position: absolute;
     top: 0;
@@ -61,7 +60,7 @@
   }
 
   @media only screen and (min-width: 600px) {
-    .wavePage::before {
+    .wave-page::before {
       background-image: var(--bg-image-big);
     }
   }
