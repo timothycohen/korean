@@ -3,32 +3,27 @@
   import Clock from '$time/components/Clock.svelte';
 </script>
 
-<div class="detailsWrapper">
+<div class="details-wrapper">
   {#if $direction === 'seeHHMMTypeKo'}
-    <span class="clockWrapper"><Clock size={180} hour={$goal.hour} minute={$goal.minute} /></span>
+    <span class="clock-wrapper"><Clock size={180} hour={$goal.hour} minute={$goal.minute} /></span>
     <h1 class="answer ko">{$showGoalAnswer ? $goal.hangul : ''}</h1>
   {:else}
     <h1 class="goal ko">{$goal.hangul}</h1>
     <h2 class="answer en">{$showGoalAnswer ? $goal.HHMM : ' '}</h2>
-    <h2 class="parsedInput ko">{$showParsedInput ? $parsedInput : ' '}</h2>
+    <h2 class="parsed-input ko">{$showParsedInput ? $parsedInput : ' '}</h2>
   {/if}
 </div>
 
 <style>
-  .detailsWrapper {
+  .details-wrapper {
     height: 250px;
     display: grid;
     align-content: flex-end;
   }
-  .clockWrapper {
+  .clock-wrapper {
     height: 180px;
   }
-  .ko {
-    font-family: GowunDodum;
-    font-weight: 400;
-  }
   .en {
-    font-family: BioRhyme;
     font-weight: 300;
   }
   .answer {
@@ -49,7 +44,7 @@
     color: var(--gray5);
     font-weight: 700;
   }
-  .parsedInput.ko {
+  .parsed-input.ko {
     font-size: clamp(2rem, 1.25rem + 3.3333vw, 3rem);
     width: 100%;
     color: var(--gray4);
@@ -57,11 +52,11 @@
   }
 
   @media only screen and (min-width: 600px) {
-    .clockWrapper :global(button) {
+    .clock-wrapper :global(button) {
       transform: scale(1.39); /* (320 - 70) / (250 - 70) */
       transform-origin: bottom;
     }
-    .detailsWrapper {
+    .details-wrapper {
       height: 320px;
     }
   }

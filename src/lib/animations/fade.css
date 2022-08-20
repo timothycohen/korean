@@ -1,18 +1,18 @@
-@keyframes fadeDownAndIn {
+@keyframes fade-down-and-in {
   0% {
     opacity: 0.01;
     transform: translateY(-10px) scale(0.98);
   }
   100% {
     opacity: 1;
-    transform: translateY(0px) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
-@keyframes fadeDownAndOut {
+@keyframes fade-down-and-out {
   0% {
     opacity: 1;
-    transform: translateY(0px) scale(1);
+    transform: translateY(0) scale(1);
   }
   99% {
     opacity: 0.01;
@@ -24,21 +24,21 @@
   }
 }
 
-@keyframes fadeUpAndIn {
+@keyframes fade-up-and-in {
   0% {
     opacity: 0.01;
     transform: translateY(10px) scale(0.98);
   }
   100% {
     opacity: 1;
-    transform: translateY(0px) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
-@keyframes fadeUpAndOut {
+@keyframes fade-up-and-out {
   0% {
     opacity: 1;
-    transform: translateY(0px) scale(1);
+    transform: translateY(0) scale(1);
   }
   99% {
     opacity: 0.01;
@@ -58,15 +58,18 @@
   animation-fill-mode: forwards;
 }
 
-.fadeDownAndIn {
-  animation-name: fadeDownAndIn;
+.fade-down-and-in {
+  animation-name: fade-down-and-in;
 }
-.fadeDownAndOut {
-  animation-name: fadeDownAndOut;
+
+.fade-down-and-out {
+  animation-name: fade-down-and-out;
 }
-.fadeUpAndIn {
-  animation-name: fadeUpAndIn;
+
+.fade-up-and-in {
+  animation-name: fade-up-and-in;
 }
-.fadeUpAndOut {
-  animation-name: fadeUpAndOut;
+
+.fade-up-and-out {
+  animation-name: fade-up-and-out;
 }

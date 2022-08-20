@@ -103,15 +103,12 @@
   .app-selection {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    /* grid-template-rows: repeat(3, minmax(5rem, 1fr)); */
-    /* grid-template-rows: minmax(15rem, 1fr) 1fr 1fr; */
-
-    grid-template-areas:
+    grid-template:
       '. . feature feature feature feature . .'
       '. . colors colors colors colors . .'
       'numbers numbers numbers numbers time time time time';
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     background-color: black;
     place-items: center;
   }
@@ -141,12 +138,12 @@
   .preview-link:hover {
     opacity: 0.75;
   }
-  .preview-link:hover * {
-    transform: scale(1);
-  }
   .preview-link * {
     transition: transform 300ms ease-in-out;
     transform: scale(0.98);
+  }
+  .preview-link:hover * {
+    transform: scale(1);
   }
   .preview-link img {
     object-fit: contain;
@@ -161,17 +158,17 @@
   /* @media only screen and (min-width: 600px) and (max-height: 900px) { */
   @media (min-aspect-ratio: 1/1) {
     .app-selection {
-      grid-template-rows: repeat(2, 1fr);
-      grid-template-areas:
+      grid-template:
         '. . feature feature feature feature . .'
         '. colors colors numbers numbers time time .';
+      grid-template-rows: repeat(2, 1fr);
     }
   }
 
   @media (min-aspect-ratio: 2/1) {
     .app-selection {
+      grid-template: 'feature feature colors colors numbers numbers time time';
       grid-template-rows: repeat(1, 1fr);
-      grid-template-areas: 'feature feature colors colors numbers numbers time time';
     }
   }
 

@@ -42,8 +42,7 @@ export const parsedInput = derived([userInput, goal, direction], ([$userInput, $
   // therefore, try catch for out of range numbers
   try {
     return $goal.fromNumber(Number.parseInt(cleanedInput)).hangul;
-  } catch (e) {
-    console.error(e);
+  } catch {
     return '…';
   }
 });

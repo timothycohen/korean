@@ -20,17 +20,17 @@
   .layout-wave :global(main) {
     text-align: center;
   }
-  .layout-wave :global(.inputWrapper) {
+  .layout-wave :global(.input-wrapper) {
     display: grid;
     height: 3rem;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1rem;
   }
-  .layout-wave :global(.answerSwitch) {
+  .layout-wave :global(.answer-switch) {
     grid-area: answer;
     display: grid;
     justify-content: center;
   }
-  .layout-wave :global(.directionBtn) {
+  .layout-wave :global(.direction-btn) {
     grid-area: direction;
   }
   .layout-wave :global(.hint) {
@@ -41,9 +41,9 @@
     height: 3rem;
     font-size: 0.75rem;
   }
-  .layout-wave :global(.togglesContainer) {
+  .layout-wave :global(.toggles-container) {
     display: grid;
-    grid-template-areas: 'answer direction' 'hint hint';
+    grid-template: 'answer direction' 'hint hint';
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -53,7 +53,7 @@
     .layout-wave :global(.hint) {
       font-size: 1rem;
     }
-    .layout-wave :global(.inputWrapper) {
+    .layout-wave :global(.input-wrapper) {
       margin-top: 2rem;
     }
   }
@@ -61,9 +61,9 @@
     .layout-wave :global(.hint) {
       font-size: 1.5rem;
     }
-    .layout-wave :global(.togglesContainer) {
+    .layout-wave :global(.toggles-container) {
+      grid-template: 'answer hint direction';
       grid-template-columns: repeat(3, 1fr);
-      grid-template-areas: 'answer hint direction';
     }
   }
 
@@ -88,10 +88,10 @@
     display: none;
   }
   .layout-wave :global(.ko) {
-    font-family: 'GowunDodum';
+    font-family: var(--font-ko);
   }
   .layout-wave :global(.en) {
-    font-family: 'BioRhyme';
+    font-family: var(--font-en);
   }
   .layout-wave :global(.visibility-icon-wrapper) {
     position: relative;

@@ -1,17 +1,17 @@
 #!/bin/bash
 
-if [ ! -w ".git" ]; then
-  echo "Unable to write to .git folder. Does it exist with correct permissions?"
+# source folder for the git hooks
+GITHOOKS_FOLDER="$(cd "$(dirname "$0")" && pwd)"
+# .git/hooks folder where git will execute from
+GIT_HOOKS_FOLDER="$(cd $GITHOOKS_FOLDER/../.git/hooks >/dev/null 2>&1 && pwd)"
+if [[ $? -gt 0 || ! -w "$GIT_HOOKS_FOLDER" ]]; then
+  echo "Unable to write to .git/hooks folder. Does it exist with correct permissions?"
   exit 1
 fi
-
+HEADER='#!/bin/bash\n\nset -e\n\n' # add once to each .git/hooks/hook so it exits if any of the source hooks fail
 GREEN='\033[0;32m'
 NO_COLOR='\033[0m'
-
-HEADER='#!/bin/bash\n\nset -e\n\n'                             # add once to each .git/hooks/hook so it exits if any of the source hooks fail
-GITHOOKS_FOLDER="$(cd "$(dirname "$0")" && pwd)"               # source folder for the git hooks
-GIT_HOOKS_FOLDER="$(cd $GITHOOKS_FOLDER/../.git/hooks && pwd)" # .git/hooks folder where git will execute from
-REL_PATH='"$(dirname -- "$0")"/../../.githooks'                # to call the source file from inside .git/hooks/hook
+REL_PATH='"$(dirname -- "$0")"/../../.githooks' # to call the source file from inside .git/hooks/hook
 
 init_hooks() {
   for GITHOOK in "$@"; do
@@ -29,3 +29,9 @@ init_hooks() {
 # todo find all hooks in .githooks folder and run this automatically
 init_hooks pre-commit pre-commit/no_non_ASCII pre-commit/format_lint pre-commit/check
 init_hooks pre-push pre-push/reinstall pre-push/unit pre-push/e2e
+
+echo "
+Write is set to true by default for formatting and linting.
+Any files that have been staged will be formatted and readded to the staging area.
+This means any changes made after committing will end up in the final commit.
+To disable, set write=false in .githooks/pre-commit/format_lint."

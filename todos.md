@@ -11,6 +11,7 @@ SvelteKit, Prettier, ESLint, Vitest, Playwright, Tailwind, DaisyUI, Supabase
 - check for non-ascii characters
 - format
 - lint
+- stylelint
 
 ### :white_check_mark: pre-push: githooks
 

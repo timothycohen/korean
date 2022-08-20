@@ -21,21 +21,21 @@
   const getFirstVisibleColor = (colorMap: typeof $allColors) => {
     const lowContrast = ['노란색', '하얀색', '베이지색', '회색'];
     for (let i = 0; i < colorMap.length; i++) {
-      if (!lowContrast.includes(colorMap[i].Korean)) return colorMap[i].hex;
+      if (!lowContrast.includes(colorMap[i].korean)) return colorMap[i].hex;
     }
   };
 
   $: calcBG = (color: typeof $colors.color) => {
     let dark = ['까만색', '남색', '보라색'];
     if ($showKey) {
-      if (dark.includes(color.Korean)) return 'white';
+      if (dark.includes(color.korean)) return 'white';
       return 'black';
     }
     return color.hex;
   };
 </script>
 
-<div class="blackContainer selectionContainer" style="background-color: rgba(0, 0, 0, 0.05);">
+<div class="black-container selection-container" style="background-color: rgb(0 0 0 / 5%);">
   {#each colorMap as color, i (color)}
     <span
       class={`shakable${$shakeAnimationIndex === i ? ' shake' : ''}`}
@@ -47,9 +47,9 @@
       <Button
         ripple={false}
         COMMENT="crossfade & ripples are mutually exclusive here: https://github.com/sveltejs/svelte/issues/3685"
-        aria-label={`${color.English} is ${color.Korean}`}
+        aria-label={`${color.english} is ${color.korean}`}
         lang="ko"
-        rippleFillFocus={!$showKey ? (color.English === 'black' ? 'white' : '') : color.hex}
+        rippleFillFocus={!$showKey ? (color.english === 'black' ? 'white' : '') : color.hex}
         --color={color.hex}
         --background-color={calcBG(color)}
         --background-color-h={calcBG(color)}
@@ -62,13 +62,13 @@
           }
         }}
       >
-        {color.Korean}
+        {color.korean}
       </Button>
     </span>
   {/each}
 
   {#key getFirstVisibleColor(colorMap)}
-    <span class="shuffleBtn">
+    <span class="shuffle-btn">
       <Button --background-color={getFirstVisibleColor(colorMap)} on:click={shuffle} aria-label="shuffle colors">
         <Icon name="shuffle" vbX="16" vbY="16" width="33%" stroke="none" />
       </Button>
@@ -77,40 +77,39 @@
 </div>
 
 <style>
-  .selectionContainer {
+  .selection-container {
     width: 95%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
     gap: 1rem;
     padding: 1rem;
   }
-  .selectionContainer :global(.shakable button),
-  .selectionContainer :global(.shuffleBtn button) {
+  .selection-container :global(.shakable button),
+  .selection-container :global(.shuffle-btn button) {
     font-size: 1.1rem;
     font-weight: bolder;
-    font-family: GowunDodum;
+    font-family: var(--font-ko);
     word-break: keep-all;
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(255, 242, 209, 0.5);
+    border: 1px solid rgb(255 242 209 / 50%);
     outline: 1px solid transparent;
     transition: border, outline 300ms;
     user-select: none;
   }
-
-  .selectionContainer :global(.shakable button:hover),
-  .selectionContainer :global(.shuffleBtn button:hover) {
+  .selection-container :global(.shakable button:hover),
+  .selection-container :global(.shuffle-btn button:hover) {
     border: 1px solid var(--primary2);
     outline: 2px solid var(--primary2);
     transition: none;
   }
 
   @media only screen and (min-width: 600px) {
-    .selectionContainer {
+    .selection-container {
       grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
       width: 90%;
     }
-    .selectionContainer :global(.shakable button) {
+    .selection-container :global(.shakable button) {
       font-size: 2.5rem;
     }
   }

@@ -20,31 +20,31 @@
   <header>
     <h1>Korean Numbers</h1>
 
-    <button class="settingsBtn" on:click={drawer.toggle}>Settings</button>
+    <button class="settings-btn" on:click={drawer.toggle}>Settings</button>
   </header>
 
   <main style={`filter: ${$drawer ? 'var(--shimmer)' : ''}`}>
     <Display />
 
-    <div class="inputWrapper">
+    <div class="input-wrapper">
       <Input />
     </div>
 
-    <div class="togglesContainer">
-      <span class="answerSwitch">
+    <div class="toggles-container">
+      <span class="answer-switch">
         <VisibilitySwitch bind:checked={$showGoalAnswer} label="answer" labelPosition="right" size="lg" />
       </span>
 
       <p class="hint">{$hint ?? ' '}</p>
 
-      <span class="directionBtn">
+      <span class="direction-btn">
         <DirectionBtn />
       </span>
     </div>
   </main>
 </WavePage>
 
-<Drawer {drawer} selectorsImmuneToClickOutside={['.settingsBtn']} height="max(450px, 55%)">
+<Drawer {drawer} selectorsImmuneToClickOutside={['.settings-btn']} height="max(450px, 55%)">
   <div class="drawer-topbar">
     <h1>Settings</h1>
     <button on:click={() => drawer.close()}>Close</button>
@@ -64,12 +64,12 @@
 </Drawer>
 
 <style>
-  .settingsBtn {
-    font-family: SpaceMono;
+  .settings-btn {
+    font-family: var(--font-secondary);
     text-transform: lowercase;
     background-color: var(--gray5);
     border: 4px solid var(--primary2);
-    border-radius: 0px;
+    border-radius: 0;
     padding: 0.5rem;
     font-size: 1rem;
     color: var(--primary2);
@@ -80,15 +80,14 @@
     text-align: center;
   }
   .drawer-topbar {
-    padding: 0.5rem 1rem;
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr;
     grid-auto-flow: column;
     align-items: baseline;
     margin: 0 1rem;
-    padding: 1rem 1.5rem 0.5rem 1.5rem;
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+    padding: 1rem 1.5rem 0.5rem;
+    border-bottom: 0.5px solid rgb(0 0 0 / 20%);
   }
   .drawer-topbar h1 {
     font-size: 2rem;

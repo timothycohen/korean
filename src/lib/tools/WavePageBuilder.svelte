@@ -71,12 +71,12 @@
   console.log(fullPath);
 </script>
 
-<div class="wavePage" style="--bg-image: {createURL('#353c6d')}; --filter: {shimmer ? 'var(--shimmer)' : ''};">
+<div class="wave-page" style="--bg-image: {createURL('#353c6d')}; --filter: {shimmer ? 'var(--shimmer)' : ''};">
   <slot />
 </div>
 
 <style>
-  .wavePage {
+  .wave-page {
     min-height: 100%;
     width: 100%;
     padding: 1rem;
@@ -84,7 +84,7 @@
     position: relative;
   }
 
-  .wavePage::before {
+  .wave-page::before {
     content: '';
     position: absolute;
     top: 0;

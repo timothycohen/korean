@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Run prettier and eslint only on staged files
+write=true
+
+# Run prettier, eslint, and stylelint only on staged files
 
 # Allow both formatting and linting to complete even if the other fails
 exit_code=0
@@ -15,18 +17,34 @@ cd "$(dirname "$0")/../../"
 # Because this runs on all git diffed files, its necessary to filter for supported files
 FILES_TO_FORMAT=$(echo $STAGED_FILES | xargs -n 1 | grep -E '\.(svelte|js|ts|jsx|tsx|json|css|less|scss|html|vue|graphql|md|yaml|flow|handlebars|hbs|ember)$')
 FILES_TO_LINT=$(echo $STAGED_FILES | xargs -n 1 | grep -E '\.(svelte|js|ts|jsx|tsx|json)$')
+FILES_TO_STYLELINT=$(echo $STAGED_FILES | xargs -n 1 | grep -E '\.(css|svelte)$')
 
-# Format
-printf '\n==========\nformatting\n==========\n'
-npx prettier --list-different --write --plugin-search-dir=. ${FILES_TO_FORMAT}
-exit_code=$(($exit_code + $?))
+if [ $write = true ]; then
+  printf '\n==========\nformatting\n==========\n'
+  npx prettier --list-different --write --plugin-search-dir=. ${FILES_TO_FORMAT}
+  exit_code=$(($exit_code + $?))
 
-# Lint
-printf '\n=======\nlinting\n=======\n'
-npx eslint --fix --max-warnings 0 ${FILES_TO_LINT}
-exit_code=$(($exit_code + $?))
+  printf '\n=======\nlinting\n=======\n'
+  npx eslint --fix --max-warnings 0 ${FILES_TO_LINT}
+  exit_code=$(($exit_code + $?))
 
-# Add any changed files back to staging
-echo "$STAGED_FILES" | xargs git add
+  printf '\n=======\nstyle-linting\n=======\n'
+  npx stylelint --fix --rd --risd ${FILES_TO_STYLELINT}
+  exit_code=$(($exit_code + $?))
+
+  echo "$STAGED_FILES" | xargs git add
+else
+  printf '\n==========\nformatting\n==========\n'
+  npx prettier --list-different --plugin-search-dir=. ${FILES_TO_FORMAT}
+  exit_code=$(($exit_code + $?))
+
+  printf '\n=======\nlinting\n=======\n'
+  npx eslint --max-warnings 0 ${FILES_TO_LINT}
+  exit_code=$(($exit_code + $?))
+
+  printf '\n=======\nstyle-linting\n=======\n'
+  npx stylelint --rd --risd ${FILES_TO_STYLELINT}
+  exit_code=$(($exit_code + $?))
+fi
 
 exit "$exit_code"

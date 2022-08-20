@@ -21,7 +21,7 @@
   <div
     transition:slide={{ duration: 300 }}
     style="--height: {height};"
-    class="bottom_drawer"
+    class="bottom-drawer"
     use:clickOutside={selectorsImmuneToClickOutside.map(s => document.querySelector(s))}
     on:outclick|stopPropagation={() => {
       drawer.close();
@@ -32,7 +32,7 @@
 {/if}
 
 <style>
-  .bottom_drawer {
+  .bottom-drawer {
     position: fixed;
     background-color: var(--secondary5);
     color: var(--secondary1);

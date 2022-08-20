@@ -4,7 +4,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const getColors = (count: number): ColorMap[] => {
   // don't start with white to prevent confusion
   let newColor = new Color().color;
-  while (newColor.English === 'white') {
+  while (newColor.english === 'white') {
     newColor = new Color().color;
   }
 

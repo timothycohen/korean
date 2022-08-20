@@ -23,14 +23,14 @@
 </svelte:head>
 
 <div class="page" style="--bg: {$showAnswer || $direction === 'colorToHangul' ? $colorsStore.color.hex : '#000000'};">
-  <div class="topBar">
+  <div class="top-bar">
     <DirectionBtn
       on:click={direction.toggle}
       direction={$direction === 'colorToHangul' ? 'left' : 'right'}
       labelLeft="한글"
       labelRight="Color"
     />
-    <div class="colorWheelContainer" on:click={showAnimations.toggle} title="toggle animations">
+    <div class="color-wheel-container" on:click={showAnimations.toggle} title="toggle animations">
       {#if $showAnimations}
         <ColorWheelAnimated />
       {:else}
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="view {$direction}">
+  <div class="view {$direction === 'colorToHangul' ? 'color-to-hangul' : 'hangul-to-color'}">
     {#if $direction === 'colorToHangul'}
       <span><KoreanContainerToHangul /></span>
       <Input />
@@ -58,14 +58,14 @@
     overflow: hidden;
   }
 
-  .topBar {
+  .top-bar {
     padding: 0.5rem 1.25rem 0 1.5rem;
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-flow: column;
     align-items: center;
   }
-  .topBar .colorWheelContainer {
+  .top-bar .color-wheel-container {
     height: 100px;
     width: 100px;
   }
@@ -76,17 +76,17 @@
     gap: 2rem;
   }
 
-  .view.colorToHangul {
+  .view.color-to-hangul {
     grid-template-rows: 96px 164px auto;
   }
 
-  .view.colorToHangul span:nth-child(1) {
+  .view.color-to-hangul span:nth-child(1) {
     display: grid;
     justify-items: center;
   }
 
   @media only screen and (min-width: 600px) {
-    .view.colorToHangul {
+    .view.color-to-hangul {
       grid-template-rows: 112px 98px auto;
     }
   }

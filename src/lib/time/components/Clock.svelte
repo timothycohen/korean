@@ -28,6 +28,6 @@
     overflow: hidden;
   }
   button:hover {
-    background-color: hsla(43.4, 42%, 75%, 0.1);
+    background-color: hsl(43.4deg 42% 75% / 10%);
   }
 </style>

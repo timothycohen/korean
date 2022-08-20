@@ -30,8 +30,7 @@ export const parsedInput = derived([userInput, direction], ([$userInput, $direct
     const [h, m] = $userInput.split(':').map(s => Number.parseInt(s, 10)) as [Hour, Minute];
     const time = HangulTime.toHangul(h, m ?? 0);
     return time;
-  } catch (e) {
-    console.error(e);
+  } catch {
     return '…';
   }
 });

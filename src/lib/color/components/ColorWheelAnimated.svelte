@@ -6,7 +6,7 @@
 </script>
 
 {#key $colors.color.hex}
-  <div class="animationWrapper" in:fadeSpin={defaultFadeSpin}>
+  <div class="animation-wrapper" in:fadeSpin={defaultFadeSpin}>
     <ColorWheel
       allColorHexes={$allColors.map(c => c.hex)}
       picked={{ hex: $colors.color.hex, removeFromOuter: $showAnswer }}
@@ -17,7 +17,7 @@
 {/key}
 
 <style>
-  .animationWrapper {
+  .animation-wrapper {
     height: 100%;
     width: 100%;
   }

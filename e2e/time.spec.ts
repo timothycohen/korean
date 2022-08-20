@@ -10,7 +10,7 @@ test.describe('time', () => {
 
     test('load time -> hangul page by default', async ({ page }) => {
       await page.goto('/time');
-      await page.waitForSelector('.clockWrapper', { timeout: 2000 });
+      await page.waitForSelector('.clock-wrapper', { timeout: 2000 });
     });
 
     test('clicking the direction button changes views', async ({ page }) => {

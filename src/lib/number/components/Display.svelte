@@ -2,7 +2,7 @@
   import { goal, direction, parsedInput, showGoalAnswer, showParsedInput } from '$number/stores';
 </script>
 
-<div class="detailsWrapper">
+<div class="details-wrapper">
   {#if $direction === 'seeNumTypeKo'}
     <h1 class="goal en" lang="en" tabindex="0" aria-label="Goal {$goal.number}">{$goal.number}</h1>
 
@@ -16,25 +16,17 @@
       {$showGoalAnswer ? $goal.number : ' '}
     </h2>
 
-    <h2 class="parsedInput ko" lang="ko" aria-label="Your input {parsedInput}" tabindex={$showParsedInput ? 0 : -1}>
+    <h2 class="parsed-input ko" lang="ko" aria-label="Your input {parsedInput}" tabindex={$showParsedInput ? 0 : -1}>
       {$showParsedInput ? $parsedInput : ' '}
     </h2>
   {/if}
 </div>
 
 <style>
-  .detailsWrapper {
+  .details-wrapper {
     height: 300px;
     display: grid;
     align-content: flex-end;
-  }
-  .ko {
-    font-family: GowunDodum;
-    font-weight: 400;
-  }
-  .en {
-    font-family: BioRhyme;
-    font-weight: 300;
   }
   .answer {
     color: var(--gray5);
@@ -67,11 +59,11 @@
     display: grid;
     align-items: flex-end;
   }
-  .parsedInput {
+  .parsed-input {
     width: 100%;
     color: var(--gray4);
   }
-  .parsedInput.ko {
+  .parsed-input.ko {
     font-size: clamp(1rem, 1.25rem + 3.3333vw, 1.5rem);
     min-height: 80px;
     display: grid;
@@ -79,7 +71,7 @@
   }
 
   @media only screen and (min-width: 600px) {
-    .detailsWrapper {
+    .details-wrapper {
       height: 320px;
     }
   }
