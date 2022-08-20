@@ -11,7 +11,7 @@
   <label for={name}>
     {label}
   </label>
-  <input type="checkbox" {name} class="toggle toggle-{size} toggle-primary" bind:checked />
+  <input type="checkbox" {name} class="t-d-toggle t-d-toggle-{size} t-d-toggle-primary" bind:checked />
 </div>
 
 <style>

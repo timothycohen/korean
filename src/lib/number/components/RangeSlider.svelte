@@ -14,20 +14,15 @@
 --range-handle-border:   hsla(43, 100%, 50%, .85);
 --range-range-inactive:  hsla(43, 100%, 91%, .85);    /* inactive range bar background color */
 --range-range:           hsla(43, 100%, 91%, 1);      /* active range bar background color */
---range-float-inactive:  hsla(43, 100%, 91%, .85);    /* inactive floating label background color */
---range-float:           hsla(43, 100%, 91%, .85);    /* floating label background color */
---range-float-text:      white;
 `}
 >
   <h1>{$goal.formattedRange[0]} - {$goal.formattedRange[1]}</h1>
 
-  <RangeSlider range pushy bind:values={$goal.range} min={$goal.absMin} max={$goal.absMax} step={1} float={true} />
+  <RangeSlider range pushy bind:values={$goal.range} min={$goal.absMin} max={$goal.absMax} step={1} />
 </div>
 
 <style>
   .slider {
-    display: grid;
-    place-items: center;
     margin: 0 3rem;
   }
   h1 {

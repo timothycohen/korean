@@ -15,5 +15,7 @@ module.exports = {
         },
       },
     ],
+    prefix: 'd-',
   },
+  prefix: 't-',
 };
