@@ -2,8 +2,6 @@ name: CodeQL
 
 on:
   push:
-    branches:
-      - main
   pull_request:
   schedule:
     # At 09:30 AM, only on Monday
