@@ -70,22 +70,17 @@
   /* /numbers and /time Input components */
   .layout-wave :global(.wave-page-input) {
     width: 100%;
-    height: 3rem;
-    font-size: clamp(1rem, 5.25vw, 2.5rem);
-    padding: 0 3rem;
+    height: 3.25rem;
+    font-size: 2rem;
+    padding: 0 3rem 0 0.5rem;
     text-align: center;
-    border: 2px solid var(--primary2);
+    border: 3px solid var(--primary2);
     border-radius: 4px;
+    outline: none;
     color: black;
   }
   .layout-wave :global(.wave-page-input:focus-visible) {
-    border: 2px solid transparent;
-    outline: 2px solid var(--primary4);
-  }
-  .layout-wave :global(.wave-page-input::-webkit-clear-button),
-  .layout-wave :global(.wave-page-input::-webkit-outer-spin-button),
-  .layout-wave :global(.wave-page-input::-webkit-inner-spin-button) {
-    display: none;
+    border: 3px solid var(--primary4);
   }
   .layout-wave :global(.ko) {
     font-family: var(--font-ko);
@@ -95,10 +90,10 @@
   }
   .layout-wave :global(.visibility-icon-wrapper) {
     position: relative;
+    display: grid;
+    height: 3.5rem;
     justify-self: right;
-    top: -2.4rem;
-    right: 0.5rem;
-    height: 2rem;
-    width: 2rem;
+    top: -3.25rem;
+    right: 0.75rem;
   }
 </style>

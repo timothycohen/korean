@@ -93,15 +93,15 @@
     width: 100%;
     height: 100%;
     border: 1px solid rgb(255 242 209 / 50%);
-    outline: 1px solid transparent;
-    transition: border, outline 300ms;
+    transition: none;
     user-select: none;
   }
   .selection-container :global(.shakable button:hover),
+  .selection-container :global(.shakable button:focus-visible),
+  .selection-container :global(.shuffle-btn button:focus-visible),
   .selection-container :global(.shuffle-btn button:hover) {
-    border: 1px solid var(--primary2);
-    outline: 2px solid var(--primary2);
-    transition: none;
+    border: none;
+    box-shadow: 0 0 0 2px var(--primary2);
   }
 
   @media only screen and (min-width: 600px) {
