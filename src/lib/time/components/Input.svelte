@@ -44,6 +44,7 @@
   <!-- lang is backwards so that the aria-label reads the goal properly -->
   <input
     class={`wave-page-input ${$direction === 'seeKoTypeHHMM' ? 'en' : 'ko'}`}
+    style={$direction === 'seeKoTypeHHMM' ? '' : 'padding: 0 1rem;'}
     type="text"
     lang={$direction === 'seeKoTypeHHMM' ? 'ko' : 'en'}
     aria-label={$direction === 'seeKoTypeHHMM'

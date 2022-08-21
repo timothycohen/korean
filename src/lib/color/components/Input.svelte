@@ -57,12 +57,13 @@
     text-align: center;
     border: 1px solid var(--gray5);
     border-radius: 4px;
-    font-size: 3rem;
-    padding: 2rem;
     background-color: black;
     color: var(--primary2);
     width: 100%;
-    height: 3rem;
+    height: 4rem;
+    font-size: 2.75rem;
+    line-height: normal;
+    padding: 0 2rem;
   }
   .styled-input:focus-visible {
     border: 1px solid transparent;
