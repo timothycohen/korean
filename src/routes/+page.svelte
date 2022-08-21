@@ -1,15 +1,14 @@
 <script lang="ts">
   import Counter from '$lib/home/components/Counter.svelte';
-  import { colors, time, numbers } from '$assets/images';
   import AnalogClock from '$common/components/AnalogClock.svelte';
   import { fadeSpin } from '$animations';
   import { onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
 
   const apps = [
-    { name: 'Colors', href: '/colors', src: colors },
-    { name: 'Numbers', href: '/numbers', src: numbers },
-    { name: 'Time', href: '/time', src: time },
+    { name: 'colors', href: '/colors' },
+    { name: 'numbers', href: '/numbers' },
+    { name: 'time', href: '/time' },
   ];
   let appIndex = 0;
 
@@ -39,7 +38,7 @@
 <main>
   <div class="app-selection">
     <div class="feature" style="grid-area: feature;">
-      {#if apps[appIndex].name === 'Colors'}
+      {#if apps[appIndex].name === 'colors'}
         <span class="feature-colors" on:click={nextApp}>
           <img
             src="/favicon-colors.svg"
@@ -49,7 +48,7 @@
             out:fade|local={{ duration: 150 }}
           />
         </span>
-      {:else if apps[appIndex].name === 'Numbers'}
+      {:else if apps[appIndex].name === 'numbers'}
         <span
           class="feature-numbers"
           on:click={nextApp}
@@ -72,7 +71,7 @@
       {/if}
     </div>
 
-    {#each apps as { href, src, name }, index}
+    {#each apps as { href, name }, index}
       <div
         class="preview-link-wrapper"
         style="grid-area: {name.toLowerCase()}; transform: scale({apps[appIndex].name === name ? 1 : 0.8});"
@@ -85,8 +84,17 @@
           on:focus={() => (appIndex = index)}
           on:contextmenu|preventDefault
         >
-          <span>{name}</span>
-          <img {src} alt="" width={500} height={379} class={apps[appIndex].name === name ? ' targeted' : ''} />
+          <span style="text-transform: capitalize;">{name}</span>
+          <picture>
+            <source media="(max-width:700px)" srcset="src/assets/images/{name}-page-500.png" />
+            <img
+              src="src/assets/images/{name}-page-1000.png"
+              alt="Link to {name} app."
+              width={500}
+              height={383}
+              class={apps[appIndex].name === name ? ' targeted' : ''}
+            />
+          </picture>
         </a>
       </div>
     {/each}
