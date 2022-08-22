@@ -9,7 +9,8 @@ const config: PlaywrightTestConfig = {
   },
   use: {
     baseURL: 'http://localhost:5173/',
-    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    trace: 'retain-on-failure',
   },
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -28,6 +29,7 @@ const config: PlaywrightTestConfig = {
     },
   ],
   testMatch: ['**/*.spec.{js,ts}'],
-  workers: 5,
+  workers: 4,
+  timeout: 30000,
 };
 export default config;

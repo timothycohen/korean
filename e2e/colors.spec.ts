@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 
 test.describe('colors', () => {
-  test.describe('general', () => {
+  test.describe.parallel('general', () => {
     test('colors app is accessible from the home page', async ({ page }) => {
       await page.goto('/');
       await page.locator('text=Colors').click();
@@ -25,7 +25,7 @@ test.describe('colors', () => {
     });
   });
 
-  test.describe('hangul to color', () => {
+  test.describe.parallel('hangul to color', () => {
     test('clicking the key button makes the key visible', async ({ page }) => {
       await page.goto('/colors');
       const red = page.locator('[aria-label="red is 빨간색"]');
@@ -107,7 +107,7 @@ test.describe('colors', () => {
     });
   });
 
-  test.describe('color to hangul', () => {
+  test.describe.parallel('color to hangul', () => {
     const setup = async (page: Page) => {
       await page.goto('/colors').then(async () => await page.waitForTimeout(50));
       await page.locator('text=한글').click();
